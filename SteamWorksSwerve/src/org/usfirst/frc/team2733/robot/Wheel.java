@@ -37,6 +37,14 @@ public class Wheel {
 		aimSpeed = 0;
 	}
 	
+	public void enable() {
+		
+	}
+	
+	public void disable() {
+		driveMotor.disable();
+	}
+	
 	public void update(){
 		//approach speed
 		//speed += ((aimSpeed - speed) * KSpeed);
@@ -63,7 +71,6 @@ public class Wheel {
 		
 		update();
 	}
-	
 	
 	public void aimDir(double newDir){
 		aimDir = newDir;
