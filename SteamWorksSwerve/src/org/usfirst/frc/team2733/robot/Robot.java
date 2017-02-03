@@ -16,6 +16,7 @@ public class Robot extends SampleRobot {
     
     public void robotInit() {
       RobotMap.initSwerve1();
+      swerveDrive = new DriveTrain(RobotMap.FL, RobotMap.FR, RobotMap.BL, RobotMap.BR);
     }
 
     public void autonomous() {
@@ -23,7 +24,7 @@ public class Robot extends SampleRobot {
     }
 
     public void operatorControl() {
-      
+      swerveDrive.drive();
     }
 
     public void test() {

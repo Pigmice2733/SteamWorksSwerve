@@ -64,7 +64,6 @@ public class Wheel {
 		update();
 	}
 	
-	
 	public void aimDir(double newDir){
 		aimDir = newDir;
 	}
