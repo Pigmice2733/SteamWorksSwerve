@@ -1,7 +1,16 @@
 package org.usfirst.frc.team2733.robot;
 
+import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 public class Wheel {
 
+	String name;
+	AnalogInput steerEncoder;
+	SpeedController steerMotor;
+	SpeedController driveMotor;
+	
 	//holds the actual values of the wheels
 	private double dir;
 	private double speed;
@@ -14,7 +23,12 @@ public class Wheel {
 	//private double KSpeed = .1;
 	//private double KDir = .01;
 	
-	public Wheel(){
+	public Wheel(String name, AnalogInput encoder, SpeedController drive, SpeedController steer){
+		this.name = name;
+		this.steerEncoder = encoder;
+		this.steerMotor = steer;
+		this.driveMotor = drive;
+		
 		//zeros the values
 		dir = 0;
 		speed = 0;
@@ -57,6 +71,8 @@ public class Wheel {
 	
 	public void aimSpeed(double newSpeed){
 		aimSpeed = newSpeed;
+		//SmartDashboard.putNumber(name + " drive", speed);
+        //driveMotor.pidWrite(speed);
 	}
 	
 	public double getDir(){
@@ -67,4 +83,18 @@ public class Wheel {
 		return speed;
 	}
 	
+	protected double returnPIDInput() {
+        // Return your input value for the PID loop
+        // e.g. a sensor, like a potentiometer:
+        // yourPot.getAverageVoltage() / kYourMaxVoltage;
+    	double offset = SmartDashboard.getNumber(name + " offset");
+        return steerEncoder.getAverageVoltage() + offset;
+}
+
+	protected void usePIDOutput(double output) {
+		SmartDashboard.putNumber(name + " steer", output);
+        // Use output to drive your system, like a motor
+        // e.g. yourMotor.set(output);
+        steerMotor.pidWrite(output);
+	}
 }
