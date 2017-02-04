@@ -10,7 +10,6 @@ public class DriveTrain {
 	List<Wheel> modules = new ArrayList<Wheel>();//Defining ArrayList to hold wheels
 	
 	public Wheel frontRight, backRight, frontLeft, backLeft;//Defining new Wheels
-	
 	public static enum DriveMode {
 		MAINSWERVE,
 		ALTSWERVE,
@@ -22,6 +21,7 @@ public class DriveTrain {
 	public JoystickInput joy;
 	
 	public DriveTrain(Wheel FrontLeft, Wheel FrontRight, Wheel BackLeft, Wheel BackRight, JoystickInput joy){//implementation for swerve
+
 		modules.add(FrontLeft);//Adds wheels to a list
 		modules.add(FrontRight);
 		modules.add(BackLeft);
@@ -49,4 +49,5 @@ public class DriveTrain {
 			module.steerMotor.pidWrite(direction);
 		}
 	}
+	
 }
