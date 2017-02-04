@@ -3,6 +3,7 @@ package org.usfirst.frc.team2733.robot;
 
 
 import edu.wpi.first.wpilibj.SampleRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 public class Robot extends SampleRobot {
@@ -30,6 +31,8 @@ public class Robot extends SampleRobot {
     }
 
     public void test() {
+    	SmartDashboard.putNumber("direction", joy.getDirection());
+        SmartDashboard.putNumber("speed", joy.getSpeed());
     }
 } 
  
