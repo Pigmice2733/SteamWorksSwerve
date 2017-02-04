@@ -75,7 +75,7 @@ public class Wheel {
 	public void aimDir(double newDir){
 		aimDir = newDir;
 	}
-	
+	 
 	public void aimSpeed(double newSpeed){
 		aimSpeed = newSpeed;
 		//SmartDashboard.putNumber(name + " drive", speed);

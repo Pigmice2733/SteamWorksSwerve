@@ -26,7 +26,7 @@ public class DriveTrain {
 		modules.add(FrontRight);
 		modules.add(BackLeft);
 		modules.add(BackRight);
-		this.joy = joy;
+		this.joy = joy; 
 	}
 	
 	public void setMode(DriveMode driveMode) {
