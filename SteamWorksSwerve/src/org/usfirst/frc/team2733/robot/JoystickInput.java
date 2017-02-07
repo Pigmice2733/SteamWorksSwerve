@@ -4,12 +4,12 @@ import edu.wpi.first.wpilibj.Joystick;
 
 public class JoystickInput {
 	
-	Joystick lstick;
-	Joystick rstick;
+	Joystick lStick;
+	Joystick rStick;
 	
 	public JoystickInput(int port0, int port1) {
-		lstick = new Joystick(port0);
-		rstick = new Joystick(port1);
+		lStick = new Joystick(port0);
+		rStick = new Joystick(port1);
 	}
 	
 	public double getSpeed() {

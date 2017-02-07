@@ -23,7 +23,7 @@ public class Wheel {
 	//private double KSpeed = .1;
 	//private double KDir = .01;
 	
-	public Wheel(String name, AnalogInput encoder, SpeedController drive, SpeedController steer){
+	public Wheel(String name, AnalogInput encoder, SpeedController drive, SpeedController steer) {
 		this.name = name;
 		this.steerEncoder = encoder;
 		this.steerMotor = steer;
@@ -45,7 +45,7 @@ public class Wheel {
 		driveMotor.disable();
 	}
 	
-	public void update(){
+	public void update() {
 		//approach speed
 		//speed += ((aimSpeed - speed) * KSpeed);
 		speed = aimSpeed;
@@ -62,7 +62,7 @@ public class Wheel {
 		
 	}
 	
-	public void set(double velX, double velY, double rot, float xCoord, float yCoord){
+	public void set(double velX, double velY, double rot, float xCoord, float yCoord) {
 		double Wxi = velX + (rot*yCoord);
 		double Wyi = velY - (rot*xCoord);
 		
@@ -72,21 +72,21 @@ public class Wheel {
 		update();
 	}
 	
-	public void aimDir(double newDir){
+	public void aimDir(double newDir) {
 		aimDir = newDir;
 	}
 	 
-	public void aimSpeed(double newSpeed){
+	public void aimSpeed(double newSpeed) {
 		aimSpeed = newSpeed;
 		//SmartDashboard.putNumber(name + " drive", speed);
         //driveMotor.pidWrite(speed);
 	}
 	
-	public double getDir(){
+	public double getDir() {
 		return dir;
 	}
 	
-	public double getSpeed(){
+	public double getSpeed() {
 		return speed;
 	}
 	
@@ -96,7 +96,7 @@ public class Wheel {
         // yourPot.getAverageVoltage() / kYourMaxVoltage;
     	double offset = SmartDashboard.getNumber(name + " offset");
         return steerEncoder.getAverageVoltage() + offset;
-}
+	}
 
 	protected void usePIDOutput(double output) {
 		SmartDashboard.putNumber(name + " steer", output);
