@@ -8,17 +8,18 @@ public class AbsoluteEncoder {
 	
 	private RotationType rotationType = RotationType.Radians;
 	
-	private double k;
+	private double k, offset;
 	
 	// Pass in the analog channel the encoder is plugged in to.
 	// Adjust k till output is correct;
-	public AbsoluteEncoder(int inputChannel, int k) {
+	public AbsoluteEncoder(int inputChannel, int k, int offset) {
 		analogInput = new AnalogInput(inputChannel);
 		this.k = k;
+		this.offset = offset;
 	}
 	
 	public double getAbsRotation() {
-		return analogInput.getValue() * k;
+		return (analogInput.getAverageValue() * k) + offset;
 	}
 	
 	public void setRotationType(RotationType roType) {
