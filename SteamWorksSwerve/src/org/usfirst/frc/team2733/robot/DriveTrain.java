@@ -32,7 +32,7 @@ public class DriveTrain {
 	public void setMode(DriveMode driveMode) {
 		SmartDashboard.putString("mode", driveMode.toString());
         // Re-enable SwerveModules after mode changed from Disabled
-        if (mode == driveMode.DISABLED) {
+        if (mode == DriveMode.DISABLED) {
         	for (Wheel mod: modules) {
         		mod.disable();
         	}
