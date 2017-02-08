@@ -16,7 +16,7 @@ public class Robot extends SampleRobot {
     public void robotInit() {
       RobotMap.initSwerve1();
       joy = new JoystickInput(RobotMap.joystickPort1, RobotMap.joystickPort2);
-      swerveDrive = new DriveTrain(RobotMap.FL, RobotMap.FR, RobotMap.BL, RobotMap.BR, joy);
+      //swerveDrive = new DriveTrain(RobotMap.FL, RobotMap.FR, RobotMap.BL, RobotMap.BR, joy);
     }
 
     @Override
@@ -26,13 +26,13 @@ public class Robot extends SampleRobot {
 
     @Override
     public void operatorControl() {
-      swerveDrive.drive();
+      //swerveDrive.drive();
     }
 
     @Override
     public void test() {
-    	SmartDashboard.putNumber("direction", joy.getDirection());
-        SmartDashboard.putNumber("speed", joy.getSpeed());
+    	//SmartDashboard.putNumber("direction", joy.getDirection());
+        //SmartDashboard.putNumber("speed", joy.getSpeed());
     }
 } 
  
