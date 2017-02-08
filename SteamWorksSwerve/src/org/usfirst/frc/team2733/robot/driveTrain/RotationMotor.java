@@ -6,5 +6,7 @@ public class RotationMotor {
 		
 	}
 	
-	
+	public void setAngle() {
+		
+	}
 }
