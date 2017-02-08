@@ -1,11 +1,10 @@
 package org.usfirst.frc.team2733.robot;
 
+import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.Talon;
 
 import org.usfirst.frc.team2733.robot.SwerveModule.WheelName;
-
-import com.ctre.CANTalon;
 
 public class RobotMap {
 
