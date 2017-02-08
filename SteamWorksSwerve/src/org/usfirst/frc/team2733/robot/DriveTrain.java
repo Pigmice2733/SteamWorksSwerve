@@ -7,9 +7,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveTrain {
 	
-	List<Wheel> modules = new ArrayList<Wheel>();//Defining ArrayList to hold wheels
+	List<SwerveModule> modules = new ArrayList<SwerveModule>();//Defining ArrayList to hold wheels
 	
-	public Wheel frontRight, backRight, frontLeft, backLeft;//Defining new Wheels
+	public SwerveModule frontRight, backRight, frontLeft, backLeft;//Defining new Wheels
 	public static enum DriveMode {
 		MAINSWERVE,
 		ALTSWERVE,
@@ -20,7 +20,7 @@ public class DriveTrain {
 	public DriveMode mode;
 	public JoystickInput joy;
 	
-	public DriveTrain(Wheel FrontLeft, Wheel FrontRight, Wheel BackLeft, Wheel BackRight, JoystickInput joy){//implementation for swerve
+	public DriveTrain(SwerveModule FrontLeft, SwerveModule FrontRight, SwerveModule BackLeft, SwerveModule BackRight, JoystickInput joy){//implementation for swerve
 
 		modules.add(FrontLeft);//Adds wheels to a list
 		modules.add(FrontRight);
@@ -33,7 +33,7 @@ public class DriveTrain {
 		SmartDashboard.putString("mode", driveMode.toString());
         // Re-enable SwerveModules after mode changed from Disabled
         if (mode == DriveMode.DISABLED) {
-        	for (Wheel mod: modules) {
+        	for (SwerveModule mod: modules) {
         		mod.disable();
         	}
         }
@@ -44,7 +44,7 @@ public class DriveTrain {
 		double direction = RobotMap.mapRange(0, 1, -1, RobotMap.minSetpoint, RobotMap.maxSetpoint);
         SmartDashboard.putNumber("direction", direction);
         SmartDashboard.putNumber("speed", speed);
-		for(Wheel module: modules) {//For loop goes through Wheels held in ArrayList
+		for(SwerveModule module: modules) {//For loop goes through Wheels held in ArrayList
 			module.driveMotor.set(speed);
 			module.steerMotor.pidWrite(direction);
 		}

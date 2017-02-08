@@ -3,7 +3,7 @@ package org.usfirst.frc.team2733.robot;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class Wheel {
+public class SwerveModule {
 
 	WheelName name;
 	AbsoluteEncoder steerEncoder;
@@ -22,7 +22,7 @@ public class Wheel {
 	//private double KSpeed = .1;
 	//private double KDir = .01;
 	
-	public Wheel(WheelName name, AbsoluteEncoder encoder, SpeedController drive, SpeedController steer) {
+	public SwerveModule(WheelName name, AbsoluteEncoder encoder, SpeedController drive, SpeedController steer) {
 		this.name = name;
 		this.steerEncoder = encoder;
 		this.steerMotor = steer;
