@@ -1,12 +1,15 @@
 package org.usfirst.frc.team2733.robot;
 
-import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.Talon;
 
+import org.usfirst.frc.team2733.robot.Wheel.WheelName;
+
+import com.ctre.CANTalon;
+
 public class RobotMap {
 
+	/** P value to be used in internal PID loop. */
 	public static double P = 1;
 	/** I value to be used in internal PID loop. */
 	public static double I = 0;
@@ -31,17 +34,17 @@ public class RobotMap {
 
 	/** Initialize Talons and encoders for each swerve module. */
 	public static void initSwerve1() {// Swerve Initialization for Competition Swerve
-		FR = new Wheel("FR", new AnalogInput(4), new CANTalon(11), new Spark(0));// FORMAT: Name, Turning Encoder, Drive Motor, turning Motor
-		FL = new Wheel("FL", new AnalogInput(5), new CANTalon(12), new Spark(1));// Same Format for other inits
-		BR = new Wheel("BR", new AnalogInput(6), new CANTalon(13), new Spark(2));
-		BL = new Wheel("BL", new AnalogInput(7), new CANTalon(14), new Spark(3));
+		FR = new Wheel(WheelName.FR, new AbsoluteEncoder(4, 1, 0), new CANTalon(11), new Spark(0));// FORMAT: Name, Turning Encoder, Drive Motor, turning Motor
+		FL = new Wheel(WheelName.FL, new AbsoluteEncoder(5, 1, 0), new CANTalon(12), new Spark(1));// Same Format for other inits
+		BR = new Wheel(WheelName.BR, new AbsoluteEncoder(6, 1, 0), new CANTalon(13), new Spark(2));
+		BL = new Wheel(WheelName.BL, new AbsoluteEncoder(7, 1, 0), new CANTalon(14), new Spark(3));
 	}
 
 	public static void initSwerve2() {// Swerve Initialization for Development Swerve. The only difference is the speed controller types used.
-        FR = new Wheel("FR", new AnalogInput(4), new CANTalon(0), new Talon(0));
-        FL = new Wheel("FL", new AnalogInput(5), new CANTalon(1), new Talon(1));
-        BR = new Wheel("BR", new AnalogInput(6), new CANTalon(2), new Talon(2));
-        BL = new Wheel("BL", new AnalogInput(7), new CANTalon(3), new Talon(3));
+		FR = new Wheel(WheelName.FR, new AbsoluteEncoder(4, 1, 0), new CANTalon(11), new Talon(0));// FORMAT: Name, Turning Encoder, Drive Motor, turning Motor
+		FL = new Wheel(WheelName.FL, new AbsoluteEncoder(5, 1, 0), new CANTalon(12), new Talon(1));// Same Format for other inits
+		BR = new Wheel(WheelName.BR, new AbsoluteEncoder(6, 1, 0), new CANTalon(13), new Talon(2));
+		BL = new Wheel(WheelName.BL, new AbsoluteEncoder(7, 1, 0), new CANTalon(14), new Talon(3));
 	}
 
 	public static void initTank() {// In case we use tank drive, this is a backup. Hopefully we never use this.

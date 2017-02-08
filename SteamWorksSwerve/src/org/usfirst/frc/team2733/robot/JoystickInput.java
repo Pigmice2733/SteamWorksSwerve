@@ -13,11 +13,11 @@ public class JoystickInput {
 	}
 	
 	public double getSpeed() {
-		return lstick.getMagnitude();
+		return lStick.getMagnitude();
 	}
 	
 	public double getDirection() {
-		return rstick.getDirectionDegrees();
+		return rStick.getDirectionDegrees();
 	}
 }
  
