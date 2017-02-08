@@ -1,10 +1,10 @@
-package org.usfirst.frc.team2733.robot;
+package org.usfirst.frc.team2733.tempStuffThatIsBeingReplaced;
+
+import org.usfirst.frc.team2733.tempStuffThatIsBeingReplaced.SwerveModule.WheelName;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.Talon;
-
-import org.usfirst.frc.team2733.robot.SwerveModule.WheelName;
 
 public class RobotMap {
 
