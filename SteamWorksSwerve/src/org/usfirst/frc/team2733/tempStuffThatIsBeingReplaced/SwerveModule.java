@@ -1,5 +1,7 @@
 package org.usfirst.frc.team2733.tempStuffThatIsBeingReplaced;
 
+import org.usfirst.frc.team2733.robot.AbsoluteEncoder;
+
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
