@@ -51,6 +51,12 @@ public class RobotMap {
 		
 	}
 	
+	// Feel free to remove this in a few days. It is only hear to prove that basic unit tests are working.
+	// Please only remove after confirming that the ant function "test" works
+	public static int test() {
+		return 3;
+	}
+
 	public static double mapRange(double value, double fromLow, double fromHigh, double toLow, double toHigh) {
         return (value - fromLow) * (toHigh - toLow) / (fromHigh - fromLow) + toLow;
 	}
