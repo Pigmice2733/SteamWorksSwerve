@@ -9,9 +9,6 @@ public class PID {
 	//keeps track of the complexity of the PID; is it using I and D?
 	boolean usingI, usingD;
 	
-	//last frame's value of the currentVal. This is compared to the value given in the getIncrement method
-	double lastFrameVal;
-	
 	//the running total of the success of the movement
 	double integral;
 	
@@ -44,8 +41,7 @@ public class PID {
 		usingI = true;
 		usingD = false;
 
-		//zeros global variables used for the I component
-		lastFrameVal = 0;
+		//zeros global variable used for the I component
 		integral = 0;
 	}
 	
@@ -67,8 +63,7 @@ public class PID {
 		usingI = true;
 		usingD = true;
 
-		//zeros global variables used for the I component
-		lastFrameVal = 0;
+		//zeros global variable used for the I component
 		integral = 0;
 	}
 	
@@ -80,7 +75,7 @@ public class PID {
 	 * The intended state of the object
 	 * @return
 	 */
-	public double getIncrement(double currentVal, double aimVal) {
+	public double getVal(double currentVal, double aimVal) {
 		
 		double returnVal = 0;
 		
@@ -103,11 +98,8 @@ public class PID {
 	}
 	
 	//calculates the I based component of the increment
-	private double calcI(double currentVal, double aimVal){
-		integral += aimVal - (lastFrameVal - currentVal);
-		
-		lastFrameVal = currentVal;
-		return ;
+	private double calcI(double currentVal, double aimVal){		
+		return 0;
 	}
 	
 	//calculates the D based component of the increment
