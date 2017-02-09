@@ -1,5 +1,7 @@
 package org.usfirst.frc.team2733.robot;
 
+import edu.wpi.first.wpilibj.Timer;
+
 public class PID {
 
 	
@@ -10,7 +12,10 @@ public class PID {
 	boolean usingI, usingD;
 	
 	//the running total of the success of the movement
-	double integral;
+	double errorSum, previousError;
+	
+	// System time in ms at last update
+	long lastTime;
 	
 	/**
 	 * This is the constructor for a PID object that only uses the Proportional component.
@@ -42,7 +47,10 @@ public class PID {
 		usingD = false;
 
 		//zeros global variable used for the I component
-		integral = 0;
+		errorSum = 0;
+		
+		//zeroes time
+		lastTime = 0;
 	}
 	
 	/**
@@ -64,7 +72,11 @@ public class PID {
 		usingD = true;
 
 		//zeros global variable used for the I component
-		integral = 0;
+		errorSum = 0;
+		//zeroes global storing previous error
+		previousError = 0;
+		//zeroes time
+		lastTime = 0;
 	}
 	
 	/**
@@ -73,37 +85,38 @@ public class PID {
 	 * The current state of the object.
 	 * @param aimVal
 	 * The intended state of the object
-	 * @return
+	 * @return output value for process using PID controller
 	 */
 	public double getVal(double currentVal, double aimVal) {
 		
 		double returnVal = 0;
 		
-		returnVal += calcP(currentVal, aimVal);
+		// Current time in ms
+		long currentTime = (long) (Timer.getFPGATimestamp() * 1000);
+		
+		// Time elapsed since last update
+		long timeChange = currentTime - lastTime;
+		
+		// The current error
+		double currentError = aimVal - currentVal;
+		
+		// Proportional term
+		returnVal += (currentError * P);
 		
 		if(usingI){
-			returnVal += calcI(currentVal, aimVal);
+		    errorSum += (currentError * timeChange);
+			returnVal += errorSum * I;
 		}
 		
 		if(usingD){
-			returnVal += calcD(currentVal, aimVal);
+		    
+		    double derivative = (currentError - previousError)/timeChange;
+			returnVal += derivative * D;
 		}
 		
+		lastTime = currentTime;
+		previousError = currentError;
+		
 		return returnVal;
-	}
-	
-	//calculates the P based component of the increment
-	private double calcP(double currentVal, double aimVal){
-		return (aimVal - currentVal) * P;
-	}
-	
-	//calculates the I based component of the increment
-	private double calcI(double currentVal, double aimVal){		
-		return 0;
-	}
-	
-	//calculates the D based component of the increment
-	private double calcD(double currentVal, double aimVal){
-		return 0;
 	}
 }
