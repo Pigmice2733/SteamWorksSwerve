@@ -17,7 +17,7 @@ public class Coordinator {
 	 * @param encoderPort The port for the encoder associated with a particular rotation motor
 	 */
 	
-	Coordinator(RotationMotor rotationMotor, SwerveModule swerveMotor, int encoderPort){
+	Coordinator(RotationMotor rotationMotor, DriveMotor swerveMotor, int encoderPort){
 		swerveEncoder = new AbsoluteEncoder(encoderPort, this.k, this.offset);
 	}
 	
