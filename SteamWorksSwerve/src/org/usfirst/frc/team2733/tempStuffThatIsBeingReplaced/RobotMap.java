@@ -2,6 +2,7 @@ package org.usfirst.frc.team2733.tempStuffThatIsBeingReplaced;
 
 import org.usfirst.frc.team2733.robot.AbsoluteEncoder;
 import org.usfirst.frc.team2733.tempStuffThatIsBeingReplaced.SwerveModule.WheelName;
+import org.usfirst.frc.team2733.robot.PID;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Spark;
@@ -10,7 +11,7 @@ import edu.wpi.first.wpilibj.Talon;
 public class RobotMap {
 
 	/** P value to be used in internal PID loop. */
-	public static double P = 1;
+	public static double P = 0.01;
 	/** I value to be used in internal PID loop. */
 	public static double I = 0;
 	/** D value to be used in internal PID loop. */
@@ -24,9 +25,11 @@ public class RobotMap {
 	/** The back right swerve module. */
 	public static SwerveModule BR;
 	
-	public static double minSetpoint = 1.5;
+	public static PID pid;
+	
+	//public static double minSetpoint = 1.5;
 	/** The highest setpoint the steering motor should be allowed to go to. */
-	public static double maxSetpoint = 3.5;
+	//public static double maxSetpoint = 3.5;
 
 	public static int joystickPort1 = 0;
 	public static int joystickPort2 = 0;
@@ -49,6 +52,14 @@ public class RobotMap {
 
 	public static void initTank() {// In case we use tank drive, this is a backup. Hopefully we never use this.
 		
+	}
+	
+	public void initPID() {//Initializes the PID class. Needs to be called in the RobotInit
+		pid = new PID(P);//Change the Init to add I and D IF necessary.
+	}
+	
+	public void initOtherMovingParts() {//Initializes the other components of the robot such as the Shooter, Ball intake, etc. 
+		//UNFINISHED//
 	}
 	
 	public static double mapRange(double value, double fromLow, double fromHigh, double toLow, double toHigh) {
