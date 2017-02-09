@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2733.tempStuffThatIsBeingReplaced;
 
+import org.usfirst.frc.team2733.robot.AbsoluteEncoder;
 import org.usfirst.frc.team2733.tempStuffThatIsBeingReplaced.SwerveModule.WheelName;
 
 import edu.wpi.first.wpilibj.CANTalon;
