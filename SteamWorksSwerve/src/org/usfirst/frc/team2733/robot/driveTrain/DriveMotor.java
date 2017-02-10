@@ -18,15 +18,12 @@ public class DriveMotor {
 		// Replace when actual distance per pulse is known
 		encoder.setDistancePerPulse(0.000001);
 		
-		piController = new PID(P, I); 
+		piController = new PID(P, I);
 	}
 	
-	public void setSpeed(double newSpeed) {
-		piController.setPoint(newSpeed);
-	}
-	
-	public void update() {
-		double piVal = piController.getVal(encoder.getRate());
+	// Get speed to drive at, update PID and motor
+	public void update(double speed) {
+		double piVal = piController.getVal(encoder.getRate(), speed);
 		driveMotor.set(piVal);
 	}
 }
