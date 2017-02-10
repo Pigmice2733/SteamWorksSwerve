@@ -19,5 +19,8 @@ public class JoystickInput {
 	public double getDirection() {
 		return rStick.getDirectionRadians();
 	}
+	
+	public double getRotation() {
+		return lStick.getTwist();
+	}
 }
- 

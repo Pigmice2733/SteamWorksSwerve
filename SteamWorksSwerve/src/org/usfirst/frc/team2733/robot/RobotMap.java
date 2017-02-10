@@ -24,9 +24,7 @@ public class RobotMap {
 	// Pairs of encoder ports for drive motors
 	public static Map<WheelPosition,Integer[]> driveEncoderPorts = new HashMap<>();
 	
-	public static Map<WheelPosition, Integer> rotationEncoderPorts = new HashMap<>();
-	
-	public static Map<WheelPosition,Integer[]> rotationEncoderValues = new HashMap<>();
+	public static Map<WheelPosition, Integer[]> rotationEncoderPorts = new HashMap<>();
 	
 	public static double minSetpoint = 1.5;
 	/** The highest setpoint the steering motor should be allowed to go to. */
@@ -68,15 +66,10 @@ public class RobotMap {
 		driveEncoderPorts.put(WheelPosition.BackLeft, new Integer[]{0, 0});
 		driveEncoderPorts.put(WheelPosition.BackRight, new Integer[]{0, 0});
 		
-		rotationEncoderPorts.put(WheelPosition.FrontLeft, 0);
-		rotationEncoderPorts.put(WheelPosition.FrontRight, 0);
-		rotationEncoderPorts.put(WheelPosition.BackLeft, 0);
-		rotationEncoderPorts.put(WheelPosition.BackRight, 0);
-		
-		rotationEncoderValues.put(WheelPosition.FrontLeft, new Integer[]{1, 0});
-		rotationEncoderValues.put(WheelPosition.FrontRight, new Integer[]{1, 0});
-		rotationEncoderValues.put(WheelPosition.BackLeft, new Integer[]{1, 0});
-		rotationEncoderValues.put(WheelPosition.BackRight, new Integer[]{1, 0});
+		rotationEncoderPorts.put(WheelPosition.FrontLeft, new Integer[]{0, 0});
+		rotationEncoderPorts.put(WheelPosition.FrontRight, new Integer[]{0, 0});
+		rotationEncoderPorts.put(WheelPosition.BackLeft, new Integer[]{0, 0});
+		rotationEncoderPorts.put(WheelPosition.BackRight, new Integer[]{0, 0});
 	}
 
 	/** Initialize Talons and encoders for each swerve module for competition. */

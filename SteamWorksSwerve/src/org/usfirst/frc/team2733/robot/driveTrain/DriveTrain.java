@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.usfirst.frc.team2733.robot.RobotMap;
 import org.usfirst.frc.team2733.robot.swerve.Point;
 import org.usfirst.frc.team2733.robot.swerve.SwerveCalc;
@@ -60,10 +59,14 @@ public class DriveTrain {
 	
 	public void drive() {
 		double speed = joy.getSpeed();
-		double direction = RobotMap.mapRange(0, 1, -1, RobotMap.minSetpoint, RobotMap.maxSetpoint);
-        SmartDashboard.putNumber("direction", direction);
+		double direction = joy.getDirection();
+		
+		Point velocityVector = new Point((-Math.sin(direction) * speed), (Math.cos(direction) * speed)); 
+		
+		double rotation = joy.getRotation();
+		SmartDashboard.putNumber("direction", direction);
         SmartDashboard.putNumber("speed", speed);
-		//swerveCalc.setAim(velocityVector, rotation);
+		swerveCalc.setAim(velocityVector, rotation);
 	}
 	
 }
