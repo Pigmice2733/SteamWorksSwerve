@@ -2,8 +2,7 @@ package org.usfirst.frc.team2733.robot.driveTrain;
 
 import org.usfirst.frc.team2733.robot.PID;
 
-import edu.wpi.first.wpilibj.CANTalon;
-
+import com.ctre.CANTalon;
 
 public class RotationMotor {
 
