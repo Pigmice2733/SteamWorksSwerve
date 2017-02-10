@@ -1,8 +1,8 @@
 package org.usfirst.frc.team2733.tempStuffThatIsBeingReplaced;
 
-import org.usfirst.frc.team2733.robot.AbsoluteEncoder;
 import org.usfirst.frc.team2733.tempStuffThatIsBeingReplaced.SwerveModule.WheelName;
 import org.usfirst.frc.team2733.robot.PID;
+import org.usfirst.frc.team2733.robot.driveTrain.AbsoluteEncoder;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Spark;

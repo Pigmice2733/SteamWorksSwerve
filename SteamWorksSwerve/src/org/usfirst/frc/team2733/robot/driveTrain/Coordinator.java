@@ -1,7 +1,6 @@
 package org.usfirst.frc.team2733.robot.driveTrain;
 
-import org.usfirst.frc.team2733.robot.AbsoluteEncoder;
-import org.usfirst.frc.team2733.robot.AbsoluteEncoder.RotationType;
+import org.usfirst.frc.team2733.robot.driveTrain.AbsoluteEncoder.RotationType;
 
 public class Coordinator {
 	
