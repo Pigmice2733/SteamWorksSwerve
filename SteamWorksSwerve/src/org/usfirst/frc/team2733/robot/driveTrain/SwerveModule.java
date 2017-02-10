@@ -7,7 +7,7 @@ public class SwerveModule {
 	//private final DriveMotor driveMotor;
 	//private final RotationMotor rotationMotor;
 	
-	public SwerveModule() {
+	public SwerveModule(DriveMotor driveMotor, RotationMotor rotMotor) {
 		//driveMotor = new DriveMotor();
 		//rotationMotor = new RotationMotor();
 	}
