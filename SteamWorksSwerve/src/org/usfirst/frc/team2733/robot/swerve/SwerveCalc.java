@@ -1,15 +1,15 @@
 package org.usfirst.frc.team2733.robot.swerve;
 
-import java.util.Dictionary;
+import java.util.Map;
 
 
 public class SwerveCalc {
 
-	private Dictionary<WheelPosition, Point> wheelPositions;
+	private Map<WheelPosition, Point> wheelPositions;
 	
-	private Dictionary<WheelPosition, Point> wheelAims;//the x and y of the point correspond to the velocity and rotation of the wheel aims.
+	private Map<WheelPosition, Point> wheelAims;//the x and y of the point correspond to the velocity and rotation of the wheel aims.
 	
-	public SwerveCalc(Dictionary<WheelPosition, Point> wheelPositions){
+	public SwerveCalc(Map<WheelPosition, Point> wheelPositions){
 		this.wheelPositions = wheelPositions;
 	}
 	

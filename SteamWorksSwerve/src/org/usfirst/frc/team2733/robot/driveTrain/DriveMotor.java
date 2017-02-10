@@ -27,4 +27,8 @@ public class DriveMotor {
 		double piVal = piController.getVal(encoder.getRate(), speed);
 		driveMotor.set(piVal);
 	}
+	
+	public void disable() {
+		driveMotor.disable();
+	}
 }

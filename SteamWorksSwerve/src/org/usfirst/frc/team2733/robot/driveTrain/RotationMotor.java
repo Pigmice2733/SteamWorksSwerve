@@ -22,4 +22,8 @@ public class RotationMotor {
 		double piVal = piController.getVal(encoder.getAbsRotation(), angle);
 		rotMotor.set(piVal);
 	}
+	
+	public void disable() {
+		rotMotor.disable();
+	}
 }
