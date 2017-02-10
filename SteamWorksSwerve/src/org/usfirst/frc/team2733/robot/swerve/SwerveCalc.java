@@ -1,13 +1,13 @@
 package org.usfirst.frc.team2733.robot.swerve;
 
-import java.awt.Point;
 import java.util.Dictionary;
+
 
 public class SwerveCalc {
 
 	private Dictionary<WheelPosition, Point> wheelPositions;
 	
-	private Dictionary<WheelPosition, Point> wheelAims;
+	private Dictionary<WheelPosition, Point> wheelAims;//the x and y of the point correspond to the velocity and rotation of the wheel aims.
 	
 	public SwerveCalc(Dictionary<WheelPosition, Point> wheelPositions){
 		this.wheelPositions = wheelPositions;
@@ -26,7 +26,11 @@ public class SwerveCalc {
 	 * x/y coordinates of the point to rotate around
 	 */
 	public void setAim(Point velocityVector, double rotation, Point centerOfRotation){
-		internalSetAim(velocityVector, rotation, centerOfRotation);
+		internalSetAim(velocityVector, rotation, centerOfRotation, WheelPosition.FrontRight);
+		internalSetAim(velocityVector, rotation, centerOfRotation, WheelPosition.BackRight);
+		internalSetAim(velocityVector, rotation, centerOfRotation, WheelPosition.FrontLeft);
+		internalSetAim(velocityVector, rotation, centerOfRotation, WheelPosition.BackLeft);
+		
 	}
 	
 	/**
@@ -39,7 +43,11 @@ public class SwerveCalc {
 	 * in radians/second (clockwise is positive)
 	 */
 	public void setAim(Point velocityVector, double rotation){
-		internalSetAim(velocityVector, rotation, new Point(0, 0));
+		internalSetAim(velocityVector, rotation, new Point(0, 0), WheelPosition.FrontRight);
+		internalSetAim(velocityVector, rotation, new Point(0, 0), WheelPosition.BackRight);
+		internalSetAim(velocityVector, rotation, new Point(0, 0), WheelPosition.FrontLeft);
+		internalSetAim(velocityVector, rotation, new Point(0, 0), WheelPosition.BackLeft);
+		
 	}
 	
 	//internal method with the real math
@@ -54,8 +62,7 @@ public class SwerveCalc {
 		double Wyi = velocityVector.getY() - (rotation*wheelLocY);
 		
 		//calculate the aims and store
-		wheelAims.put("FrontRightVel", Math.sqrt(Math.pow(Wxi, 2) + Math.pow(Wyi, 2)));
-		wheelAims.put("FrontRightRot", Math.atan2(Wxi, Wyi));
+		wheelAims.put(wheelPosition, new Point(Math.sqrt(Math.pow(Wxi, 2) + Math.pow(Wyi, 2)), 0));
 	}
 	
 	/**
@@ -66,18 +73,7 @@ public class SwerveCalc {
 	 * returns the velocity the given wheel should aim for
 	 */
 	public double getVelAim(WheelPosition wheelPosition){
-		switch(wheelPosition){
-		case FrontRight:
-			return wheelAims.get("FrontRightVel");
-		case BackRight:
-			return wheelAims.get("BackRightVel");
-		case FrontLeft:
-			return wheelAims.get("FrontLeftVel");
-		case BackLeft:
-			return wheelAims.get("BackLeftVel");
-		default: 
-			return 0;
-		}
+		return wheelAims.get(wheelPosition).getX();
 	}
 	
 	/**
@@ -88,18 +84,7 @@ public class SwerveCalc {
 	 * returns the rotational the given wheel should aim for
 	 */
 	public double getRotAim(WheelPosition wheelPosition){
-		switch(wheelPosition){
-		case FrontRight:
-			return wheelAims.get("FrontRightRot");
-		case BackRight:
-			return wheelAims.get("BackRightRot");
-		case FrontLeft:
-			return wheelAims.get("FrontLeftRot");
-		case BackLeft:
-			return wheelAims.get("BackLeftRot");
-		default: 
-			return 0;
-		}
+		return wheelAims.get(wheelPosition).getY();
 	}
 	
 	
