@@ -8,6 +8,8 @@ public class PID {
 	//the coefficients for the PID
 	private double P, I, D;
 	
+	private double setPoint;
+	
 	//keeps track of the complexity of the PID; is it using I and D?
 	boolean usingI, usingD;
 	
@@ -87,7 +89,7 @@ public class PID {
 	 * The intended state of the object
 	 * @return output value for process using PID controller
 	 */
-	public double getVal(double currentVal, double aimVal) {
+	public double getVal(double currentVal) {
 		
 		double returnVal = 0;
 		
@@ -98,7 +100,7 @@ public class PID {
 		long timeChange = currentTime - lastTime;
 		
 		// The current error
-		double currentError = aimVal - currentVal;
+		double currentError = setPoint - currentVal;
 		
 		// Proportional term
 		returnVal += (currentError * P);
@@ -118,5 +120,9 @@ public class PID {
 		previousError = currentError;
 		
 		return returnVal;
+	}
+	
+	public void setPoint(double setPoint) {
+		this.setPoint = setPoint;
 	}
 }
