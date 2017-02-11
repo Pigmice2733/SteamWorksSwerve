@@ -2,7 +2,6 @@ package org.usfirst.frc.team2733.robot.swerve;
 
 import java.util.Map;
 
-
 public class SwerveCalc {
 
 	private Map<WheelPosition, Point> wheelPositions;
@@ -25,7 +24,7 @@ public class SwerveCalc {
 	 * @param centerOfRotation
 	 * x/y coordinates of the point to rotate around
 	 */
-	public void setAim(Point velocityVector, double rotation, Point centerOfRotation){
+	public void setAim(Point velocityVector, double rotation, Point centerOfRotation) {
 		internalSetAim(velocityVector, rotation, centerOfRotation, WheelPosition.FrontRight);
 		internalSetAim(velocityVector, rotation, centerOfRotation, WheelPosition.BackRight);
 		internalSetAim(velocityVector, rotation, centerOfRotation, WheelPosition.FrontLeft);
@@ -42,7 +41,7 @@ public class SwerveCalc {
 	 * @param rotation
 	 * in radians/second (clockwise is positive)
 	 */
-	public void setAim(Point velocityVector, double rotation){
+	public void setAim(Point velocityVector, double rotation) {
 		internalSetAim(velocityVector, rotation, new Point(0, 0), WheelPosition.FrontRight);
 		internalSetAim(velocityVector, rotation, new Point(0, 0), WheelPosition.BackRight);
 		internalSetAim(velocityVector, rotation, new Point(0, 0), WheelPosition.FrontLeft);

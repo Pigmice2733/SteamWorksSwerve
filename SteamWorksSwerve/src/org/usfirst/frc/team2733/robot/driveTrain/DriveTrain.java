@@ -28,7 +28,7 @@ public class DriveTrain {
 	
 	public SwerveCalc swerveCalc;
 	
-	public DriveTrain(){// implementation for swerve
+	public DriveTrain() {// implementation for swerve
 
 		this.joy = new JoystickInput(RobotMap.joystickPort1, RobotMap.joystickPort2);
 		
@@ -61,12 +61,20 @@ public class DriveTrain {
 		double speed = joy.getSpeed();
 		double direction = joy.getDirection();
 		
-		Point velocityVector = new Point((-Math.sin(direction) * speed), (Math.cos(direction) * speed)); 
+		Point velocityVector = getVelocityVector(speed, direction);
 		
 		double rotation = joy.getRotation();
 		SmartDashboard.putNumber("direction", direction);
         SmartDashboard.putNumber("speed", speed);
 		swerveCalc.setAim(velocityVector, rotation);
+		
+		for (SwerveModule module : modules) {
+			module.update();
+		}
+	}
+	
+	public Point getVelocityVector(double speed, double direction) {
+		return new Point((-Math.sin(direction) * speed), (Math.cos(direction) * speed));
 	}
 	
 }
