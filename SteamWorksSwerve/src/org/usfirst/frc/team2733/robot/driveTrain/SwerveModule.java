@@ -6,7 +6,7 @@ import org.usfirst.frc.team2733.robot.swerve.SwerveCalc.WheelPosition;
 
 public class SwerveModule {
 	
-	private double currentSpeed, currentAngle;
+	private double speed, angle;
 	
 	private final WheelPosition wheelPos;
 	
@@ -26,14 +26,28 @@ public class SwerveModule {
 	}
 	
 	public void update() {
-		currentSpeed = swerveCalc.getVelAim(wheelPos);
-		currentAngle = swerveCalc.getRotAim(wheelPos);
-		driveMotor.update(currentSpeed);
-		rotationMotor.update(currentAngle);
+		double targSpeed = swerveCalc.getVelAim(wheelPos);
+		double targAngle = swerveCalc.getRotAim(wheelPos);
+		
+		calcOptimalHeading(targSpeed, targAngle);
+		
+		driveMotor.update(speed);
+		rotationMotor.update(angle);
 	}
 	
 	public void disable() {
 		driveMotor.disable();
 		rotationMotor.disable();
+	}
+	
+	public void calcOptimalHeading(double targSpeed, double targAngle) {
+		if(Math.abs((targAngle - angle)) > 90.0) {
+			angle = (targAngle - (Math.acos(-1))) % (2 * Math.acos(-1));
+			speed = -targSpeed;
+		} else {
+			angle = targAngle;
+			speed = targSpeed;
+		}
+		
 	}
 }
