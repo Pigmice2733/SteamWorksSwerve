@@ -28,7 +28,7 @@ public class DriveTrain {
 	
 	public SwerveCalc swerveCalc;
 	
-	public DriveTrain(){//implementation for swerve
+	public DriveTrain(){// implementation for swerve
 
 		this.joy = new JoystickInput(RobotMap.joystickPort1, RobotMap.joystickPort2);
 		
@@ -40,7 +40,7 @@ public class DriveTrain {
 		
 		swerveCalc = new SwerveCalc(swerveDict);
 		
-		modules.add(new SwerveModule(WheelPosition.FrontLeft, swerveCalc));//Adds wheels to a list
+		modules.add(new SwerveModule(WheelPosition.FrontLeft, swerveCalc));// Adds wheels to a list
 		modules.add(new SwerveModule(WheelPosition.FrontRight, swerveCalc));
 		modules.add(new SwerveModule(WheelPosition.BackLeft, swerveCalc));
 		modules.add(new SwerveModule(WheelPosition.BackRight, swerveCalc));
