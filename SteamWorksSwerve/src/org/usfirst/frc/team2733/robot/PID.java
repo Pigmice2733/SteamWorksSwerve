@@ -17,6 +17,10 @@ public class PID {
 	// System time in ms at last update
 	long lastTime;
 	
+	boolean continuous;
+	
+	double maxInput, minInput;
+	
 	/**
 	 * This is the constructor for a PID object that only uses the Proportional component.
 	 * @param P_coef
@@ -98,7 +102,7 @@ public class PID {
 		long timeChange = currentTime - lastTime;
 		
 		// The current error
-		double currentError = aimVal - currentVal;
+		double currentError = getContinuousError(aimVal - currentVal);
 		
 		// Proportional term
 		returnVal += (currentError * P);
@@ -118,5 +122,24 @@ public class PID {
 		previousError = currentError;
 		
 		return returnVal;
+	}
+	
+	private double getContinuousError(double error) {
+	    if (continuous) {
+	      if (Math.abs(error) > (maxInput - minInput) / 2) {
+	        if (error > 0) {
+	          return error - (maxInput - minInput);
+	        } else {
+	          return error + (maxInput - minInput);
+	        }
+	      }
+	    }
+	    
+	    return error;
+	}
+	
+	public void setMaxMin(double maxInput, double minInput) {
+	    this.maxInput = maxInput;
+	    this.minInput = minInput;
 	}
 }
