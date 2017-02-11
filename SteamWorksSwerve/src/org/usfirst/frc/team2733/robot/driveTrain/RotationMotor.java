@@ -2,18 +2,17 @@ package org.usfirst.frc.team2733.robot.driveTrain;
 
 import org.usfirst.frc.team2733.robot.PID;
 
-import com.ctre.CANTalon;
-
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Spark;
 
 public class RotationMotor {
 
-	private final CANTalon rotMotor;
+	private final Spark rotMotor;
 	private final Encoder encoder;
 	private final PID piController;
 	
 	public RotationMotor(int motorPort, int encoderPortA, int encoderPortB, double P, double I){
-	    rotMotor = new CANTalon(motorPort);
+	    rotMotor = new Spark(motorPort);
 		encoder = new Encoder(encoderPortA, encoderPortB);
 		
 		piController = new PID(P, I); 
