@@ -17,15 +17,11 @@ public class Robot extends SampleRobot {
 	public void autonomous() {
 		
 	}
-
+	
     @Override
     public void operatorControl() {
-    	swerveDrive.drive();
+        while(isOperatorControl() && isEnabled()) {
+    	    swerveDrive.drive();
+        }
     }
-
-    @Override
-    public void test() {
-    	
-    }
-	
 }

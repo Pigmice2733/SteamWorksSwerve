@@ -68,5 +68,4 @@ public class DriveTrain {
         SmartDashboard.putNumber("speed", speed);
 		swerveCalc.setAim(velocityVector, rotation);
 	}
-	
 }
