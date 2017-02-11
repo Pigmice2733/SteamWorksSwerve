@@ -45,15 +45,11 @@ public class Robot extends SampleRobot {
 			Timer.delay(0.05);
 		}
 	}
-
+	
     @Override
     public void operatorControl() {
-    	driveTrain.drive();
+        while (isOperatorControl() && isEnabled()) {
+    	    driveTrain.drive();
+        }
     }
-
-    @Override
-    public void test() {
-    	
-    }
-	
 }

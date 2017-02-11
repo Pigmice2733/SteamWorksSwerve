@@ -76,5 +76,4 @@ public class DriveTrain {
 	public Point getVelocityVector(double speed, double direction) {
 		return new Point((-Math.sin(direction) * speed), (Math.cos(direction) * speed));
 	}
-	
 }
