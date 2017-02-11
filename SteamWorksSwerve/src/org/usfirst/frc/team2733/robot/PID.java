@@ -142,4 +142,8 @@ public class PID {
 	    this.maxInput = maxInput;
 	    this.minInput = minInput;
 	}
+	
+	public void setContinuous(boolean continuous) {
+	    this.continuous = continuous;
+	}
 }
