@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2733.robot;
 
+import org.usfirst.frc.team2733.robot.driveTrain.AbsoluteEncoder;
 import org.usfirst.frc.team2733.robot.driveTrain.DriveTrain;
 import org.usfirst.frc.team2733.robot.swerve.Point;
 
@@ -10,12 +11,13 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable;
 public class Robot extends SampleRobot {
 	
 	public static DriveTrain driveTrain;
-
+	public AbsoluteEncoder enc;
 	public NetworkTable networkTable;
 
 	@Override
 	protected void robotInit() {
 		driveTrain = new DriveTrain();
+		enc = new AbsoluteEncoder(0, 0, 0);
 	}
 
 	/** 
@@ -46,7 +48,10 @@ public class Robot extends SampleRobot {
     @Override
     public void operatorControl() {
         while (isOperatorControl() && isEnabled()) {
-    	    driveTrain.drive();
+    	    //driveTrain.drive();
+        	double rot = networkTable.getNumber("rotation", 0);
+        	rot = enc.getAbsRotation();
         }
+        
     }
 }
