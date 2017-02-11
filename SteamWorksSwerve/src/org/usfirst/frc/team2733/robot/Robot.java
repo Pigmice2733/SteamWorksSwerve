@@ -24,23 +24,20 @@ public class Robot extends SampleRobot {
 	 */
 	@Override
 	public void autonomous() {
+		networkTable = NetworkTable.getTable("RobotInterface");
 		while (isAutonomous() && isEnabled()) {
-			networkTable = NetworkTable.getTable("AutoCommand");
+			// Movement Update
+			double speed = networkTable.getNumber("speed", 0);
+			double direction = networkTable.getNumber("direction", 0);
+			double rotation = networkTable.getNumber("rotation", 0);
 			
-			String command = networkTable.getString("command", "none");
+			Point velocityVector = driveTrain.getVelocityVector(speed, direction);
 			
-			if (command.equals("movementUpdate")) {
-				double speed = networkTable.getNumber("speed", 0);
-				double direction = networkTable.getNumber("direction", 0);
-				
-				double rotation = networkTable.getNumber("rotation", 0);
-				
-				Point velocityVector = driveTrain.getVelocityVector(speed, direction);
-				
-				driveTrain.swerveCalc.setAim(velocityVector, rotation);
-			} else if (command.equals("")) {
-				
-			}
+			driveTrain.swerveCalc.setAim(velocityVector, rotation);
+			
+			// Ball Shooter - If necessary
+			// double ballShooterSpeed = networkTable.getNumber("shooterSpeed", 0);
+			
 			
 			Timer.delay(0.05);
 		}
