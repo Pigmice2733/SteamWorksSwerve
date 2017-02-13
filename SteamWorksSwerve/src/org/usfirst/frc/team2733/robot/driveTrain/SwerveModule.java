@@ -16,8 +16,7 @@ public class SwerveModule {
 	private final RotationMotor rotationMotor;
 	
 	public SwerveModule(WheelPosition wheelPos, SwerveCalc swerveCalc) {
-		driveMotor = new DriveMotor(RobotMap.driveMotorPorts.get(wheelPos), RobotMap.driveEncoderPorts.get(wheelPos)[0],
-				RobotMap.driveEncoderPorts.get(wheelPos)[1], RobotMap.PDrive, RobotMap.IDrive);
+		driveMotor = new DriveMotor(RobotMap.driveMotorPorts.get(wheelPos));
 		rotationMotor = new RotationMotor(RobotMap.rotateMotorPorts.get(wheelPos), RobotMap.rotationEncoderPorts.get(wheelPos)[0],
 				RobotMap.rotationEncoderPorts.get(wheelPos)[1], RobotMap.PRotate, RobotMap.IRotate);
 		
