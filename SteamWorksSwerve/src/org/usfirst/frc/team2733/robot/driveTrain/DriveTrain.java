@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.usfirst.frc.team2733.robot.RobotMap;
+import org.usfirst.frc.team2733.robot.controller.JoystickInput;
 import org.usfirst.frc.team2733.robot.swerve.Point;
 import org.usfirst.frc.team2733.robot.swerve.SwerveCalc;
 import org.usfirst.frc.team2733.robot.swerve.SwerveCalc.WheelPosition;
@@ -65,11 +66,11 @@ public class DriveTrain {
 	
 	public void drive() {
 	    //Convert to m/s
-		double speed = joy.getSpeed() * 3;
+		double speed = joy.getSpeed();
 		double direction = joy.getDirection();
 		
 		// Get degrees, convert to radians
-        double headingOffset = gyro.getAngle() * 0.0174532928;
+        double headingOffset = Math.toRadians(gyro.getAngle());
         
 		Point velocityVector = getVelocityVector(speed, direction - headingOffset);
 		
