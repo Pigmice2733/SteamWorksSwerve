@@ -12,7 +12,8 @@ public class DriveMotor {
 	
 	// Get speed to drive at, update PID and motor
 	public void update(double speed) {
-		driveMotor.set(speed);
+	    // Convert back from m/s
+		driveMotor.set(speed / 3);
 	}
 	
 	public void disable() {

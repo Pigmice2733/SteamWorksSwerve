@@ -34,9 +34,6 @@ public class SwerveModule {
 		rotationMotor.update(angle);
 	}
 	
-	// -4151.0, -2082.75, -8300
-	// 415
-	
 	public void disable() {
 		driveMotor.disable();
 		rotationMotor.disable();
