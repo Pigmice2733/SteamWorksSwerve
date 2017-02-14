@@ -9,6 +9,8 @@ import org.usfirst.frc.team2733.robot.swerve.Point;
 import org.usfirst.frc.team2733.robot.swerve.SwerveCalc;
 import org.usfirst.frc.team2733.robot.swerve.SwerveCalc.WheelPosition;
 
+import edu.wpi.first.wpilibj.AnalogGyro;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveTrain {
@@ -26,11 +28,15 @@ public class DriveTrain {
 	
 	public JoystickInput joy;
 	
+	public Gyro gyro;
+	
 	public SwerveCalc swerveCalc;
 	
 	public DriveTrain() {// implementation for swerve
 
 		this.joy = new JoystickInput(RobotMap.joystickPort1, RobotMap.joystickPort2);
+		
+		this.gyro = new AnalogGyro(RobotMap.gyroPort);
 		
 		Map<WheelPosition, Point> swerveDict = new HashMap<>();
 		swerveDict.put(WheelPosition.FrontLeft, new Point(-0.5, 0.5));
@@ -61,7 +67,10 @@ public class DriveTrain {
 		double speed = joy.getSpeed();
 		double direction = joy.getDirection();
 		
-		Point velocityVector = getVelocityVector(speed, direction);
+		// Get degrees, convert to radians
+        double headingOffset = gyro.getAngle() * 0.0174532928;
+        
+		Point velocityVector = getVelocityVector(speed, direction - headingOffset);
 		
 		double rotation = joy.getRotation();
 		SmartDashboard.putNumber("direction", direction);
