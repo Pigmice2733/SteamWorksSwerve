@@ -19,6 +19,34 @@ public class Robot extends SampleRobot {
 		driveTrain = new DriveTrain();
 		enc = new AbsoluteEncoder(0, 0, 0);
 	}
+	
+	public enum RobotInitialLocation {
+		UNKNOWN(0), LEFT(1), CENTER(2), RIGHT(3);// If the robot is on the left, then it is left of the tower. (if you are looking from behind the robot)
+		
+		private int location;
+		
+		RobotInitialLocation(int location) {
+			this.location = location;
+		}
+		
+		public int getValue() {
+			return location;
+		}
+		
+		public static RobotInitialLocation fromValue(int value) {
+			switch(value) {
+			case -1:
+				return UNKNOWN;
+			case 0:
+				return LEFT;
+			case 1:
+				return CENTER;
+			default:
+				return UNKNOWN;
+			}
+		}
+		
+	}
 
 	/** 
 	 * Commands available
@@ -26,7 +54,21 @@ public class Robot extends SampleRobot {
 	 */
 	@Override
 	public void autonomous() {
+		networkTable = NetworkTable.getTable("RobotInitalInterface");
+		RobotInitialLocation location = RobotInitialLocation.fromValue((int) networkTable.getNumber("robotInitalLocation", -1));
+		if (location == RobotInitialLocation.LEFT || location == RobotInitialLocation.RIGHT) {
+			// driveTrain.swerveCalc
+		} else if (location == RobotInitialLocation.CENTER) {
+			
+		} else {
+			// Uh oh
+			// This should never happen
+		}
+		
 		networkTable = NetworkTable.getTable("RobotInterface");
+		
+		// -10 degrees and 28ft or 336 inches
+		// Tires are 4in in diameter
 		while (isAutonomous() && isEnabled()) {
 			// Movement Update
 			double speed = networkTable.getNumber("speed", 0);
