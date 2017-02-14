@@ -2,14 +2,14 @@ package org.usfirst.frc.team2733.robot.driveTrain;
 
 import org.usfirst.frc.team2733.robot.enumerations.ConversionEnum;
 
-import com.ctre.CANTalon;
+import edu.wpi.first.wpilibj.Talon;
 
 public class DriveMotor {
 
-	private final CANTalon driveMotor;
+	private final Talon driveMotor;
 	
 	public DriveMotor(int motorPort){
-		driveMotor = new CANTalon(motorPort);
+		driveMotor = new Talon(motorPort);
 	}
 	
 	// Get speed to drive at, update PID and motor

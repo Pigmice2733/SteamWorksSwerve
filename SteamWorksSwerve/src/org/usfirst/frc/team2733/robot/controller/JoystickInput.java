@@ -4,7 +4,7 @@ import org.usfirst.frc.team2733.robot.enumerations.ConversionEnum;
 
 import edu.wpi.first.wpilibj.Joystick;
 
-public class JoystickInput implements Controller{
+public class JoystickInput extends Controller{
 	
 	Joystick lStick;
 	Joystick rStick;
@@ -14,6 +14,7 @@ public class JoystickInput implements Controller{
 		rStick = new Joystick(port1);
 	}
 	
+	@Override
 	public double getSpeed() {
 	    double speed = lStick.getMagnitude();
 	    
@@ -26,10 +27,12 @@ public class JoystickInput implements Controller{
 		return speed * ConversionEnum.RANGE_TO_M_PER_S.getConversion();
 	}
 	
+	@Override
 	public double getDirection() {
 		return rStick.getDirectionRadians();
 	}
 	
+	@Override
 	public double getRotation() {
 		return lStick.getX();
 	}
