@@ -80,7 +80,7 @@ public class SwerveCalc {
 	 * @param wheelPosition
 	 * which wheel is the rotational requested for
 	 * @return
-	 * returns the rotational the given wheel should aim for
+	 * returns the rotational position the given wheel should aim for
 	 */
 	public double getRotAim(WheelPosition wheelPosition){
 		return wheelAims.get(wheelPosition).getY();
