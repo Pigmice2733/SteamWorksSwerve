@@ -1,4 +1,4 @@
-package org.usfirst.frc.team2733.robot;
+package org.usfirst.frc.team2733.robot.driveTrain;
 
 import edu.wpi.first.wpilibj.Joystick;
 
@@ -17,7 +17,10 @@ public class JoystickInput {
 	}
 	
 	public double getDirection() {
-		return rStick.getDirectionDegrees();
+		return rStick.getDirectionRadians();
+	}
+	
+	public double getRotation() {
+		return lStick.getX();
 	}
 }
- 
