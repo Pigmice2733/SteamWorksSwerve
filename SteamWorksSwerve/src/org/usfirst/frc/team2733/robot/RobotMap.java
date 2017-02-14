@@ -28,6 +28,12 @@ public class RobotMap {
 	public static int joystickPort1 = 0;
 	public static int joystickPort2 = 0;
 	
+	// Feel free to remove this in a few days. It is only hear to prove that basic unit tests are working.
+	// Please only remove after confirming that the ant function "test" works
+	public static int test() {
+		return 3;
+	}
+
 	public static int gyroPort = 0;
 	
 	public static void initSwerve() {
