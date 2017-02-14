@@ -70,7 +70,9 @@ public class DriveTrain {
 		double direction = joy.getDirection();
 		
 		// Get degrees, convert to radians
-        double headingOffset = Math.toRadians(gyro.getAngle());
+		// TODO: This is gonna be here later because we will have a better gyro and it will be possible then - Xander
+        // double headingOffset = Math.toRadians(gyro.getAngle());
+		double headingOffset = 0;
         
 		Point velocityVector = getVelocityVector(speed, direction - headingOffset);
 		

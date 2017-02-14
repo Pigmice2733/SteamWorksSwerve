@@ -6,15 +6,15 @@ public class SwerveCalc {
 
 	private Map<WheelPosition, Point> wheelPositions;
 	
-	private Map<WheelPosition, Point> wheelAims;//the x and y of the point correspond to the velocity and rotation of the wheel aims.
+	private Map<WheelPosition, Point> wheelAims;// the x and y of the point correspond to the velocity and rotation of the wheel aims.
 	
-	public SwerveCalc(Map<WheelPosition, Point> wheelPositions){
+	public SwerveCalc(Map<WheelPosition, Point> wheelPositions) {
 		this.wheelPositions = wheelPositions;
 	}
 	
 	/**
 	 * Sets the aim of the swerve system
-
+	 * 
 	 * @param velocityX
 	 * in meters/second
 	 * @param velocityY
@@ -50,7 +50,7 @@ public class SwerveCalc {
 	}
 	
 	//internal method with the real math
-	private void internalSetAim(Point velocityVector, double rotation, Point centerOfRotation, WheelPosition wheelPosition){
+	private void internalSetAim(Point velocityVector, double rotation, Point centerOfRotation, WheelPosition wheelPosition) {
 		
 		//holds the locations of the wheels in relationship to the center of rotation
 		double wheelLocX = centerOfRotation.getX() + wheelPositions.get(wheelPosition).getX();
@@ -71,7 +71,7 @@ public class SwerveCalc {
 	 * @return
 	 * returns the velocity the given wheel should aim for
 	 */
-	public double getVelAim(WheelPosition wheelPosition){
+	public double getVelAim(WheelPosition wheelPosition) {
 		return wheelAims.get(wheelPosition).getX();
 	}
 	
