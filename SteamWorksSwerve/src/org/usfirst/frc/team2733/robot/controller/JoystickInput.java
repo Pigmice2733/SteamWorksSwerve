@@ -1,10 +1,10 @@
-package org.usfirst.frc.team2733.robot.driveTrain;
+package org.usfirst.frc.team2733.robot.controller;
 
 import org.usfirst.frc.team2733.robot.enumerations.ConversionEnum;
 
 import edu.wpi.first.wpilibj.Joystick;
 
-public class JoystickInput {
+public class JoystickInput implements Controller{
 	
 	Joystick lStick;
 	Joystick rStick;
