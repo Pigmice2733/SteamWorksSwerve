@@ -49,15 +49,15 @@ public class RobotMap {
 		rotateMotorPorts.put(WheelPosition.BackLeft, 7);
 		rotateMotorPorts.put(WheelPosition.BackRight, 4);
 		
-		driveEncoderPorts.put(WheelPosition.FrontLeft, new Integer[]{0, 0});
+		/*driveEncoderPorts.put(WheelPosition.FrontLeft, new Integer[]{0, 0});
 		driveEncoderPorts.put(WheelPosition.FrontRight, new Integer[]{0, 0});
 		driveEncoderPorts.put(WheelPosition.BackLeft, new Integer[]{0, 0});
-		driveEncoderPorts.put(WheelPosition.BackRight, new Integer[]{0, 0});
+		driveEncoderPorts.put(WheelPosition.BackRight, new Integer[]{0, 0});*/
 		
-		rotationEncoderPorts.put(WheelPosition.FrontLeft, new Integer[]{0, 0});
-		rotationEncoderPorts.put(WheelPosition.FrontRight, new Integer[]{0, 0});
-		rotationEncoderPorts.put(WheelPosition.BackLeft, new Integer[]{0, 0});
-		rotationEncoderPorts.put(WheelPosition.BackRight, new Integer[]{0, 0});
+		rotationEncoderPorts.put(WheelPosition.FrontLeft, new Integer[]{2, 3});
+		rotationEncoderPorts.put(WheelPosition.FrontRight, new Integer[]{0, 1});
+		rotationEncoderPorts.put(WheelPosition.BackLeft, new Integer[]{6, 7});
+		rotationEncoderPorts.put(WheelPosition.BackRight, new Integer[]{4, 5});
 	}
 
 }

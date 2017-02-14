@@ -65,7 +65,7 @@ public class DriveTrain {
     }
 	
 	public void drive() {
-	    //Convert to m/s
+	    // Convert to m/s
 		double speed = joy.getSpeed();
 		double direction = joy.getDirection();
 		
