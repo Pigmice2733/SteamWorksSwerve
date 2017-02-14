@@ -64,7 +64,8 @@ public class DriveTrain {
     }
 	
 	public void drive() {
-		double speed = joy.getSpeed();
+	    //Convert to m/s
+		double speed = joy.getSpeed() * 3;
 		double direction = joy.getDirection();
 		
 		// Get degrees, convert to radians
