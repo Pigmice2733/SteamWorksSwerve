@@ -15,6 +15,7 @@ public class Robot extends SampleRobot {
 	@Override
 	protected void robotInit() {
 		driveTrain = new DriveTrain();
+		networkTable = NetworkTable.getTable("RobotInitalInterface");
 	}
 	
 	public enum RobotInitialLocation {
@@ -51,21 +52,33 @@ public class Robot extends SampleRobot {
 	 */
 	@Override
 	public void autonomous() {
-		networkTable = NetworkTable.getTable("RobotInitalInterface");
-		RobotInitialLocation location = RobotInitialLocation.fromValue((int) networkTable.getNumber("robotInitalLocation", -1));
-		if (location == RobotInitialLocation.LEFT || location == RobotInitialLocation.RIGHT) {
-			// driveTrain.swerveCalc
-		} else if (location == RobotInitialLocation.CENTER) {
-			
-		} else {
-			// Uh oh
-			// This should never happen
+		// Currently random speed
+		double defaultSpeed = 0.2;// If you don't know what to set it to
+		
+		while (!networkTable.isConnected()) {
+			System.out.println("Uhh.. The network table still isn't connected. You should start to panic.");
+			Timer.delay(1);
 		}
 		
-		networkTable = NetworkTable.getTable("RobotInterface");
+		boolean success = false;
+		while (success) {
+			RobotInitialLocation location = RobotInitialLocation.fromValue((int) networkTable.getNumber("robotInitalLocation", -1));
+			if (location == RobotInitialLocation.LEFT || location == RobotInitialLocation.RIGHT) {
+				driveTrain.swerveCalc.setAim(driveTrain.getVelocityVector(defaultSpeed, 0.05 * Math.PI * (location == RobotInitialLocation.LEFT ? -1 : 1)), 0);
+				Timer.delay(8.5 / defaultSpeed);
+				// TODO: Finish aligning
+				success = true;
+			} else if (location == RobotInitialLocation.CENTER) {
+				driveTrain.swerveCalc.setAim(driveTrain.getVelocityVector(defaultSpeed, 0), 0);
+				Timer.delay(6.5 / defaultSpeed);
+				// TODO: Finish aligning
+				success = true;
+			} else {
+				System.out.println("Uhh.. The python script isn't telling us where we are!! PANIC!! I guess we will wait for input from the script.");
+				Timer.delay(1);
+			}
+		}
 		
-		// -10 degrees and 28ft or 336 inches
-		// Tires are 4in in diameter
 		while (isAutonomous() && isEnabled()) {
 			// Movement Update
 			double speed = networkTable.getNumber("speed", 0);

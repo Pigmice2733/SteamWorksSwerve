@@ -2,56 +2,56 @@ package org.usfirst.frc.team2733.robot.enumerations;
 
 public enum PIEnum {
 	
-	//P and I coefficients for swerve modules
-	ModuleOneDriveP (0),
-	ModuleOneDriveI (0),
-	ModuleOneRotationP (0),
-	ModuleOneRotationI (0),
+	//P and I coefficients for swerve MODULE_s
+	MODULE_ONE_DRIVE_P (0),
+	MODULE_ONE_DRIVE_I (0),
+	MODULE_ONE_ROTATION_P (0),
+	MODULE_ONE_ROTATION_I (0),
 	
-	ModuleTwoDriveP (0),   
-	ModuleTwoDriveI (0),   
-	ModuleTwoRotationP (0),
-	ModuleTwoRotationI (0),
+	MODULE_TWO_DRIVE_P (0),   
+	MODULE_TWO_DRIVE_I (0),   
+	MODULE_TWO_ROTATION_P (0),
+	MODULE_TWO_ROTATION_I (0),
 	
-	ModuleThreeDriveP (0),   
-	ModuleThreeDriveI (0),   
-	ModuleThreeRotationP (0),
-	ModuleThreeRotationI (0),
+	MODULE_THREE_DRIVE_P (0),   
+	MODULE_THREE_DRIVE_I (0),   
+	MODULE_THREE_ROTATION_P (0),
+	MODULE_THREE_ROTATION_I (0),
 	
-	ModuleFourDriveP (0),   
-	ModuleFourDriveI (0),   
-	ModuleFourRotationP (0),
-	ModuleFourRotationI (0),
+	MODULE_FOUR_DRIVE_P (0),   
+	MODULE_FOUR_DRIVE_I (0),   
+	MODULE_FOUR_ROTATION_P (0),
+	MODULE_FOUR_ROTATION_I (0),
 	
-	ModuleFiveDriveP (0),   
-	ModuleFiveDriveI (0),   
-	ModuleFiveRotationP (0),
-	ModuleFiveRotationI (0),
+	MODULE_FIVE_DRIVE_P (0),   
+	MODULE_FIVE_DRIVE_I (0),   
+	MODULE_FIVE_ROTATION_P (0),
+	MODULE_FIVE_ROTATION_I (0),
 	
-	ModuleSixDriveP (0),   
-	ModuleSixDriveI (0),   
-	ModuleSixRotationP (0),
-	ModuleSixRotationI (0),
+	MODULE_SIX_DRIVE_P (0),   
+	MODULE_SIX_DRIVE_I (0),   
+	MODULE_SIX_ROTATION_P (0),
+	MODULE_SIX_ROTATION_I (0),
 	
-	ModuleSevenDriveP (0),   
-	ModuleSevenDriveI (0),   
-	ModuleSevenRotationP (0),
-	ModuleSevenRotationI (0),
+	MODULE_SEVEN_DRIVE_P (0),   
+	MODULE_SEVEN_DRIVE_I (0),   
+	MODULE_SEVEN_ROTATION_P (0),
+	MODULE_SEVEN_ROTATION_I (0),
 	
-	ModuleEightDriveP (0),   
-	ModuleEightDriveI (0),   
-	ModuleEightRotationP (0),
-	ModuleEightRotationI (0),
+	MODULE_EIGHT_DRIVE_P (0),   
+	MODULE_EIGHT_DRIVE_I (0),   
+	MODULE_EIGHT_ROTATION_P (0),
+	MODULE_EIGHT_ROTATION_I (0),
 	
-	ModuleNineDriveP (0),   
-	ModuleNineDriveI (0),   
-	ModuleNineRotationP (0),
-	ModuleNineRotationI (0),
+	MODULE_NINE_DRIVE_P (0),   
+	MODULE_NINE_DRIVE_I (0),   
+	MODULE_NINE_ROTATION_P (0),
+	MODULE_NINE_ROTATION_I (0),
 	
-	ModuleTenDriveP (0),   
-	ModuleTenDriveI (0),   
-	ModuleTenRotationP (0),
-	ModuleTenRotationI (0);
+	MODULE_TEN_DRIVE_P (0),   
+	MODULE_TEN_DRIVE_I (0),   
+	MODULE_TEN_ROTATION_P (0),
+	MODULE_TEN_ROTATION_I (0);
 	
 	private double coefficient;
 	
