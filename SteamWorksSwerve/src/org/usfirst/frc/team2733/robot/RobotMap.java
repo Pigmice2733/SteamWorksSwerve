@@ -25,12 +25,10 @@ public class RobotMap {
 	
 	public static Map<WheelPosition, Integer[]> rotationEncoderPorts = new HashMap<>();
 	
-	public static double minSetpoint = 1.5;
-	/** The highest setpoint the steering motor should be allowed to go to. */
-	public static double maxSetpoint = 3.5;
-
 	public static int joystickPort1 = 0;
 	public static int joystickPort2 = 0;
+	
+	public static int gyroPort = 0;
 	
 	public static void initSwerve() {
 		/** All values are placeholders **/

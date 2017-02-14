@@ -21,6 +21,6 @@ public class JoystickInput {
 	}
 	
 	public double getRotation() {
-		return lStick.getTwist();
+		return lStick.getX();
 	}
 }
