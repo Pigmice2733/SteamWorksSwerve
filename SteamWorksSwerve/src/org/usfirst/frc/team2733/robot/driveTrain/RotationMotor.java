@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2733.robot.driveTrain;
 
 import org.usfirst.frc.team2733.robot.PID;
+import org.usfirst.frc.team2733.robot.enumerations.ConversionEnum;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Spark;
@@ -16,16 +17,16 @@ public class RotationMotor {
 		encoder = new Encoder(encoderPortA, encoderPortB);
 		
 		// Encoder will output distance as radians
-		encoder.setDistancePerPulse(0.01514020555946888307692840184713);
+		encoder.setDistancePerPulse(ConversionEnum.RELATIVE_ENCODER_PULSES_TO_RADIANS.getConversion());
 		
 		piController = new PID(P, I); 
-		piController.setMaxMin(2 * Math.acos(-1), 0);
+		piController.setMaxMin(2 * Math.PI, 0);
 		piController.setContinuous(true);
 	}
 	
 	// Get angle to drive at, update PID and motor
 	public void update(double angle) {
-		double piVal = piController.getVal(encoder.getDistance() % (Math.acos(-1) * 2), angle);
+		double piVal = piController.getVal(encoder.getDistance() % (2 * Math.PI), angle);
 		rotMotor.set(piVal);
 	}
 	

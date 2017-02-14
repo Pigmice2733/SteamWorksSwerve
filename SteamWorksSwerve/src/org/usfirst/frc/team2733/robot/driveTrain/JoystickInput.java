@@ -1,5 +1,7 @@
 package org.usfirst.frc.team2733.robot.driveTrain;
 
+import org.usfirst.frc.team2733.robot.enumerations.ConversionEnum;
+
 import edu.wpi.first.wpilibj.Joystick;
 
 public class JoystickInput {
@@ -13,7 +15,15 @@ public class JoystickInput {
 	}
 	
 	public double getSpeed() {
-		return lStick.getMagnitude();
+	    double speed = lStick.getMagnitude();
+	    
+	    speed = (Math.abs(speed) < 0.1) ? 0 : speed;
+	    
+	    speed *= speed;
+	    
+	    speed = (Math.abs(speed) > 1.0) ? (Math.sin(speed) * 1.0) : speed;
+	    
+		return speed * ConversionEnum.RANGE_TO_M_PER_S.getConversion();
 	}
 	
 	public double getDirection() {
