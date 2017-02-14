@@ -33,12 +33,14 @@ public class Robot extends SampleRobot {
 		
 		public static RobotInitialLocation fromValue(int value) {
 			switch(value) {
-			case -1:
-				return UNKNOWN;
 			case 0:
-				return LEFT;
+				return UNKNOWN;
 			case 1:
+				return LEFT;
+			case 2:
 				return CENTER;
+			case 3:
+				return RIGHT;
 			default:
 				return UNKNOWN;
 			}
