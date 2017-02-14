@@ -16,12 +16,12 @@ public class RobotMap {
 	public static double IRotate = 0;
 	
 	// Needs to be replaced
-	public static Map<WheelPosition,Integer> driveMotorPorts = new HashMap<>();
+	public static Map<WheelPosition, Integer> driveMotorPorts = new HashMap<>();
 	
-	public static Map<WheelPosition,Integer> rotateMotorPorts = new HashMap<>();
+	public static Map<WheelPosition, Integer> rotateMotorPorts = new HashMap<>();
 	
 	// Pairs of encoder ports for drive motors
-	public static Map<WheelPosition,Integer[]> driveEncoderPorts = new HashMap<>();
+	public static Map<WheelPosition, Integer[]> driveEncoderPorts = new HashMap<>();
 	
 	public static Map<WheelPosition, Integer[]> rotationEncoderPorts = new HashMap<>();
 	
