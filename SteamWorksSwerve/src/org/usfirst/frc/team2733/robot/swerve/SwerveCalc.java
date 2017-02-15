@@ -2,6 +2,8 @@ package org.usfirst.frc.team2733.robot.swerve;
 
 import java.util.Map;
 
+import org.usfirst.frc.team2733.robot.enumerations.WheelPosition;
+
 public class SwerveCalc {
 
 	private Map<WheelPosition, Point> wheelPositions;
@@ -84,13 +86,5 @@ public class SwerveCalc {
 	 */
 	public double getRotAim(WheelPosition wheelPosition){
 		return wheelAims.get(wheelPosition).getY();
-	}
-	
-	
-	public enum WheelPosition{
-		FrontRight,
-		BackRight,
-		FrontLeft,
-		BackLeft
 	}
 }

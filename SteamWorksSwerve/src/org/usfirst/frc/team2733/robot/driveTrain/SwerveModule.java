@@ -1,8 +1,8 @@
 package org.usfirst.frc.team2733.robot.driveTrain;
 
-import org.usfirst.frc.team2733.robot.RobotMap;
+import org.usfirst.frc.team2733.robot.enumerations.PortsEnum;
+import org.usfirst.frc.team2733.robot.enumerations.WheelPosition;
 import org.usfirst.frc.team2733.robot.swerve.SwerveCalc;
-import org.usfirst.frc.team2733.robot.swerve.SwerveCalc.WheelPosition;
 
 public class SwerveModule {
 	
@@ -16,9 +16,42 @@ public class SwerveModule {
 	private final RotationMotor rotationMotor;
 	
 	public SwerveModule(WheelPosition wheelPos, SwerveCalc swerveCalc) {
-		driveMotor = new DriveMotor(RobotMap.driveMotorPorts.get(wheelPos));
-		rotationMotor = new RotationMotor(RobotMap.rotateMotorPorts.get(wheelPos), RobotMap.rotationEncoderPorts.get(wheelPos)[0],
-				RobotMap.rotationEncoderPorts.get(wheelPos)[1], RobotMap.PRotate, RobotMap.IRotate);
+		int portRotation = -1;
+		int portDrive = -1;
+		int portEncoder1 = -1;
+		int portEncoder2 = -1;
+		
+		switch(wheelPos) {
+		case FrontRight:
+			portRotation = PortsEnum.FRONT_RIGHT_ROTATION_MOTOR.getPort();
+			portDrive = PortsEnum.FRONT_RIGHT_DRIVE_MOTOR.getPort();
+			portEncoder1 = PortsEnum.FRONT_RIGHT_ROTATION_DIGITAL_ENCODER_ONE.getPort();
+			portEncoder2 = PortsEnum.FRONT_RIGHT_ROTATION_DIGITAL_ENCODER_TWO.getPort();
+			break;
+		case BackRight:
+			portRotation = PortsEnum.BACK_RIGHT_ROTATION_MOTOR.getPort();
+			portDrive = PortsEnum.BACK_RIGHT_DRIVE_MOTOR.getPort();
+			portEncoder1 = PortsEnum.BACK_RIGHT_ROTATION_DIGITAL_ENCODER_ONE.getPort();
+			portEncoder2 = PortsEnum.BACK_RIGHT_ROTATION_DIGITAL_ENCODER_TWO.getPort();
+			break;
+		case FrontLeft:
+			portRotation = PortsEnum.FRONT_LEFT_ROTATION_MOTOR.getPort();
+			portDrive = PortsEnum.FRONT_LEFT_DRIVE_MOTOR.getPort();
+			portEncoder1 = PortsEnum.FRONT_LEFT_ROTATION_DIGITAL_ENCODER_ONE.getPort();
+			portEncoder2 = PortsEnum.FRONT_LEFT_ROTATION_DIGITAL_ENCODER_TWO.getPort();
+			break;
+		case BackLeft:
+			portRotation = PortsEnum.BACK_LEFT_ROTATION_MOTOR.getPort();
+			portDrive = PortsEnum.BACK_LEFT_DRIVE_MOTOR.getPort();
+			portEncoder1 = PortsEnum.BACK_LEFT_ROTATION_DIGITAL_ENCODER_ONE.getPort();
+			portEncoder2 = PortsEnum.BACK_LEFT_ROTATION_DIGITAL_ENCODER_TWO.getPort();
+			break;
+		default:
+			
+		}
+		driveMotor = new DriveMotor(portDrive);
+		rotationMotor = new RotationMotor(portRotation, portEncoder1,
+				portEncoder2, RobotMap.PRotate, RobotMap.IRotate);
 		
 		this.swerveCalc = swerveCalc;
 		this.wheelPos = wheelPos;
