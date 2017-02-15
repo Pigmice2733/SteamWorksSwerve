@@ -34,6 +34,6 @@ public class JoystickInput extends Controller{
 	
 	@Override
 	public double getRotation() {
-		return lStick.getX();
+		return (lStick.getRawAxis(0) < .1) ? 0 : lStick.getRawAxis(0);
 	}
 }
