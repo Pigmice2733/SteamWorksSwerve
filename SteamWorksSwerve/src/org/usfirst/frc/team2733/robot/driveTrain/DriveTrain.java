@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import org.usfirst.frc.team2733.robot.RobotMap;
 import org.usfirst.frc.team2733.robot.controller.JoystickInput;
+import org.usfirst.frc.team2733.robot.enumerations.PortsEnum;
 import org.usfirst.frc.team2733.robot.swerve.Point;
 import org.usfirst.frc.team2733.robot.swerve.SwerveCalc;
 import org.usfirst.frc.team2733.robot.swerve.SwerveCalc.WheelPosition;
@@ -35,15 +36,16 @@ public class DriveTrain {
 	
 	public DriveTrain() {// implementation for swerve
 
-		this.joy = new JoystickInput(RobotMap.joystickPort1, RobotMap.joystickPort2);
+		this.joy = new JoystickInput(PortsEnum.JOYSTICK_ONE.getPort(), PortsEnum.JOYSTICK_TWO.getPort());
 		
-		this.gyro = new AnalogGyro(RobotMap.gyroPort);
+		this.gyro = new AnalogGyro(PortsEnum.GYRO.getPort());
 		
 		Map<WheelPosition, Point> swerveDict = new HashMap<>();
 		swerveDict.put(WheelPosition.FrontLeft, new Point(-0.5, 0.5));
 		swerveDict.put(WheelPosition.FrontRight, new Point(0.5, 0.5));
 		swerveDict.put(WheelPosition.BackLeft, new Point(-0.5, -0.5));
 		swerveDict.put(WheelPosition.BackRight, new Point(0.5, -0.5));
+		
 		
 		swerveCalc = new SwerveCalc(swerveDict);
 		
