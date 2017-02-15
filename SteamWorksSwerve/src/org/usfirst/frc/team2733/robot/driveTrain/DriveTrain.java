@@ -7,10 +7,9 @@ import java.util.Map;
 
 import org.usfirst.frc.team2733.robot.controller.JoystickInput;
 import org.usfirst.frc.team2733.robot.enumerations.PortsEnum;
+import org.usfirst.frc.team2733.robot.enumerations.WheelPosition;
 import org.usfirst.frc.team2733.robot.swerve.Point;
 import org.usfirst.frc.team2733.robot.swerve.SwerveCalc;
-import org.usfirst.frc.team2733.robot.swerve.SwerveCalc.WheelPosition;
-
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
