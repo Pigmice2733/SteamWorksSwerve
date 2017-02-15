@@ -15,16 +15,16 @@ public class JoystickInput extends Controller{
 	}
 	
 	@Override
-	public double getSpeed() {
-	    double speed = lStick.getMagnitude();
+	public double getVelocity(Direction direction){
+	    double vel = 0;
 	    
-	    speed = (Math.abs(speed) < 0.1) ? 0 : speed;
+	    if (direction == Direction.X){
+	        vel = rStick.getRawAxis(0);
+	    } else if (direction == Direction.Y){
+	        vel = rStick.getRawAxis(1);
+	    }
 	    
-	    speed *= speed;
-	    
-	    speed = (Math.abs(speed) > 1.0) ? (Math.sin(speed) * 1.0) : speed;
-	    
-		return speed * ConversionEnum.RANGE_TO_M_PER_S.getConversion();
+	    return vel * ConversionEnum.RANGE_TO_M_PER_S.getConversion();
 	}
 	
 	@Override
