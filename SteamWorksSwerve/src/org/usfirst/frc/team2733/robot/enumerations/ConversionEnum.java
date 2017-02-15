@@ -1,7 +1,7 @@
 package org.usfirst.frc.team2733.robot.enumerations;
 
 public enum ConversionEnum {
-    RELATIVE_ENCODER_PULSES_TO_RADIANS (0.01514020555946888307692840184713),
+    RELATIVE_ENCODER_PULSES_TO_RADIANS (0.016495291750503),
     RANGE_TO_M_PER_S (3);
     
     private double conversion;
