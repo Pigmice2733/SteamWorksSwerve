@@ -37,8 +37,6 @@ public class DriveTrain {
 
 		this.joy = new JoystickInput(PortsEnum.JOYSTICK_ONE.getPort(), PortsEnum.JOYSTICK_TWO.getPort());
 		
-		this.gyro = new AnalogGyro(PortsEnum.GYRO.getPort());
-		
 		Map<WheelPosition, Point> swerveDict = new HashMap<>();
 		swerveDict.put(WheelPosition.FrontLeft, new Point(-0.5, 0.5));
 		swerveDict.put(WheelPosition.FrontRight, new Point(0.5, 0.5));

@@ -6,9 +6,6 @@ public enum PortsEnum {
 	JOYSTICK_ONE (0),
 	JOYSTICK_TWO (1),
 	
-	//sensors
-	GYRO (8),
-	
 	//motors
 	SHOOTER (4),
 	CLIMBER (5),
