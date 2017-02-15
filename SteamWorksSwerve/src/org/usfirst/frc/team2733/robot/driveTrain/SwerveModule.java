@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2733.robot.driveTrain;
 
+import org.usfirst.frc.team2733.robot.enumerations.PIEnum;
 import org.usfirst.frc.team2733.robot.enumerations.PortsEnum;
 import org.usfirst.frc.team2733.robot.enumerations.WheelPosition;
 import org.usfirst.frc.team2733.robot.swerve.SwerveCalc;
@@ -51,7 +52,7 @@ public class SwerveModule {
 		}
 		driveMotor = new DriveMotor(portDrive);
 		rotationMotor = new RotationMotor(portRotation, portEncoder1,
-				portEncoder2, RobotMap.PRotate, RobotMap.IRotate);
+				portEncoder2, PIEnum.MODULE_ROTATION_P.getCoefficient(), PIEnum.MODULE_ROTATION_I.getCoefficient());
 		
 		this.swerveCalc = swerveCalc;
 		this.wheelPos = wheelPos;
