@@ -7,6 +7,7 @@ import org.usfirst.frc.team2733.robot.swerve.SwerveCalc;
 
 public class SwerveModule {
 	
+    // angle needs to always be between 0pi and 2pi
 	private double speed, angle;
 	
 	private final WheelPosition wheelPos;
@@ -80,15 +81,20 @@ public class SwerveModule {
 		rotationMotor.disable();
 	}
 	
-	//calculates correct direction and speed for the moters to turn based on their current speed and direction and the intended speed and direction.
+	// Calculates correct direction and speed for the motors to turn based on their current speed and direction and the intended speed and direction.
 	public void calcOptimalHeading(double targSpeed, double targAngle) {
-		if(Math.abs((targAngle - angle)) > 90.0) {
-			angle = (targAngle - (Math.acos(-1))) % (2 * Math.acos(-1));
-			speed = -targSpeed;
-		} else {
-			angle = targAngle;
-			speed = targSpeed;
-		}
-		
+	    targAngle = targAngle % (2 * Math.PI);
+	    
+	    double relativeAngle = (targAngle - angle) % (2 * Math.PI);
+	    
+	    // If the relative angle is in the first 2 quadrants, leave speed and angle alone
+	    if ((relativeAngle < 0.5 * Math.PI) || (relativeAngle > 1.5 * Math.PI)) {
+            angle = targAngle;
+            speed = targSpeed;
+        // Otherwise, reverse speed and take shorter angle
+        } else {
+            angle = (targAngle - Math.PI) % (2 * Math.PI);
+            speed = -targSpeed;
+        }
 	}
 }
