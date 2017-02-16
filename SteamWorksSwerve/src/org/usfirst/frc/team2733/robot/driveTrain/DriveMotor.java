@@ -15,7 +15,7 @@ public class DriveMotor {
 	// Get speed to drive at, update PID and motor
 	public void update(double speed) {
 	    // Convert back from m/s
-		driveMotor.set(speed / ConversionEnum.RANGE_TO_M_PER_S.getConversion());
+		driveMotor.set(speed / ConversionEnum.DRIVE_SPEED_RANGE_TO_M_PER_S.getConversion());
 	}
 	
 	public void disable() {

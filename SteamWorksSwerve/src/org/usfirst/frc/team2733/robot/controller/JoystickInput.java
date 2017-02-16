@@ -15,16 +15,16 @@ public class JoystickInput extends Controller{
 	}
 	
 	@Override
-	public double getVelocity(Direction direction){
-	    double vel = 0;
+	public double getSpeed() {
+	    double speed = lStick.getMagnitude();
 	    
-	    if (direction == Direction.X){
-	        vel = rStick.getRawAxis(0);
-	    } else if (direction == Direction.Y){
-	        vel = rStick.getRawAxis(1);
-	    }
+	    speed = (Math.abs(speed) < 0.1) ? 0 : speed;
 	    
-	    return vel * ConversionEnum.RANGE_TO_M_PER_S.getConversion();
+	    speed *= speed;
+	    
+	    speed = (Math.abs(speed) > 1.0) ? (Math.signum(speed) * 1.0) : speed;
+	    
+		return speed * ConversionEnum.DRIVE_SPEED_RANGE_TO_M_PER_S.getConversion();
 	}
 	
 	@Override
@@ -34,6 +34,7 @@ public class JoystickInput extends Controller{
 	
 	@Override
 	public double getRotation() {
-		return (lStick.getRawAxis(0) < .1) ? 0 : lStick.getRawAxis(0);
+		double rotationSpeed = (lStick.getRawAxis(0) < 0.1) ? 0 : lStick.getRawAxis(0);
+		return rotationSpeed * ConversionEnum.ROTATION_SPEED_RANGE_TO_M_PER_S.getConversion();
 	}
 }
