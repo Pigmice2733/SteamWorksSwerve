@@ -1,2 +1,4 @@
-/bin/
-*.class
+bin/
+testClasses/
+unitTests/
+build/jars/
