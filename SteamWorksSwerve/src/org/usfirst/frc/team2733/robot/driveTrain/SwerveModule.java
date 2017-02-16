@@ -16,6 +16,11 @@ public class SwerveModule {
 	private final DriveMotor driveMotor;
 	private final RotationMotor rotationMotor;
 	
+	/**
+	 * Holds the motor objects and calculates the optimal movements.
+	 * @param wheelPos
+	 * @param swerveCalc
+	 */
 	public SwerveModule(WheelPosition wheelPos, SwerveCalc swerveCalc) {
 		int portRotation = -1;
 		int portDrive = -1;
@@ -58,6 +63,7 @@ public class SwerveModule {
 		this.wheelPos = wheelPos;
 	}
 	
+	//updates the components
 	public void update() {
 		double targSpeed = swerveCalc.getVelAim(wheelPos);
 		double targAngle = swerveCalc.getRotAim(wheelPos);
@@ -68,11 +74,13 @@ public class SwerveModule {
 		rotationMotor.update(angle);
 	}
 	
+	//disables the motors
 	public void disable() {
 		driveMotor.disable();
 		rotationMotor.disable();
 	}
 	
+	//calculates correct direction and speed for the moters to turn based on their current speed and direction and the intended speed and direction.
 	public void calcOptimalHeading(double targSpeed, double targAngle) {
 		if(Math.abs((targAngle - angle)) > 90.0) {
 			angle = (targAngle - (Math.acos(-1))) % (2 * Math.acos(-1));

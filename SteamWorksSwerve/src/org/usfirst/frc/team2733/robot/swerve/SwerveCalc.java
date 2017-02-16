@@ -1,14 +1,15 @@
 package org.usfirst.frc.team2733.robot.swerve;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.usfirst.frc.team2733.robot.enumerations.WheelPosition;
 
 public class SwerveCalc {
 
-	private Map<WheelPosition, Point> wheelPositions;
+	private Map<WheelPosition, Point> wheelPositions = new HashMap();
 	
-	private Map<WheelPosition, Point> wheelAims;// the x and y of the point correspond to the velocity and rotation of the wheel aims.
+	private Map<WheelPosition, Point> wheelAims = new HashMap();// the x and y of the point correspond to the velocity and rotation of the wheel aims.
 	
 	public SwerveCalc(Map<WheelPosition, Point> wheelPositions) {
 		this.wheelPositions = wheelPositions;

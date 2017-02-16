@@ -5,12 +5,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.usfirst.frc.team2733.robot.controller.Controller.Direction;
 import org.usfirst.frc.team2733.robot.controller.JoystickInput;
 import org.usfirst.frc.team2733.robot.enumerations.PortsEnum;
 import org.usfirst.frc.team2733.robot.enumerations.WheelPosition;
 import org.usfirst.frc.team2733.robot.swerve.Point;
 import org.usfirst.frc.team2733.robot.swerve.SwerveCalc;
-import edu.wpi.first.wpilibj.AnalogGyro;
+
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -36,8 +37,6 @@ public class DriveTrain {
 	public DriveTrain() {// implementation for swerve
 
 		this.joy = new JoystickInput(PortsEnum.JOYSTICK_ONE.getPort(), PortsEnum.JOYSTICK_TWO.getPort());
-		
-		this.gyro = new AnalogGyro(PortsEnum.GYRO.getPort());
 		
 		Map<WheelPosition, Point> swerveDict = new HashMap<>();
 		swerveDict.put(WheelPosition.FrontLeft, new Point(-0.5, 0.5));
@@ -67,7 +66,8 @@ public class DriveTrain {
 	
 	public void drive() {
 	    // Convert to m/s
-		double speed = joy.getSpeed();
+		double velocityX = joy.getVelocity(Direction.X);
+		double velocityY = joy.getVelocity(Direction.Y);
 		double direction = joy.getDirection();
 		
 		// Get degrees, convert to radians
@@ -75,11 +75,17 @@ public class DriveTrain {
         // double headingOffset = Math.toRadians(gyro.getAngle());
 		double headingOffset = 0;
         
-		Point velocityVector = getVelocityVector(speed, direction - headingOffset);
+		/*
+		 * This method will have to be exapanded to make use of gyro offset. Unfortunatly that was not done correctly the first time.
+		 * This still has the messy remnant of the old code, it will be changed later.
+		 * 
+		 */
+		
+		Point velocityVector = getVelocityVector(velocityX, velocityY);
 		
 		double rotation = joy.getRotation();
 		SmartDashboard.putNumber("direction", direction);
-        SmartDashboard.putNumber("speed", speed);
+        SmartDashboard.putNumber("speed", Math.sqrt((velocityX*velocityX)+(velocityY*velocityY))  );
 		swerveCalc.setAim(velocityVector, rotation);
 		
 		for (SwerveModule module : modules) {
