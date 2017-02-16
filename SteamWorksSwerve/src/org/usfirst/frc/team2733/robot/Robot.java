@@ -1,7 +1,7 @@
 package org.usfirst.frc.team2733.robot;
 
 import org.usfirst.frc.team2733.robot.driveTrain.DriveTrain;
-import org.usfirst.frc.team2733.robot.swerve.Vector;
+import org.usfirst.frc.team2733.robot.swerve.Vector_Point_Abomination;
 
 import edu.wpi.first.wpilibj.SampleRobot;
 import edu.wpi.first.wpilibj.Timer;
@@ -87,7 +87,7 @@ public class Robot extends SampleRobot {
 			double direction = networkTable.getNumber("direction", 0);
 			double rotation = networkTable.getNumber("rotation", 0);
 			
-			Vector velocityVector = driveTrain.getVelocityVector(speed, direction);
+			Vector_Point_Abomination velocityVector = driveTrain.getVelocityVector(speed, direction);
 			
 			driveTrain.swerveCalc.setAim(velocityVector, rotation);
 			
