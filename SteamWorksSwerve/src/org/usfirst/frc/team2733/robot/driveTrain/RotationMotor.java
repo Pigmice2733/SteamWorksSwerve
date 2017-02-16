@@ -25,9 +25,16 @@ public class RotationMotor {
 	}
 	
 	// Get angle to drive at, update PID and motor
-	public void update(double angle) {
-		double piVal = PIController.getVal(encoder.getDistance() % (2 * Math.PI), angle);
-		rotationMotor.set(piVal);
+	/*
+	 * Angle is from 0*Math.PI to 2*Math.PI
+	 */
+	public void update(double setAngle) {
+		double currentAngle = encoder.getDistance() % (2 * Math.PI);
+        setAngle = setAngle % (2 * Math.PI);
+        
+        double motorSpeed = PIController.getVal(currentAngle, setAngle);
+        
+        rotationMotor.set(motorSpeed);
 	}
 	
 	public void disable() {
