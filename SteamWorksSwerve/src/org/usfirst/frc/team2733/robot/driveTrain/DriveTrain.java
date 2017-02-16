@@ -98,6 +98,8 @@ public class DriveTrain {
 		// Align our coordinate system with left-handed Cartesian coordinate system
 		direction -= 2 * Math.PI;
 		
+		// Change Math.sin(direction) to -Math.sin(direction)
+		//if robot is rotating wrong direction
 		Vector_Point_Abomination vector = new Vector_Point_Abomination((Math.sin(direction) * speed), (Math.cos(direction) * speed));
 		
 		return vector;
