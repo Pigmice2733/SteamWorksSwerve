@@ -2,3 +2,5 @@ bin/
 testClasses/
 unitTests/
 *.class
+*.jar
+dist/FRCUserProgram.jar

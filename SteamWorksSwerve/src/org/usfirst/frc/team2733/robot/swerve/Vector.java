@@ -2,17 +2,17 @@
 
 package org.usfirst.frc.team2733.robot.swerve;
 
-public class Point{
+public class Vector{
    
     public double x;
 
     public double y;
 
-    public Point(Point p) {
+    public Vector(Vector p) {
         this(p.x, p.y);
     }
 
-    public Point(double x, double y) {
+    public Vector(double x, double y) {
         this.x = x;
         this.y = y;
     }

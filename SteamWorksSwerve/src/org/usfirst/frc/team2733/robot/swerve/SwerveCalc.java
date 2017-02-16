@@ -7,11 +7,11 @@ import org.usfirst.frc.team2733.robot.enumerations.WheelPosition;
 
 public class SwerveCalc {
 
-	private Map<WheelPosition, Point> wheelPositions = new HashMap<>();
+	private Map<WheelPosition, Vector> wheelPositions = new HashMap<>();
 	
-	private Map<WheelPosition, Point> wheelAims = new HashMap<>();// the x and y of the point correspond to the velocity and rotation of the wheel aims.
+	private Map<WheelPosition, Vector> wheelAims = new HashMap<>();// the x and y of the point correspond to the velocity and rotation of the wheel aims.
 	
-	public SwerveCalc(Map<WheelPosition, Point> wheelPositions) {
+	public SwerveCalc(Map<WheelPosition, Vector> wheelPositions) {
 		this.wheelPositions = wheelPositions;
 	}
 	
@@ -27,7 +27,7 @@ public class SwerveCalc {
 	 * @param centerOfRotation
 	 * x/y coordinates of the point to rotate around
 	 */
-	public void setAim(Point velocityVector, double rotation, Point centerOfRotation) {
+	public void setAim(Vector velocityVector, double rotation, Vector centerOfRotation) {
 		internalSetAim(velocityVector, rotation, centerOfRotation, WheelPosition.FrontRight);
 		internalSetAim(velocityVector, rotation, centerOfRotation, WheelPosition.BackRight);
 		internalSetAim(velocityVector, rotation, centerOfRotation, WheelPosition.FrontLeft);
@@ -44,16 +44,16 @@ public class SwerveCalc {
 	 * @param rotation
 	 * in radians/second (clockwise is positive)
 	 */
-	public void setAim(Point velocityVector, double rotation) {
-		internalSetAim(velocityVector, rotation, new Point(0, 0), WheelPosition.FrontRight);
-		internalSetAim(velocityVector, rotation, new Point(0, 0), WheelPosition.BackRight);
-		internalSetAim(velocityVector, rotation, new Point(0, 0), WheelPosition.FrontLeft);
-		internalSetAim(velocityVector, rotation, new Point(0, 0), WheelPosition.BackLeft);
+	public void setAim(Vector velocityVector, double rotation) {
+		internalSetAim(velocityVector, rotation, new Vector(0, 0), WheelPosition.FrontRight);
+		internalSetAim(velocityVector, rotation, new Vector(0, 0), WheelPosition.BackRight);
+		internalSetAim(velocityVector, rotation, new Vector(0, 0), WheelPosition.FrontLeft);
+		internalSetAim(velocityVector, rotation, new Vector(0, 0), WheelPosition.BackLeft);
 		
 	}
 	
 	//internal method with the real math
-	private void internalSetAim(Point velocityVector, double rotation, Point centerOfRotation, WheelPosition wheelPosition) {
+	private void internalSetAim(Vector velocityVector, double rotation, Vector centerOfRotation, WheelPosition wheelPosition) {
 		
 		//holds the locations of the wheels in relationship to the center of rotation
 		double wheelLocX = centerOfRotation.getX() + wheelPositions.get(wheelPosition).getX();
@@ -64,7 +64,7 @@ public class SwerveCalc {
 		double Wyi = velocityVector.getY() - (rotation*wheelLocY);
 		
 		//calculate the aims and store
-		wheelAims.put(wheelPosition, new Point(Math.sqrt(Math.pow(Wxi, 2) + Math.pow(Wyi, 2)), 0));
+		wheelAims.put(wheelPosition, new Vector(Math.sqrt(Math.pow(Wxi, 2) + Math.pow(Wyi, 2)), 0));
 	}
 	
 	public class AngleSpeedObject {

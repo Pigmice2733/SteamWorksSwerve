@@ -8,7 +8,7 @@ import java.util.Map;
 import org.usfirst.frc.team2733.robot.controller.JoystickInput;
 import org.usfirst.frc.team2733.robot.enumerations.PortsEnum;
 import org.usfirst.frc.team2733.robot.enumerations.WheelPosition;
-import org.usfirst.frc.team2733.robot.swerve.Point;
+import org.usfirst.frc.team2733.robot.swerve.Vector;
 import org.usfirst.frc.team2733.robot.swerve.SwerveCalc;
 
 import edu.wpi.first.wpilibj.interfaces.Gyro;
@@ -46,12 +46,12 @@ public class DriveTrain {
 	
 	}
 	
-	public static Map<WheelPosition, Point> getSwerveDict() {
-	    Map<WheelPosition, Point> swerveDict = new HashMap<>();
-        swerveDict.put(WheelPosition.FrontLeft, new Point(-0.33, 0.33));
-        swerveDict.put(WheelPosition.FrontRight, new Point(0.33, 0.33));
-        swerveDict.put(WheelPosition.BackLeft, new Point(-0.33, -0.33));
-        swerveDict.put(WheelPosition.BackRight, new Point(0.33, -0.33));
+	public static Map<WheelPosition, Vector> getSwerveDict() {
+	    Map<WheelPosition, Vector> swerveDict = new HashMap<>();
+        swerveDict.put(WheelPosition.FrontLeft, new Vector(-0.33, 0.33));
+        swerveDict.put(WheelPosition.FrontRight, new Vector(0.33, 0.33));
+        swerveDict.put(WheelPosition.BackLeft, new Vector(-0.33, -0.33));
+        swerveDict.put(WheelPosition.BackRight, new Vector(0.33, -0.33));
         
         return swerveDict;
 	}
@@ -83,7 +83,7 @@ public class DriveTrain {
 		 * 
 		 */
 		
-		Point velocityVector = getVelocityVector(speed, direction - headingOffset);
+		Vector velocityVector = getVelocityVector(speed, direction - headingOffset);
 		
 		SmartDashboard.putNumber("Direction", direction);
         SmartDashboard.putNumber("Speed", speed);
@@ -94,11 +94,11 @@ public class DriveTrain {
 		}
 	}
 	
-	public Point getVelocityVector(double speed, double direction) {
+	public Vector getVelocityVector(double speed, double direction) {
 		// Align our coordinate system with left-handed Cartesian coordinate system
 		direction -= 2 * Math.PI;
 		
-		Point vector = new Point((Math.sin(direction) * speed), (Math.cos(direction) * speed));
+		Vector vector = new Vector((Math.sin(direction) * speed), (Math.cos(direction) * speed));
 		
 		System.out.println(vector.getX() + "  :  " + vector.getY());
 		
