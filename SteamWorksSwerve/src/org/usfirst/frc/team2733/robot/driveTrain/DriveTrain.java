@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.usfirst.frc.team2733.robot.controller.Controller.Direction;
 import org.usfirst.frc.team2733.robot.controller.JoystickInput;
 import org.usfirst.frc.team2733.robot.enumerations.PortsEnum;
 import org.usfirst.frc.team2733.robot.enumerations.WheelPosition;
@@ -65,10 +64,9 @@ public class DriveTrain {
     }
 	
 	public void drive() {
-	    // Convert to m/s
-		double velocityX = joy.getVelocity(Direction.X);
-		double velocityY = joy.getVelocity(Direction.Y);
+	    double speed = joy.getSpeed();
 		double direction = joy.getDirection();
+		double rotation = joy.getRotation();
 		
 		// Get degrees, convert to radians
 		// TODO: This is gonna be here later because we will have a better gyro and it will be possible then - Xander
@@ -81,11 +79,10 @@ public class DriveTrain {
 		 * 
 		 */
 		
-		Point velocityVector = getVelocityVector(velocityX, velocityY);
+		Point velocityVector = getVelocityVector(speed, direction - headingOffset);
 		
-		double rotation = joy.getRotation();
-		SmartDashboard.putNumber("direction", direction);
-        SmartDashboard.putNumber("speed", Math.sqrt((velocityX*velocityX)+(velocityY*velocityY))  );
+		SmartDashboard.putNumber("Direction", direction);
+        SmartDashboard.putNumber("Speed", speed);
 		swerveCalc.setAim(velocityVector, rotation);
 		
 		for (SwerveModule module : modules) {
