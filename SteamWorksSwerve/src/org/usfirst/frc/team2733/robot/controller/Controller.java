@@ -1,42 +1,19 @@
 package org.usfirst.frc.team2733.robot.controller;
 
-public class Controller {
-	
-	public Controller(){
-		
-	}
+public interface Controller {
 	
 	/**
-	 * @return non-directional speed intended for the robot
+	 * @return Speed in m/s the robot should go.
 	 */
-    public double getSpeed(){
-    	return 0;
-    }
+    public double getSpeed();
     
     /**
-     * @param direction of velocity to return
-     * @return velocity for the specified direction
+     * @return The direction of movement in radians. Forward is 0, clockwise is positive.
      */
-    public double getVelocity(Direction direction){
-    	return 0;
-    }
+    public double getDirection();
     
     /**
-     * @return the direction of movement in radians. forward is 0, clockwise is positive.
+     * @return The velocity of the rotation of the robot in radians/second, clockwise is positive.
      */
-    public double getDirection(){
-    	return 0;
-    }
-    
-    /**
-     * @return the velocity of the rotation of the robot. in radians/second, clockwise is positive
-     */
-    public double getRotation(){
-    	return 0;
-    }
-    
-    public enum Direction{
-    	X,
-    	Y
-    }
+    public double getRotation();
 }

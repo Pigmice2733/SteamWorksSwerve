@@ -4,7 +4,7 @@ import org.usfirst.frc.team2733.robot.enumerations.ConversionEnum;
 
 import edu.wpi.first.wpilibj.Joystick;
 
-public class JoystickInput extends Controller{
+public class JoystickInput implements Controller{
 	
 	Joystick lStick;
 	Joystick rStick;
@@ -14,26 +14,30 @@ public class JoystickInput extends Controller{
 		rStick = new Joystick(port1);
 	}
 	
-	@Override
-	public double getVelocity(Direction direction){
-	    double vel = 0;
+	public double getSpeed() {
+	    double speed = lStick.getMagnitude();
 	    
-	    if (direction == Direction.X){
-	        vel = rStick.getRawAxis(0);
-	    } else if (direction == Direction.Y){
-	        vel = rStick.getRawAxis(1);
-	    }
+	    speed = (Math.abs(speed) < 0.1) ? 0 : speed;
 	    
-	    return vel * ConversionEnum.RANGE_TO_M_PER_S.getConversion();
+	    speed *= speed;
+	    
+	    speed = (Math.abs(speed) > 1.0) ? (Math.signum(speed) * 1.0) : speed;
+	    
+	    speed *= 0.5;
+	    
+		return speed * ConversionEnum.DRIVE_SPEED_RANGE_TO_M_PER_S.getConversion();
 	}
 	
-	@Override
 	public double getDirection() {
-		return rStick.getDirectionRadians();
+		double radians = lStick.getDirectionRadians();
+		
+		radians = (radians < 0) ? ((2 * Math.PI) + radians) : radians;
+		
+		return radians;
 	}
 	
-	@Override
 	public double getRotation() {
-		return (lStick.getRawAxis(0) < .1) ? 0 : lStick.getRawAxis(0);
+		double rotationSpeed = (rStick.getRawAxis(0) < 0.1) ? 0 : rStick.getRawAxis(0);
+		return rotationSpeed * ConversionEnum.ROTATION_SPEED_RANGE_TO_M_PER_S.getConversion();
 	}
 }

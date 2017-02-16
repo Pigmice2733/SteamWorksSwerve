@@ -103,6 +103,7 @@ public class Robot extends SampleRobot {
     public void operatorControl() {
         while (isOperatorControl() && isEnabled()) {
     	    driveTrain.drive();
+    	    Timer.delay(.01);
         }
         
     }
