@@ -38,10 +38,10 @@ public class DriveTrain {
 		this.joy = new JoystickInput(PortsEnum.JOYSTICK_ONE.getPort(), PortsEnum.JOYSTICK_TWO.getPort());
 		
 		Map<WheelPosition, Point> swerveDict = new HashMap<>();
-		swerveDict.put(WheelPosition.FrontLeft, new Point(-0.5, 0.5));
-		swerveDict.put(WheelPosition.FrontRight, new Point(0.5, 0.5));
-		swerveDict.put(WheelPosition.BackLeft, new Point(-0.5, -0.5));
-		swerveDict.put(WheelPosition.BackRight, new Point(0.5, -0.5));
+		swerveDict.put(WheelPosition.FrontLeft, new Point(-0.33, 0.33));
+		swerveDict.put(WheelPosition.FrontRight, new Point(0.33, 0.33));
+		swerveDict.put(WheelPosition.BackLeft, new Point(-0.33, -0.33));
+		swerveDict.put(WheelPosition.BackRight, new Point(0.33, -0.33));
 		
 		
 		swerveCalc = new SwerveCalc(swerveDict);
