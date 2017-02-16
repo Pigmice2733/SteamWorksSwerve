@@ -59,7 +59,8 @@ public class SwerveModule {
 		}
 		driveMotor = new DriveMotor(portDrive);
 		rotationMotor = new RotationMotor(portRotation, portEncoder1,
-				portEncoder2, PIEnum.MODULE_ROTATION_P.getCoefficient(), PIEnum.MODULE_ROTATION_I.getCoefficient());
+				portEncoder2, PIEnum.MODULE_ROTATION_P.getCoefficient(), 
+				PIEnum.MODULE_ROTATION_I.getCoefficient(), 0);
 		
 		this.swerveCalc = swerveCalc;
 		this.wheelPos = wheelPos;
@@ -94,4 +95,8 @@ public class SwerveModule {
 	    return angle;
 	}
 	// END
+	
+	public void reset(){
+		rotationMotor.reset();
+	}
 }

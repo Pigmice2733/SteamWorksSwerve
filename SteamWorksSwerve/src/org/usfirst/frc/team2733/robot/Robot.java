@@ -12,6 +12,8 @@ public class Robot extends SampleRobot {
 	public static DriveTrain driveTrain;
 	public NetworkTable networkTable;
 
+	private int timer = 0;
+	
 	@Override
 	protected void robotInit() {
 		driveTrain = new DriveTrain();
@@ -101,10 +103,13 @@ public class Robot extends SampleRobot {
 	
     @Override
     public void operatorControl() {
-        while (isOperatorControl() && isEnabled()) {
-    	    driveTrain.drive();
-    	    Timer.delay(.01);
+    	driveTrain.reset();
+    	
+    	while (isOperatorControl() && isEnabled()) {
+            driveTrain.drive();
+            Timer.delay(.01);
         }
+
         
     }
 }

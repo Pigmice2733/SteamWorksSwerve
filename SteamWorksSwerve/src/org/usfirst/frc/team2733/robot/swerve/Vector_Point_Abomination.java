@@ -2,7 +2,7 @@
 
 package org.usfirst.frc.team2733.robot.swerve;
 
-public class Vector_Point_Abomination{
+public class Vector_Point_Abomination {
    
     public double x;
 

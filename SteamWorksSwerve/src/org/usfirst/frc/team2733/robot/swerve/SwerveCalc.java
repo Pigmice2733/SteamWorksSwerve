@@ -64,7 +64,7 @@ public class SwerveCalc {
 		double Wyi = velocityVector.getY() - (rotation*wheelLocY);
 		
 		//calculate the aims and store
-		wheelAims.put(wheelPosition, new Vector_Point_Abomination(Math.sqrt(Math.pow(Wxi, 2) + Math.pow(Wyi, 2)), 0));
+		wheelAims.put(wheelPosition, new Vector_Point_Abomination(Math.sqrt(Math.pow(Wxi, 2) + Math.pow(Wyi, 2)), Math.atan2(Wxi, Wyi)));
 	}
 	
 	public class AngleSpeedObject {

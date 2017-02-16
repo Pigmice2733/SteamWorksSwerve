@@ -107,7 +107,10 @@ public class PID {
 		// Proportional term
 		returnVal += (currentError * P);
 		
-		if(usingI){
+		errorSum += (currentError * timeChange);
+		returnVal += errorSum * I;
+		
+		/*if(usingI){
 		    errorSum += (currentError * timeChange);
 			returnVal += errorSum * I;
 		}
@@ -116,7 +119,7 @@ public class PID {
 		    
 		    double derivative = (currentError - previousError)/timeChange;
 			returnVal += derivative * D;
-		}
+		} */
 		
 		lastTime = currentTime;
 		previousError = currentError;
@@ -145,5 +148,11 @@ public class PID {
 	
 	public void setContinuous(boolean continuous) {
 	    this.continuous = continuous;
+	}
+	
+	public void reset(){
+		previousError = 0;
+		errorSum = 0;
+		lastTime = 0;
 	}
 }

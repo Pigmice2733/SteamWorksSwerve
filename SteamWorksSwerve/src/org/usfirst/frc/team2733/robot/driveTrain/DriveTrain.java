@@ -100,8 +100,12 @@ public class DriveTrain {
 		
 		Vector_Point_Abomination vector = new Vector_Point_Abomination((Math.sin(direction) * speed), (Math.cos(direction) * speed));
 		
-		System.out.println(vector.getX() + "  :  " + vector.getY());
-		
 		return vector;
+	}
+	
+	public void reset(){
+		for(int i = 0; i < modules.size(); i++){
+			modules.get(i).reset();
+		}
 	}
 }

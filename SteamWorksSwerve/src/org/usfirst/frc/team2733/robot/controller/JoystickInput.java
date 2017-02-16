@@ -33,7 +33,7 @@ public class JoystickInput implements Controller{
 		
 		radians = (radians < 0) ? ((2 * Math.PI) + radians) : radians;
 		
-		return radians;
+		return (2 * Math.PI) - radians;
 	}
 	
 	public double getRotation() {
