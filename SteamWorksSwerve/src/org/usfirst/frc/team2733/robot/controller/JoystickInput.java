@@ -23,15 +23,21 @@ public class JoystickInput implements Controller{
 	    
 	    speed = (Math.abs(speed) > 1.0) ? (Math.signum(speed) * 1.0) : speed;
 	    
+	    speed *= 0.5;
+	    
 		return speed * ConversionEnum.DRIVE_SPEED_RANGE_TO_M_PER_S.getConversion();
 	}
 	
 	public double getDirection() {
-		return rStick.getDirectionRadians();
+		double radians = lStick.getDirectionRadians();
+		
+		radians = (radians < 0) ? ((2 * Math.PI) + radians) : radians;
+		
+		return radians;
 	}
 	
 	public double getRotation() {
-		double rotationSpeed = (lStick.getRawAxis(0) < 0.1) ? 0 : lStick.getRawAxis(0);
+		double rotationSpeed = (rStick.getRawAxis(0) < 0.1) ? 0 : rStick.getRawAxis(0);
 		return rotationSpeed * ConversionEnum.ROTATION_SPEED_RANGE_TO_M_PER_S.getConversion();
 	}
 }

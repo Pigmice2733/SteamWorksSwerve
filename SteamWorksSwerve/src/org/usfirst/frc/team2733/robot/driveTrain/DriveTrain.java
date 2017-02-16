@@ -65,7 +65,8 @@ public class DriveTrain {
 	
 	public void drive() {
 	    double speed = joy.getSpeed();
-		double direction = joy.getDirection();
+	    
+	    double direction = joy.getDirection();
 		double rotation = joy.getRotation();
 		
 		// Get degrees, convert to radians
@@ -91,6 +92,13 @@ public class DriveTrain {
 	}
 	
 	public Point getVelocityVector(double speed, double direction) {
-		return new Point((-Math.sin(direction) * speed), (Math.cos(direction) * speed));
+		// Align our coordinate system with left-handed Cartesian coordinate system
+		direction -= 2 * Math.PI;
+		
+		Point vector = new Point((Math.sin(direction) * speed), (Math.cos(direction) * speed));
+		
+		System.out.println(vector.getX() + "  :  " + vector.getY());
+		
+		return vector;
 	}
 }
