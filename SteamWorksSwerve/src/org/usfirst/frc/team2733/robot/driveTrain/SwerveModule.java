@@ -4,11 +4,12 @@ import org.usfirst.frc.team2733.robot.enumerations.PIEnum;
 import org.usfirst.frc.team2733.robot.enumerations.PortsEnum;
 import org.usfirst.frc.team2733.robot.enumerations.WheelPosition;
 import org.usfirst.frc.team2733.robot.swerve.SwerveCalc;
+import org.usfirst.frc.team2733.robot.swerve.SwerveCalc.AngleSpeedObject;
 
 public class SwerveModule {
 	
     // angle needs to always be between 0pi and 2pi
-	private double speed, angle;
+	private double speed, angle = 0;
 	
 	private final WheelPosition wheelPos;
 	
@@ -69,7 +70,9 @@ public class SwerveModule {
 		double targSpeed = swerveCalc.getVelAim(wheelPos);
 		double targAngle = swerveCalc.getRotAim(wheelPos);
 		
-		calcOptimalHeading(targSpeed, targAngle);
+		AngleSpeedObject angleSpeedObject = swerveCalc.calcOptimalHeading(targSpeed, targAngle, angle);
+		angle = angleSpeedObject.getAngle();
+		speed = angleSpeedObject.getSpeed();
 		
 		driveMotor.update(speed);
 		rotationMotor.update(angle);
@@ -81,20 +84,14 @@ public class SwerveModule {
 		rotationMotor.disable();
 	}
 	
-	// Calculates correct direction and speed for the motors to turn based on their current speed and direction and the intended speed and direction.
-	public void calcOptimalHeading(double targSpeed, double targAngle) {
-	    targAngle = targAngle % (2 * Math.PI);
-	    
-	    double relativeAngle = (targAngle - angle) % (2 * Math.PI);
-	    
-	    // If the relative angle is in the first 2 quadrants, leave speed and angle alone
-	    if ((relativeAngle < 0.5 * Math.PI) || (relativeAngle > 1.5 * Math.PI)) {
-            angle = targAngle;
-            speed = targSpeed;
-        // Otherwise, reverse speed and take shorter angle
-        } else {
-            angle = (targAngle - Math.PI) % (2 * Math.PI);
-            speed = -targSpeed;
-        }
+	// For Testing Purpose
+	// START
+	public double getSpeed() {
+	    return speed;
 	}
+	
+	public double getAngle() {
+	    return angle;
+	}
+	// END
 }

@@ -38,20 +38,23 @@ public class DriveTrain {
 
 		this.joy = new JoystickInput(PortsEnum.JOYSTICK_ONE.getPort(), PortsEnum.JOYSTICK_TWO.getPort());
 		
-		Map<WheelPosition, Point> swerveDict = new HashMap<>();
-		swerveDict.put(WheelPosition.FrontLeft, new Point(-0.5, 0.5));
-		swerveDict.put(WheelPosition.FrontRight, new Point(0.5, 0.5));
-		swerveDict.put(WheelPosition.BackLeft, new Point(-0.5, -0.5));
-		swerveDict.put(WheelPosition.BackRight, new Point(0.5, -0.5));
-		
-		
-		swerveCalc = new SwerveCalc(swerveDict);
+		swerveCalc = new SwerveCalc(getSwerveDict());
 		
 		modules.add(new SwerveModule(WheelPosition.FrontLeft, swerveCalc));// Adds wheels to a list
 		modules.add(new SwerveModule(WheelPosition.FrontRight, swerveCalc));
 		modules.add(new SwerveModule(WheelPosition.BackLeft, swerveCalc));
 		modules.add(new SwerveModule(WheelPosition.BackRight, swerveCalc));
 	
+	}
+	
+	public static Map<WheelPosition, Point> getSwerveDict() {
+	    Map<WheelPosition, Point> swerveDict = new HashMap<>();
+        swerveDict.put(WheelPosition.FrontLeft, new Point(-0.5, 0.5));
+        swerveDict.put(WheelPosition.FrontRight, new Point(0.5, 0.5));
+        swerveDict.put(WheelPosition.BackLeft, new Point(-0.5, -0.5));
+        swerveDict.put(WheelPosition.BackRight, new Point(0.5, -0.5));
+        
+        return swerveDict;
 	}
 	
 	public void setMode(DriveMode driveMode) {

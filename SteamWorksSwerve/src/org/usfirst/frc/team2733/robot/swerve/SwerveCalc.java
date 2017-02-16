@@ -67,6 +67,43 @@ public class SwerveCalc {
 		wheelAims.put(wheelPosition, new Point(Math.sqrt(Math.pow(Wxi, 2) + Math.pow(Wyi, 2)), 0));
 	}
 	
+	public class AngleSpeedObject {
+	    private double speed;
+	    private double angle;
+	    
+	    public AngleSpeedObject(double speed, double angle) {
+            this.speed = speed;
+            this.angle = angle;
+        }
+	    
+	    public double getSpeed() {
+	        return speed;
+	    }
+	    
+        public double getAngle() {
+            return angle;
+        }
+	}
+	
+	// Calculates correct direction and speed for the motors to turn based on their current speed and direction and the intended speed and direction.
+    public AngleSpeedObject calcOptimalHeading(double targSpeed, double targAngle, double currentAngle) {
+        targAngle = targAngle % (2 * Math.PI);
+        
+        double relativeAngle = (targAngle - currentAngle) % (2 * Math.PI);
+        
+        // If the relative angle is in the first 2 quadrants, leave speed and angle alone
+        if ((relativeAngle < 0.5 * Math.PI) || (relativeAngle > 1.5 * Math.PI)) {
+            double angle = targAngle;
+            double speed = targSpeed;
+            return new AngleSpeedObject(speed, angle);
+        // Otherwise, reverse speed and take shorter angle
+        } else {
+            double angle = (targAngle - Math.PI) % (2 * Math.PI);
+            double speed = -targSpeed;
+            return new AngleSpeedObject(speed, angle);
+        }
+    }
+	
 	/**
 	 * gets the velocity aim for a given wheel
 	 * @param wheelPosition

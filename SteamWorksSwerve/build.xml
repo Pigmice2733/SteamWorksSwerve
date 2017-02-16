@@ -57,12 +57,18 @@
   </target>
 
 
-  <target name="test" depends="compile, build.java.test">
+  <target name="test" depends="jar, build.java.test">
     <mkdir dir="${java.test.reports.path}" />
+  	<echo>The supposed non-test classes are located at ${build.dir}</echo>
     <junit haltonfailure="no" printsummary="true">
       <classpath>
         <pathelement path="${java.test.build.path}" />
-        <dirset dir="${build.dir}" />
+        <fileset dir="${build.jars}">
+          <include name="**/*.jar" />
+        </fileset>
+        <fileset dir="${dist.dir}">
+          <include name="**/*.jar" />
+        </fileset>
         <pathelement location="${java.test.libs.path}/junit-4.12.jar" />
         <pathelement location="${java.test.libs.path}/hamcrest-core-1.3.jar" />
       </classpath>
