@@ -48,10 +48,10 @@ public class DriveTrain {
 	
 	public static Map<WheelPosition, Vector_Point_Abomination> getSwerveDict() {
 	    Map<WheelPosition, Vector_Point_Abomination> swerveDict = new HashMap<>();
-        swerveDict.put(WheelPosition.FrontLeft, new Vector_Point_Abomination(-0.33, 0.33));
-        swerveDict.put(WheelPosition.FrontRight, new Vector_Point_Abomination(0.33, 0.33));
-        swerveDict.put(WheelPosition.BackLeft, new Vector_Point_Abomination(-0.33, -0.33));
-        swerveDict.put(WheelPosition.BackRight, new Vector_Point_Abomination(0.33, -0.33));
+        swerveDict.put(WheelPosition.FrontLeft, new Vector_Point_Abomination(0.33, 0.33));
+        swerveDict.put(WheelPosition.FrontRight, new Vector_Point_Abomination(0.33, -0.33));
+        swerveDict.put(WheelPosition.BackLeft, new Vector_Point_Abomination(-0.33, 0.33));
+        swerveDict.put(WheelPosition.BackRight, new Vector_Point_Abomination(-0.33, -0.33));
         
         return swerveDict;
 	}
