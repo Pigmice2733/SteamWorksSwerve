@@ -99,4 +99,8 @@ public class SwerveModule {
 	public void reset(){
 		rotationMotor.reset();
 	}
+
+	public void setToZero() {
+		
+	}
 }
