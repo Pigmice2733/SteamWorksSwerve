@@ -1,9 +1,10 @@
 package org.usfirst.frc.team2733.robot;
 
 import org.usfirst.frc.team2733.robot.driveTrain.DriveTrain;
+import org.usfirst.frc.team2733.robot.enumerations.ConversionEnum;
+import org.usfirst.frc.team2733.robot.enumerations.PortsEnum;
 import org.usfirst.frc.team2733.robot.swerve.Vector_Point_Abomination;
 
-import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.SampleRobot;
 import edu.wpi.first.wpilibj.Timer;
@@ -14,11 +15,9 @@ public class Robot extends SampleRobot {
 	public static DriveTrain driveTrain;
 	public NetworkTable networkTable;
 
-	private int timer = 0;
-	
 	@Override
 	protected void robotInit() {
-		// driveTrain = new DriveTrain();
+		driveTrain = new DriveTrain();
 		networkTable = NetworkTable.getTable("RobotInitalInterface");
 	}
 	
@@ -58,16 +57,17 @@ public class Robot extends SampleRobot {
 	 */
 	@Override
 	public void autonomous() {
+		
+		
 		// Currently random speed
 		double defaultSpeed = 0.2;// If you don't know what to set it to
 		
-		while (!networkTable.isConnected()) {
+		/*while (!networkTable.isConnected()) {
 			System.out.println("Uhh.. The network table still isn't connected. You should start to panic.");
 			Timer.delay(1);
-		}
-		
-		boolean success = false;
-		while (success) {
+		}*/
+		boolean success = true;
+		while (!success) {
 			RobotInitialLocation location = RobotInitialLocation.fromValue((int) networkTable.getNumber("robotInitalLocation", -1));
 			if (location == RobotInitialLocation.LEFT || location == RobotInitialLocation.RIGHT) {
 				driveTrain.swerveCalc.setAim(driveTrain.getVelocityVector(defaultSpeed, 0.05 * Math.PI * (location == RobotInitialLocation.LEFT ? -1 : 1)), 0);
@@ -86,7 +86,7 @@ public class Robot extends SampleRobot {
 		}
 		
 		while (isAutonomous() && isEnabled()) {
-			// Movement Update
+			/*// Movement Update
 			double speed = networkTable.getNumber("speed", 0);
 			double direction = networkTable.getNumber("direction", 0);
 			double rotation = networkTable.getNumber("rotation", 0);
@@ -98,7 +98,9 @@ public class Robot extends SampleRobot {
 			// Ball Shooter - If necessary
 			// double ballShooterSpeed = networkTable.getNumber("shooterSpeed", 0);
 			
+			*/
 			
+			driveTrain.zeroWheelPositions();
 			Timer.delay(0.05);
 		}
 	}
@@ -115,16 +117,22 @@ public class Robot extends SampleRobot {
     
     @Override
     public void test() {
-    	AnalogPotentiometer analogPotenZero = new AnalogPotentiometer(0, 1, 0);
-    	AnalogPotentiometer analogPotenOne = new AnalogPotentiometer(1, 1, 0);
-    	AnalogPotentiometer analogPotenTwo = new AnalogPotentiometer(2, 1, 0);
-    	AnalogPotentiometer analogPotenThree = new AnalogPotentiometer(3, 1, 0);
+    	AnalogPotentiometer analogPotenZero = new AnalogPotentiometer(PortsEnum.FRONT_LEFT_ROTATION_ANALOG_ENCODER.getPort(), 1, 0);
+    	AnalogPotentiometer analogPotenOne = new AnalogPotentiometer(PortsEnum.FRONT_RIGHT_ROTATION_ANALOG_ENCODER.getPort(), 1, 0);
+    	AnalogPotentiometer analogPotenTwo = new AnalogPotentiometer(PortsEnum.BACK_LEFT_ROTATION_ANALOG_ENCODER.getPort(), 1, 0);
+    	AnalogPotentiometer analogPotenThree = new AnalogPotentiometer(PortsEnum.BACK_RIGHT_ROTATION_ANALOG_ENCODER.getPort(), 1, 0);
 		while (isTest() && isEnabled()) {
-			System.out.println("Analog Input Zero \"Accumulated Value\"" + analogPotenZero.get());
-			System.out.println("Analog Input One \"Accumulated Value\"" + analogPotenOne.get());
-			System.out.println("Analog Input Two \"Accumulated Value\"" + analogPotenTwo.get());
-			System.out.println("Analog Input Three \"Accumulated Value\"" + analogPotenThree.get());
+			String output = "";
+			output += ("Analog Input FL " + correctMod(analogPotenZero.get(), 1) + "\n");
+			output += ("Analog Input FR " + correctMod(analogPotenOne.get(), 1) + "\n");
+			output += ("Analog BL " + correctMod(analogPotenTwo.get(), 1) + "\n");
+			output += ("Analog BR " + correctMod(analogPotenThree.get(), 1) + "\n");
+			System.out.println(output);
 			Timer.delay(0.5);
 		}
+    }
+    
+    public static double correctMod(double number, double modulus) {
+    	return number < 0 ? number % modulus + modulus : number % modulus;
     }
 }

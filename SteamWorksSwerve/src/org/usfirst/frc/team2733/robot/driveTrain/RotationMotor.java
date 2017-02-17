@@ -1,11 +1,9 @@
 package org.usfirst.frc.team2733.robot.driveTrain;
 
 import org.usfirst.frc.team2733.robot.PID;
-import org.usfirst.frc.team2733.robot.enumerations.ConversionEnum;
+import org.usfirst.frc.team2733.robot.Robot;
 
-import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Spark;
 
 public class RotationMotor {
@@ -17,7 +15,7 @@ public class RotationMotor {
 	//private final AnalogInput anaInput;
 	private final PID PIController;
 	
-	public RotationMotor(int motorPort, int encoderPortA, int encoderPortB, double P, double I, int analogPort, double analogOffset) {
+	public RotationMotor(int motorPort, double P, double I, int analogPort, double analogOffset) {
 	    rotationMotor = new Spark(motorPort);
 		
 		analogPoten = new AnalogPotentiometer(analogPort, 1, analogOffset);
@@ -32,12 +30,10 @@ public class RotationMotor {
 	 * Angle is from 0*Math.PI to 2*Math.PI
 	 */
 	public void update(double setAngle) {
-		double currentAngle = analogPoten.get() * 2 * Math.PI;
-        setAngle = setAngle;
+		double currentAngle = Robot.correctMod(analogPoten.get(), 1) * 2 * Math.PI;
         
+		System.out.println("angle = " + currentAngle);
         double motorSpeed = PIController.getVal(currentAngle, setAngle);
-        
-        System.out.println(motorSpeed);
         
         rotationMotor.set(motorSpeed);
 	}

@@ -3,6 +3,7 @@ package org.usfirst.frc.team2733.robot.swerve;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.usfirst.frc.team2733.robot.Robot;
 import org.usfirst.frc.team2733.robot.enumerations.WheelPosition;
 
 public class SwerveCalc {
@@ -87,9 +88,9 @@ public class SwerveCalc {
 	
 	// Calculates correct direction and speed for the motors to turn based on their current speed and direction and the intended speed and direction.
     public AngleSpeedObject calcOptimalHeading(double targSpeed, double targAngle, double currentAngle) {
-        targAngle = targAngle % (2 * Math.PI);
+        targAngle = Robot.correctMod(targAngle, 2 * Math.PI);
         
-        double relativeAngle = (targAngle - currentAngle) % (2 * Math.PI);
+        double relativeAngle = Robot.correctMod(targAngle - currentAngle, 2 * Math.PI);
         
         // If the relative angle is in the first 2 quadrants, leave speed and angle alone
         if ((relativeAngle < 0.5 * Math.PI) || (relativeAngle > 1.5 * Math.PI)) {
@@ -98,7 +99,7 @@ public class SwerveCalc {
             return new AngleSpeedObject(speed, angle);
         // Otherwise, reverse speed and take shorter angle
         } else {
-            double angle = (targAngle - Math.PI) % (2 * Math.PI);
+            double angle = Robot.correctMod(targAngle - Math.PI, 2 * Math.PI);
             double speed = -targSpeed;
             return new AngleSpeedObject(speed, angle);
         }

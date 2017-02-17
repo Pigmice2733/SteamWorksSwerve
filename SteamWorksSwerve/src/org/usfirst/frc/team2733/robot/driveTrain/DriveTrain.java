@@ -110,4 +110,10 @@ public class DriveTrain {
 			modules.get(i).reset();
 		}
 	}
+
+	public void zeroWheelPositions() {
+		for (SwerveModule module : modules) {
+			module.zeroPosition();
+		}
+	}
 }
