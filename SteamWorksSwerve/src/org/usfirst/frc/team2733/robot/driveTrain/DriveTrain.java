@@ -101,7 +101,7 @@ public class DriveTrain {
 		}
 	}
 	
-	public Vector_Point_Abomination getVelocityVector(double speed, double direction) {
+	public static Vector_Point_Abomination getVelocityVector(double speed, double direction) {
 		// Align our coordinate system with left-handed Cartesian coordinate system
 		direction -= 2 * Math.PI;
 		
