@@ -29,6 +29,7 @@ public class SwerveModule {
 		int portDrive = -1;
 		int portEncoder1 = -1;
 		int portEncoder2 = -1;
+		int analogPort = -1;
 		double analogOffset = 0;
 		
 		switch(wheelPos) {
@@ -37,6 +38,7 @@ public class SwerveModule {
 			portDrive = PortsEnum.FRONT_RIGHT_DRIVE_MOTOR.getPort();
 			portEncoder1 = PortsEnum.FRONT_RIGHT_ROTATION_DIGITAL_ENCODER_ONE.getPort();
 			portEncoder2 = PortsEnum.FRONT_RIGHT_ROTATION_DIGITAL_ENCODER_TWO.getPort();
+			analogPort = PortsEnum.FRONT_RIGHT_ROTATION_ANALOG_ENCODER.getPort();
 			analogOffset = ConversionEnum.ANALOG_POTENTIONOMETER_WHEEL_FRONT_RIGHT.getConversion();
 			break;
 		case BackRight:
@@ -44,6 +46,7 @@ public class SwerveModule {
 			portDrive = PortsEnum.BACK_RIGHT_DRIVE_MOTOR.getPort();
 			portEncoder1 = PortsEnum.BACK_RIGHT_ROTATION_DIGITAL_ENCODER_ONE.getPort();
 			portEncoder2 = PortsEnum.BACK_RIGHT_ROTATION_DIGITAL_ENCODER_TWO.getPort();
+			analogPort = PortsEnum.BACK_RIGHT_ROTATION_ANALOG_ENCODER.getPort();
 			analogOffset = ConversionEnum.ANALOG_POTENTIONOMETER_WHEEL_BACK_RIGHT.getConversion();
 			break;
 		case FrontLeft:
@@ -51,6 +54,7 @@ public class SwerveModule {
 			portDrive = PortsEnum.FRONT_LEFT_DRIVE_MOTOR.getPort();
 			portEncoder1 = PortsEnum.FRONT_LEFT_ROTATION_DIGITAL_ENCODER_ONE.getPort();
 			portEncoder2 = PortsEnum.FRONT_LEFT_ROTATION_DIGITAL_ENCODER_TWO.getPort();
+			analogPort = PortsEnum.FRONT_LEFT_ROTATION_ANALOG_ENCODER.getPort();
 			analogOffset = ConversionEnum.ANALOG_POTENTIONOMETER_WHEEL_FRONT_LEFT.getConversion();
 			break;
 		case BackLeft:
@@ -58,15 +62,15 @@ public class SwerveModule {
 			portDrive = PortsEnum.BACK_LEFT_DRIVE_MOTOR.getPort();
 			portEncoder1 = PortsEnum.BACK_LEFT_ROTATION_DIGITAL_ENCODER_ONE.getPort();
 			portEncoder2 = PortsEnum.BACK_LEFT_ROTATION_DIGITAL_ENCODER_TWO.getPort();
+			analogPort = PortsEnum.BACK_LEFT_ROTATION_ANALOG_ENCODER.getPort();
 			analogOffset = ConversionEnum.ANALOG_POTENTIONOMETER_WHEEL_BACK_LEFT.getConversion();
 			break;
 		default:
 			
 		}
 		driveMotor = new DriveMotor(portDrive);
-		rotationMotor = new RotationMotor(portRotation, portEncoder1,
-				portEncoder2, PIEnum.MODULE_ROTATION_P.getCoefficient(), 
-				PIEnum.MODULE_ROTATION_I.getCoefficient(), 0,
+		rotationMotor = new RotationMotor(portRotation, PIEnum.MODULE_ROTATION_P.getCoefficient(), 
+				PIEnum.MODULE_ROTATION_I.getCoefficient(), analogPort,
 				analogOffset);
 		
 		this.swerveCalc = swerveCalc;
@@ -107,7 +111,9 @@ public class SwerveModule {
 		rotationMotor.reset();
 	}
 
-	public void setToZero() {
-		
+	public void zeroPosition() {
+		driveMotor.update(0);
+		rotationMotor.update(0);
 	}
+
 }

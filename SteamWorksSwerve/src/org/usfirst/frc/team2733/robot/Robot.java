@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2733.robot;
 
 import org.usfirst.frc.team2733.robot.driveTrain.DriveTrain;
+import org.usfirst.frc.team2733.robot.enumerations.PortsEnum;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.SampleRobot;
 import edu.wpi.first.wpilibj.Timer;
@@ -14,7 +15,7 @@ public class Robot extends SampleRobot {
 	protected void robotInit() {
 		driveTrain = new DriveTrain();
 		auto = new Autonomous(this, driveTrain);
-	}
+    }
 
 	/** 
 	 * Commands available
@@ -22,38 +23,61 @@ public class Robot extends SampleRobot {
 	 */
 	@Override
 	public void autonomous() {
-		// Currently random speed
-		//double defaultSpeed = 0.2;// If you don't know what to set it to
 		
-		auto.startAutonomous();
+		
+		//auto.startAutonomous();
 		
 		// Left and Right
 	    //driveTrain.swerveCalc.setAim(driveTrain.getVelocityVector(defaultSpeed, 0.05 * Math.PI * (location == RobotInitialLocation.LEFT ? -1 : 1)), 0);
 	    // Center
 	    //driveTrain.swerveCalc.setAim(driveTrain.getVelocityVector(defaultSpeed, 0), 0);
-		
+
+		while (isAutonomous() && isEnabled()) {
+			/*// Movement Update
+			double speed = networkTable.getNumber("speed", 0);
+			double direction = networkTable.getNumber("direction", 0);
+			double rotation = networkTable.getNumber("rotation", 0);
+			
+			Vector_Point_Abomination velocityVector = driveTrain.getVelocityVector(speed, direction);
+			
+			driveTrain.swerveCalc.setAim(velocityVector, rotation);
+			
+			// Ball Shooter - If necessary
+			// double ballShooterSpeed = networkTable.getNumber("shooterSpeed", 0);
+			
+			*/
+			
+			driveTrain.zeroWheelPositions();
+			Timer.delay(0.05);
+		}
 	}
 	
     @Override
     public void operatorControl() {
     	while (isOperatorControl() && isEnabled()) {
             driveTrain.drive();
-            Timer.delay(.01);
+            Timer.delay(0.05);
         }
     }
     
     @Override
     public void test() {
-    	AnalogPotentiometer analogPotenZero = new AnalogPotentiometer(0, 1, 0);
-    	AnalogPotentiometer analogPotenOne = new AnalogPotentiometer(1, 1, 0);
-    	AnalogPotentiometer analogPotenTwo = new AnalogPotentiometer(2, 1, 0);
-    	AnalogPotentiometer analogPotenThree = new AnalogPotentiometer(3, 1, 0);
+    	AnalogPotentiometer analogPotenZero = new AnalogPotentiometer(PortsEnum.FRONT_LEFT_ROTATION_ANALOG_ENCODER.getPort(), 1, 0);
+    	AnalogPotentiometer analogPotenOne = new AnalogPotentiometer(PortsEnum.FRONT_RIGHT_ROTATION_ANALOG_ENCODER.getPort(), 1, 0);
+    	AnalogPotentiometer analogPotenTwo = new AnalogPotentiometer(PortsEnum.BACK_LEFT_ROTATION_ANALOG_ENCODER.getPort(), 1, 0);
+    	AnalogPotentiometer analogPotenThree = new AnalogPotentiometer(PortsEnum.BACK_RIGHT_ROTATION_ANALOG_ENCODER.getPort(), 1, 0);
 		while (isTest() && isEnabled()) {
-			System.out.println("Analog Input Zero \"Accumulated Value\"" + analogPotenZero.get());
-			System.out.println("Analog Input One \"Accumulated Value\"" + analogPotenOne.get());
-			System.out.println("Analog Input Two \"Accumulated Value\"" + analogPotenTwo.get());
-			System.out.println("Analog Input Three \"Accumulated Value\"" + analogPotenThree.get());
+			String output = "";
+			output += ("Analog Input FL " + correctMod(analogPotenZero.get(), 1) + "\n");
+			output += ("Analog Input FR " + correctMod(analogPotenOne.get(), 1) + "\n");
+			output += ("Analog BL " + correctMod(analogPotenTwo.get(), 1) + "\n");
+			output += ("Analog BR " + correctMod(analogPotenThree.get(), 1) + "\n");
+			System.out.println(output);
 			Timer.delay(0.5);
 		}
+    }
+    
+    public static double correctMod(double number, double modulus) {
+    	return number < 0 ? number % modulus + modulus : number % modulus;
     }
 }
