@@ -18,5 +18,4 @@ public class Climber {
 		//double speed = joy.getClimber();
 		 motor.set(speed);
 	}
-	
 }

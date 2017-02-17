@@ -5,5 +5,4 @@ public enum WheelPosition {
 	BackRight,
 	FrontLeft,
 	BackLeft;
-	
 }

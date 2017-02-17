@@ -15,7 +15,4 @@ public enum PIEnum {
 	public double getCoefficient(){
 		return coefficient;
 	}
-	
-	
-	
 }

@@ -9,7 +9,7 @@ public class DataTransfer {
 	
 	NetworkTable table;
 	
-	public void dTInit() {
+	public DataTransfer() {
 		table = NetworkTable.getTable("datatable");
 	}
 	
