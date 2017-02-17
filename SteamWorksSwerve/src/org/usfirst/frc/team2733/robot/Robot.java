@@ -107,8 +107,6 @@ public class Robot extends SampleRobot {
 	
     @Override
     public void operatorControl() {
-    	driveTrain.reset();
-    	
     	while (isOperatorControl() && isEnabled()) {
             driveTrain.drive();
             Timer.delay(.01);

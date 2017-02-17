@@ -94,13 +94,6 @@ public class DriveTrain {
 		}
 	}
 	
-	public void autoAlign() {
-		
-		for (SwerveModule module : modules) {
-			module.setToZero();
-		}
-	}
-	
 	public Vector_Point_Abomination getVelocityVector(double speed, double direction) {
 		// Align our coordinate system with left-handed Cartesian coordinate system
 		direction -= 2 * Math.PI;
