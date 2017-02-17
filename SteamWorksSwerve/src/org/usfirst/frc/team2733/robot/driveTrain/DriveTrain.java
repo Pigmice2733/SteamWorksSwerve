@@ -94,21 +94,22 @@ public class DriveTrain {
 		}
 	}
 	
+	public void autoAlign() {
+		
+		for (SwerveModule module : modules) {
+			module.setToZero();
+		}
+	}
+	
 	public Vector_Point_Abomination getVelocityVector(double speed, double direction) {
 		// Align our coordinate system with left-handed Cartesian coordinate system
 		direction -= 2 * Math.PI;
 		
-		// Change Math.sin(direction) to -Math.sin(direction)
-		//if robot is rotating wrong direction
 		Vector_Point_Abomination vector = new Vector_Point_Abomination((Math.sin(direction) * speed), (Math.cos(direction) * speed));
 		
+		System.out.println(vector.getX() + "  :  " + vector.getY());
+		
 		return vector;
-	}
-	
-	public void reset(){
-		for(int i = 0; i < modules.size(); i++){
-			modules.get(i).reset();
-		}
 	}
 
 	public void zeroWheelPositions() {
