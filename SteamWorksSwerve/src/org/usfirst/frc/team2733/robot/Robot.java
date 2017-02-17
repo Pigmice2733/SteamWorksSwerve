@@ -68,8 +68,8 @@ public class Robot extends SampleRobot {
     	AnalogPotentiometer analogPotenThree = new AnalogPotentiometer(PortsEnum.BACK_RIGHT_ROTATION_ANALOG_ENCODER.getPort(), 1, 0);
 		while (isTest() && isEnabled()) {
 			String output = "";
-			output += ("Analog Input FL " + correctMod(analogPotenZero.get(), 1) + "\n");
-			output += ("Analog Input FR " + correctMod(analogPotenOne.get(), 1) + "\n");
+			output += ("Analog FL " + correctMod(analogPotenZero.get(), 1) + "\n");
+			output += ("Analog FR " + correctMod(analogPotenOne.get(), 1) + "\n");
 			output += ("Analog BL " + correctMod(analogPotenTwo.get(), 1) + "\n");
 			output += ("Analog BR " + correctMod(analogPotenThree.get(), 1) + "\n");
 			System.out.println(output);
