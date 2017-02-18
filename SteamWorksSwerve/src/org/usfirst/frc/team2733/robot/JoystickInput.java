@@ -1,10 +1,10 @@
-package org.usfirst.frc.team2733.robot.controller;
+package org.usfirst.frc.team2733.robot;
 
 import org.usfirst.frc.team2733.robot.enumerations.ConversionEnum;
 
 import edu.wpi.first.wpilibj.Joystick;
 
-public class JoystickInput implements Controller{
+public class JoystickInput{
 	
 	Joystick lStick;
 	Joystick rStick;
@@ -42,20 +42,14 @@ public class JoystickInput implements Controller{
 		return rotationSpeed * ConversionEnum.ROTATION_SPEED_RANGE_TO_M_PER_S.getConversion();
 	}
 	
-	public void logButtonStatus() {
-	    for (int x = 1; x <= lStick.getButtonCount(); x++) {
-	        System.out.println("Button Status [" + x + "] " + lStick.getRawButton(x));
-	    }
-	}
-	
 	public boolean isButtonPressed(JoyStickButton button) {
-	    return lStick.getRawButton(1);
+	    return lStick.getRawButton(button.getRawButtonNumber());
 	}
 	
 	public enum JoyStickButton {
 	    CLIMBER(2), SHOOTER(1), INTAKE(3);
 	    
-	    int rawButtonNumber;
+	    private int rawButtonNumber;
 	    
 	    private JoyStickButton(int rawButtonNumber) {
 	        this.rawButtonNumber = rawButtonNumber;

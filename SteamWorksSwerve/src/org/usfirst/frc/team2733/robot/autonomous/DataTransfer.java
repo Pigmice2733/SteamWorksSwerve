@@ -30,4 +30,12 @@ public class DataTransfer {
 	public void autonoousOverMessage() {
 		networkTable.putBoolean("autoOver", true);
 	}
+	
+	public double velocityX() {
+	    return networkTable.getNumber("velocityX", 0);
+	}
+	
+	public double velocityY() {
+	    return networkTable.getNumber("velocityY", 0);
+	}
 }
