@@ -1,5 +1,6 @@
-package org.usfirst.frc.team2733.robot;
+package org.usfirst.frc.team2733.robot.autonomous;
 
+import org.usfirst.frc.team2733.robot.Robot;
 import org.usfirst.frc.team2733.robot.driveTrain.DriveTrain;
 import org.usfirst.frc.team2733.robot.swerve.Vector_Point_Abomination;
 
