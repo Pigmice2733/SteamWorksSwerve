@@ -5,8 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.usfirst.frc.team2733.robot.controller.JoystickInput;
-import org.usfirst.frc.team2733.robot.controller.JoystickInput.JoyStickButton;
+import org.usfirst.frc.team2733.robot.JoystickInput;
+import org.usfirst.frc.team2733.robot.JoystickInput.JoyStickButton;
 import org.usfirst.frc.team2733.robot.enumerations.PortsEnum;
 import org.usfirst.frc.team2733.robot.enumerations.WheelPosition;
 import org.usfirst.frc.team2733.robot.swerve.Vector_Point_Abomination;
@@ -47,9 +47,9 @@ public class DriveTrain {
 		
 		swerveCalc = new SwerveCalc(getSwerveDict());
 		
-//		climber = new Climber(PortsEnum.CLIMBER.getPort());
-//		shooter = new Shooter(PortsEnum.SHOOTER.getPort(), PortsEnum.BALL_RELEASE.getPort());
-//		intake = new Intake(PortsEnum.INTAKE.getPort());
+		/*climber = new Climber(PortsEnum.CLIMBER.getPort(), joy);
+		shooter = new Shooter(PortsEnum.SHOOTER.getPort(), PortsEnum.BALL_RELEASE.getPort(), joy);
+		intake = new Intake(PortsEnum.INTAKE.getPort(), joy);*/
 		
 		modules.add(new SwerveModule(WheelPosition.FrontLeft, swerveCalc));// Adds wheels to a list
 		modules.add(new SwerveModule(WheelPosition.FrontRight, swerveCalc));
@@ -79,38 +79,19 @@ public class DriveTrain {
     }
 	
 	public void drive() {
-	    double speed = joy.getSpeed();
-	    
-	    double direction = joy.getDirection();
-		double rotation = joy.getRotation();
-		
-		// Maybe make event based if you are feeling adventureous
-		if (joy.isButtonPressed(JoyStickButton.CLIMBER)) {
-		    climber.go();
-		} else {
-		    climber.stop();
-		}
-		if (joy.isButtonPressed(JoyStickButton.SHOOTER)) {
-		    shooter.startShooting();
-		} else {
-		    shooter.stopShooting();
-		}
-        if (joy.isButtonPressed(JoyStickButton.INTAKE)) {
-            intake.startIntake();
-        } else {
-            intake.stopIntake();
-        }
+	    climber.update();
+		shooter.update();
+		intake.update();
 		
 		// Get degrees, convert to radians
 		// TODO: This is gonna be here later because we will have a better gyro and it will be possible then - Xander
         // double headingOffset = Math.toRadians(gyro.getAngle());
 		double headingOffset = 0;
         
-		/*
-		 * This method will have to be exapanded to make use of gyro offset. Unfortunatly that was not done correctly the first time.
-		 * This still has the messy remnant of the old code, it will be changed later.
-		 * 
-		 */
+        double speed = joy.getSpeed();
+        
+        double direction = joy.getDirection() - headingOffset;
+        double rotation = joy.getRotation();
 		
 		Vector_Point_Abomination velocityVector = getVelocityVector(speed, direction - headingOffset);
 		

@@ -77,7 +77,14 @@ public class Autonomous {
             break;
         case CENTER:
             
+            // Distance is distance from robot's starting position to base of tower (in meters)
+            double distance = 5;
+            double startTime = Timer.getFPGATimestamp();
             
+            while (distance > 0) {
+                driveTrain.moveForwards(0.1);
+                distance -= dataTransfer.velocityY() * (Timer.getFPGATimestamp() - startTime);
+            }
             
             break;
         case RIGHT:
