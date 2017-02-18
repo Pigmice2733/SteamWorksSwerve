@@ -92,9 +92,7 @@ public class PID {
 	 * @return output value for process using PID controller
 	 */
 	public double getVal(double currentVal, double aimVal) {
-		
-		double returnVal = currentVal;
-		
+	    
 		// Current time in ms
 		long currentTime = (long) (Timer.getFPGATimestamp() * 1000);
 		
@@ -105,7 +103,7 @@ public class PID {
 		double currentError = getContinuousError(aimVal - currentVal);
 		
 		// Proportional term
-		returnVal += (currentError * P);
+		double returnVal = (currentError * P);
 		
 		//Integral term
 		if(usingI){
@@ -114,7 +112,6 @@ public class PID {
 		}
 		
 		if(usingD){
-		    
 		    double derivative = (currentError - previousError)/timeChange;
 			returnVal += derivative * D;
 		}
