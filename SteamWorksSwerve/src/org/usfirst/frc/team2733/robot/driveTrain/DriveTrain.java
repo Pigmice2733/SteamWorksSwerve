@@ -94,6 +94,34 @@ public class DriveTrain {
 		}
 	}
 	
+	public void moveSideways (double speed) {
+	    
+	    double direction = 0.5 * Math.PI;
+	    
+	    if(speed < 0) {
+	        speed = -speed;
+	        direction = -direction;
+	    }
+	    
+	    Vector_Point_Abomination velocityVector = getVelocityVector(speed, direction);
+	    
+	    swerveCalc.setAim(velocityVector, 0);
+	    
+	    for (SwerveModule module : modules) {
+            module.update();
+        }
+	}
+	
+	public void moveForwards (double speed) {
+	    
+	}
+	
+	public void stopMovement () {
+	    for (SwerveModule module : modules) {
+            module.disable();
+        }
+	}
+	
 	public static Vector_Point_Abomination getVelocityVector(double speed, double direction) {
         // Align our coordinate system with left-handed Cartesian coordinate system
 		direction -= 2 * Math.PI;

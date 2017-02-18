@@ -1,8 +1,8 @@
 package org.usfirst.frc.team2733.robot.autonomous;
 
+import org.usfirst.frc.team2733.robot.PID;
 import org.usfirst.frc.team2733.robot.Robot;
 import org.usfirst.frc.team2733.robot.driveTrain.DriveTrain;
-import org.usfirst.frc.team2733.robot.swerve.Vector_Point_Abomination;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
@@ -13,11 +13,16 @@ public class Autonomous {
     private final Robot robot;
     private final DataTransfer dataTransfer;
     
+    private PID lateralMovementPID, forwardMovementPID;
+    
     private final InitialLocation initLoc;
     
     public Autonomous (Robot robot, DriveTrain driveTrain) {
         this.robot = robot;
         this.driveTrain = driveTrain;
+        
+        this.lateralMovementPID = new PID(0.01, 0);
+        this.forwardMovementPID = new PID(0.01, 0);
         
         this.dataTransfer = new DataTransfer(robot);
         
@@ -27,13 +32,33 @@ public class Autonomous {
     public void startAutonomous() {
         driveToTower();
         
+        double distance, direction;
+        
         //// Movement update with info from RPi
         while (robot.isAutonomous() && robot.isEnabled()) {
-            Vector_Point_Abomination velocityVector = dataTransfer.getVelocity();
             
-            double rotation = dataTransfer.getRotation();
+            direction = dataTransfer.getDirection();
+            distance = dataTransfer.getDistance();
             
-            driveTrain.swerveCalc.setAim(velocityVector, rotation);
+            if(Math.abs(direction) > 1) {
+                
+                double lateralMovement = lateralMovementPID.getVal(direction, 0);
+                
+                driveTrain.moveSideways(lateralMovement);
+                
+            } else if (distance > 25) {
+                
+                double forwardMovement = forwardMovementPID.getVal(distance, 25);
+                
+                driveTrain.moveForwards(forwardMovement);
+                
+            } else {
+                
+                // Place gear
+                
+                driveTrain.stopMovement();
+                
+            }
             
             // Ball Shooter - If necessary
             // double ballShooterSpeed = networkTable.getNumber("shooterSpeed", 0);
@@ -47,11 +72,17 @@ public class Autonomous {
         switch (initLoc) {
         case LEFT:
             
+            
+            
             break;
         case CENTER:
             
+            
+            
             break;
         case RIGHT:
+            
+            
             
             break;
         default:
