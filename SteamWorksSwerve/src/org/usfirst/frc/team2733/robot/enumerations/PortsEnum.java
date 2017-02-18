@@ -8,6 +8,7 @@ public enum PortsEnum {
 	
 	//motors
 	SHOOTER (4),
+    BALL_RELEASE (4),
 	CLIMBER (5),
 	INTAKE (6), 
 	

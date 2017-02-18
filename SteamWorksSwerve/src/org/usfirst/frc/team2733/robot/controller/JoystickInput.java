@@ -41,4 +41,28 @@ public class JoystickInput implements Controller{
 		rotationSpeed = (Math.abs(rotationSpeed) < 0.1) ? 0 : rStick.getRawAxis(0);
 		return rotationSpeed * ConversionEnum.ROTATION_SPEED_RANGE_TO_M_PER_S.getConversion();
 	}
+	
+	public void logButtonStatus() {
+	    for (int x = 1; x <= lStick.getButtonCount(); x++) {
+	        System.out.println("Button Status [" + x + "] " + lStick.getRawButton(x));
+	    }
+	}
+	
+	public boolean isButtonPressed(JoyStickButton button) {
+	    return lStick.getRawButton(1);
+	}
+	
+	public enum JoyStickButton {
+	    CLIMBER(2), SHOOTER(1), INTAKE(3);
+	    
+	    int rawButtonNumber;
+	    
+	    private JoyStickButton(int rawButtonNumber) {
+	        this.rawButtonNumber = rawButtonNumber;
+	    }
+	    
+	    public int getRawButtonNumber() {
+	        return rawButtonNumber;
+	    }
+	}
 }

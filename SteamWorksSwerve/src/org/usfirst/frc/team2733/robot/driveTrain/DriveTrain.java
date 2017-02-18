@@ -6,9 +6,13 @@ import java.util.List;
 import java.util.Map;
 
 import org.usfirst.frc.team2733.robot.controller.JoystickInput;
+import org.usfirst.frc.team2733.robot.controller.JoystickInput.JoyStickButton;
 import org.usfirst.frc.team2733.robot.enumerations.PortsEnum;
 import org.usfirst.frc.team2733.robot.enumerations.WheelPosition;
 import org.usfirst.frc.team2733.robot.swerve.Vector_Point_Abomination;
+import org.usfirst.frc.team2733.robot.systems.Climber;
+import org.usfirst.frc.team2733.robot.systems.Intake;
+import org.usfirst.frc.team2733.robot.systems.Shooter;
 import org.usfirst.frc.team2733.robot.swerve.SwerveCalc;
 
 import edu.wpi.first.wpilibj.interfaces.Gyro;
@@ -33,11 +37,19 @@ public class DriveTrain {
 	
 	public SwerveCalc swerveCalc;
 	
+	private Climber climber;
+	private Shooter shooter;
+	private Intake intake;
+	
 	public DriveTrain() {// implementation for swerve
 
 		this.joy = new JoystickInput(PortsEnum.JOYSTICK_ONE.getPort(), PortsEnum.JOYSTICK_TWO.getPort());
 		
 		swerveCalc = new SwerveCalc(getSwerveDict());
+		
+//		climber = new Climber(PortsEnum.CLIMBER.getPort());
+//		shooter = new Shooter(PortsEnum.SHOOTER.getPort(), PortsEnum.BALL_RELEASE.getPort());
+//		intake = new Intake(PortsEnum.INTAKE.getPort());
 		
 		modules.add(new SwerveModule(WheelPosition.FrontLeft, swerveCalc));// Adds wheels to a list
 		modules.add(new SwerveModule(WheelPosition.FrontRight, swerveCalc));
@@ -71,6 +83,23 @@ public class DriveTrain {
 	    
 	    double direction = joy.getDirection();
 		double rotation = joy.getRotation();
+		
+		// Maybe make event based if you are feeling adventureous
+		if (joy.isButtonPressed(JoyStickButton.CLIMBER)) {
+		    climber.go();
+		} else {
+		    climber.stop();
+		}
+		if (joy.isButtonPressed(JoyStickButton.SHOOTER)) {
+		    shooter.startShooting();
+		} else {
+		    shooter.stopShooting();
+		}
+        if (joy.isButtonPressed(JoyStickButton.INTAKE)) {
+            intake.startIntake();
+        } else {
+            intake.stopIntake();
+        }
 		
 		// Get degrees, convert to radians
 		// TODO: This is gonna be here later because we will have a better gyro and it will be possible then - Xander

@@ -14,8 +14,11 @@ public class Climber {
 		motor = new Talon(motorPort);
 	}
 	
-	public void setClimber() {
-		//double speed = joy.getClimber();
-		 motor.set(speed);
+	public void go() {
+	    motor.set(1.0);
 	}
+    
+    public void stop() {
+        motor.set(1.0);
+    }
 }
