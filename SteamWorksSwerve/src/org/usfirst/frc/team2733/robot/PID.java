@@ -93,7 +93,7 @@ public class PID {
 	 */
 	public double getVal(double currentVal, double aimVal) {
 		
-		double returnVal = 0;
+		double returnVal = currentVal;
 		
 		// Current time in ms
 		long currentTime = (long) (Timer.getFPGATimestamp() * 1000);
@@ -108,10 +108,7 @@ public class PID {
 		returnVal += (currentError * P);
 		
 		//Integral term
-		errorSum += (currentError * timeChange);
-		returnVal += errorSum * I;
-		
-		/*if(usingI){
+		if(usingI){
 		    errorSum += (currentError * timeChange);
 			returnVal += errorSum * I;
 		}
@@ -120,7 +117,7 @@ public class PID {
 		    
 		    double derivative = (currentError - previousError)/timeChange;
 			returnVal += derivative * D;
-		} */
+		}
 		
 		lastTime = currentTime;
 		previousError = currentError;
