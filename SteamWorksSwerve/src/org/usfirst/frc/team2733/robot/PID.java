@@ -107,6 +107,7 @@ public class PID {
 		// Proportional term
 		returnVal += (currentError * P);
 		
+		//Integral term
 		errorSum += (currentError * timeChange);
 		returnVal += errorSum * I;
 		

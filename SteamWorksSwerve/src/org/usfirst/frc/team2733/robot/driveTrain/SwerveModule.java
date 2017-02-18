@@ -68,7 +68,7 @@ public class SwerveModule {
 		default:
 			
 		}
-		driveMotor = new DriveMotor(portDrive);
+		driveMotor = new DriveMotor(portDrive, PIEnum.MODULE_DRIVE_P.getCoefficient());
 		rotationMotor = new RotationMotor(portRotation, PIEnum.MODULE_ROTATION_P.getCoefficient(), 
 				PIEnum.MODULE_ROTATION_I.getCoefficient(), analogPort,
 				analogOffset);

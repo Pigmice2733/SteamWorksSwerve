@@ -32,7 +32,6 @@ public class RotationMotor {
 	public void update(double setAngle) {
 		double currentAngle = Robot.correctMod(analogPoten.get(), 1) * 2 * Math.PI;
         
-		System.out.println("angle = " + currentAngle);
         double motorSpeed = PIController.getVal(currentAngle, setAngle);
         
         rotationMotor.set(motorSpeed);

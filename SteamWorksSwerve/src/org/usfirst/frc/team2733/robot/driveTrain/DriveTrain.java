@@ -79,9 +79,9 @@ public class DriveTrain {
     }
 	
 	public void drive() {
-	    climber.update();
-		shooter.update();
-		intake.update();
+	    //climber.update();
+		//shooter.update();
+		//intake.update();
 		
 		// Get degrees, convert to radians
 		// TODO: This is gonna be here later because we will have a better gyro and it will be possible then - Xander

@@ -4,7 +4,8 @@ public enum PIEnum {
 	
 	//P and I coefficients for swerve MODULE_s
 	MODULE_ROTATION_P (1.0),
-	MODULE_ROTATION_I (0.00000001);
+	MODULE_ROTATION_I (0.00000001),
+	MODULE_DRIVE_P (0.5);
 	
 	private double coefficient;
 	
