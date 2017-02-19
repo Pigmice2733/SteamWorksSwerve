@@ -6,18 +6,20 @@ import edu.wpi.first.wpilibj.Joystick;
 
 public class JoystickInput{
 	
-	Joystick lStick;
-	Joystick rStick;
+	private double lastDirection;
+	private Joystick lStick;
+	private Joystick rStick;
 	
 	public JoystickInput(int port0, int port1) {
 		lStick = new Joystick(port0);
 		rStick = new Joystick(port1);
+		lastDirection = 0;
 	}
 	
 	public double getSpeed() {
 	    double speed = lStick.getMagnitude();
 	    
-	    speed = (Math.abs(speed) < 0.1) ? 0 : speed;
+	    speed = (Math.abs(speed) < 0.1) ? 0.01 : speed;
 	    
 	    speed *= speed;
 	    
@@ -32,6 +34,10 @@ public class JoystickInput{
 		double radians = lStick.getDirectionRadians();
 		
 		radians = (radians < 0) ? ((2 * Math.PI) + radians) : radians;
+		
+		radians = (lStick.getMagnitude() < .1) ? lastDirection : radians;
+		
+		lastDirection = radians;
 		
 		return (2 * Math.PI) - radians;
 	}

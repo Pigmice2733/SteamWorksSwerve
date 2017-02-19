@@ -3,7 +3,9 @@ package org.usfirst.frc.team2733.robot;
 import org.usfirst.frc.team2733.robot.autonomous.Autonomous;
 import org.usfirst.frc.team2733.robot.autonomous.DataTransfer;
 import org.usfirst.frc.team2733.robot.driveTrain.DriveTrain;
+import org.usfirst.frc.team2733.robot.enumerations.PortsEnum;
 
+import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.SampleRobot;
 import edu.wpi.first.wpilibj.Timer;
 
@@ -15,7 +17,7 @@ public class Robot extends SampleRobot {
 	
 	@Override
 	protected void robotInit() {
-		//driveTrain = new DriveTrain();
+		driveTrain = new DriveTrain();
 		//auto = new Autonomous(this, driveTrain);
     }
 
@@ -65,12 +67,12 @@ public class Robot extends SampleRobot {
     @Override
     public void test() {
     	
-    	data = new DataTransfer(this);
-//        while (isTest() && isEnabled()) {
-//            driveTrain.joy.logButtonStatus();
-//            Timer.delay(2);
-//        }
-        /*
+    	/*data = new DataTransfer(this);
+        while (isTest() && isEnabled()) {
+            driveTrain.joy.logButtonStatus();
+            Timer.delay(2);
+        }*/
+        
     	AnalogPotentiometer analogPotenZero = new AnalogPotentiometer(PortsEnum.FRONT_LEFT_ROTATION_ANALOG_ENCODER.getPort(), 1, 0);
     	AnalogPotentiometer analogPotenOne = new AnalogPotentiometer(PortsEnum.FRONT_RIGHT_ROTATION_ANALOG_ENCODER.getPort(), 1, 0);
     	AnalogPotentiometer analogPotenTwo = new AnalogPotentiometer(PortsEnum.BACK_LEFT_ROTATION_ANALOG_ENCODER.getPort(), 1, 0);
@@ -83,12 +85,12 @@ public class Robot extends SampleRobot {
 			output += ("Analog BR " + correctMod(analogPotenThree.get(), 1) + "\n");
 			System.out.println(output);
 			Timer.delay(0.5);
-		}*/
+		}
     	
-    	while(isTest() && isEnabled()){
+    	/*while(isTest() && isEnabled()){
     		System.out.println(data.getYaw());
     		Timer.delay(.05);
-    	}
+    	}*/
     	
     	
     }

@@ -104,26 +104,20 @@ public class DriveTrain {
 		}
 	}
 	
-	public void moveSideways (double speed) {
-	    
-	    double direction = 0.5 * Math.PI;
-	    
-	    if(speed < 0) {
+	public void move(double speed, double direction, double rotation) {
+		
+		if(speed < 0) {
 	        speed = -speed;
 	        direction = -direction;
 	    }
+		
+        Vector_Point_Abomination velocityVector = getVelocityVector(speed, direction);
 	    
-	    Vector_Point_Abomination velocityVector = getVelocityVector(speed, direction);
-	    
-	    swerveCalc.setAim(velocityVector, 0);
+	    swerveCalc.setAim(velocityVector, rotation);
 	    
 	    for (SwerveModule module : modules) {
             module.update();
         }
-	}
-	
-	public void moveForwards (double speed) {
-	    
 	}
 	
 	public void stopMovement () {

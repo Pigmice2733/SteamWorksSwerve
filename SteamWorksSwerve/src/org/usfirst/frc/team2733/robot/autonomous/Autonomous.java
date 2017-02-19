@@ -21,8 +21,8 @@ public class Autonomous {
         this.robot = robot;
         this.driveTrain = driveTrain;
         
-        this.lateralMovementPID = new PID(0.01, 0);
-        this.forwardMovementPID = new PID(0.01, 0);
+        this.lateralMovementPID = new PID(0.5, 0);
+        this.forwardMovementPID = new PID(0.05, 0);
         
         this.dataTransfer = new DataTransfer(robot);
         
@@ -44,18 +44,20 @@ public class Autonomous {
                 
                 double lateralMovement = lateralMovementPID.getVal(direction, 0);
                 
-                driveTrain.moveSideways(lateralMovement);
+                driveTrain.move(lateralMovement, 0.5 * Math.PI, 0);
                 
             } else if (distance > 25) {
                 
                 double forwardMovement = forwardMovementPID.getVal(distance, 25);
                 
-                driveTrain.moveForwards(forwardMovement);
+                driveTrain.move(forwardMovement, 0, 0);
                 
             } else {
                 
                 // Place gear
                 
+            	
+            	
                 driveTrain.stopMovement();
                 
             }
@@ -82,7 +84,7 @@ public class Autonomous {
             double startTime = Timer.getFPGATimestamp();
             
             while (distance > 0) {
-                driveTrain.moveForwards(0.1);
+                driveTrain.move(0.1, 0, 0);
                 distance -= dataTransfer.velocityY() * (Timer.getFPGATimestamp() - startTime);
             }
             
