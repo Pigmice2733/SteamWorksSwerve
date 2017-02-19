@@ -6,14 +6,14 @@ import java.util.List;
 import java.util.Map;
 
 import org.usfirst.frc.team2733.robot.JoystickInput;
-import org.usfirst.frc.team2733.robot.JoystickInput.JoyStickButton;
+import org.usfirst.frc.team2733.robot.Robot;
 import org.usfirst.frc.team2733.robot.enumerations.PortsEnum;
 import org.usfirst.frc.team2733.robot.enumerations.WheelPosition;
-import org.usfirst.frc.team2733.robot.swerve.Vector_Point_Abomination;
+import org.usfirst.frc.team2733.robot.swerve.SwerveCalc;
+import org.usfirst.frc.team2733.robot.swerve.Tuple;
 import org.usfirst.frc.team2733.robot.systems.Climber;
 import org.usfirst.frc.team2733.robot.systems.Intake;
 import org.usfirst.frc.team2733.robot.systems.Shooter;
-import org.usfirst.frc.team2733.robot.swerve.SwerveCalc;
 
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -58,12 +58,12 @@ public class DriveTrain {
 	
 	}
 	
-	public static Map<WheelPosition, Vector_Point_Abomination> getSwerveDict() {
-	    Map<WheelPosition, Vector_Point_Abomination> swerveDict = new HashMap<>();
-        swerveDict.put(WheelPosition.FrontLeft, new Vector_Point_Abomination(0.33, 0.33));
-        swerveDict.put(WheelPosition.FrontRight, new Vector_Point_Abomination(0.33, -0.33));
-        swerveDict.put(WheelPosition.BackLeft, new Vector_Point_Abomination(-0.33, 0.33));
-        swerveDict.put(WheelPosition.BackRight, new Vector_Point_Abomination(-0.33, -0.33));
+	public static Map<WheelPosition, Tuple> getSwerveDict() {
+	    Map<WheelPosition, Tuple> swerveDict = new HashMap<>();
+        swerveDict.put(WheelPosition.FrontLeft, new Tuple(0.33, 0.33));
+        swerveDict.put(WheelPosition.FrontRight, new Tuple(0.33, -0.33));
+        swerveDict.put(WheelPosition.BackLeft, new Tuple(-0.33, 0.33));
+        swerveDict.put(WheelPosition.BackRight, new Tuple(-0.33, -0.33));
         
         return swerveDict;
 	}
@@ -93,7 +93,7 @@ public class DriveTrain {
         double direction = joy.getDirection() - headingOffset;
         double rotation = joy.getRotation();
 		
-		Vector_Point_Abomination velocityVector = getVelocityVector(speed, direction - headingOffset);
+		Tuple velocityVector = getVelocityVector(speed, direction - headingOffset);
 		
 		SmartDashboard.putNumber("Direction", direction);
         SmartDashboard.putNumber("Speed", speed);
@@ -111,7 +111,7 @@ public class DriveTrain {
 	        direction = -direction;
 	    }
 		
-        Vector_Point_Abomination velocityVector = getVelocityVector(speed, direction);
+        Tuple velocityVector = getVelocityVector(speed, direction);
 	    
 	    swerveCalc.setAim(velocityVector, rotation);
 	    
@@ -126,11 +126,11 @@ public class DriveTrain {
         }
 	}
 	
-	public static Vector_Point_Abomination getVelocityVector(double speed, double direction) {
+	public static Tuple getVelocityVector(double speed, double direction) {
         // Align our coordinate system with left-handed Cartesian coordinate system
 		direction -= 2 * Math.PI;
 		
-		Vector_Point_Abomination vector = new Vector_Point_Abomination((Math.sin(direction) * speed), (Math.cos(direction) * speed));
+		Tuple vector = new Tuple((Math.sin(direction) * speed), (Math.cos(direction) * speed));
 		
 		System.out.println(vector.getX() + "  :  " + vector.getY());
 		
@@ -141,5 +141,13 @@ public class DriveTrain {
 		for (SwerveModule module : modules) {
 			module.zeroPosition();
 		}
+	}
+	
+	public void printPotentioMeters(){
+		String out = "";
+		for(SwerveModule mod : modules){
+			out += Robot.correctMod(mod.getPotentiometer().get(), 1) + "\n";
+		}
+		System.out.println(out);
 	}
 }

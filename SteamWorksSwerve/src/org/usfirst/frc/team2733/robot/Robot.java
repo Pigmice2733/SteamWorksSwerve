@@ -67,32 +67,10 @@ public class Robot extends SampleRobot {
     @Override
     public void test() {
     	
-    	/*data = new DataTransfer(this);
-        while (isTest() && isEnabled()) {
-            driveTrain.joy.logButtonStatus();
-            Timer.delay(2);
-        }*/
-        
-    	AnalogPotentiometer analogPotenZero = new AnalogPotentiometer(PortsEnum.FRONT_LEFT_ROTATION_ANALOG_ENCODER.getPort(), 1, 0);
-    	AnalogPotentiometer analogPotenOne = new AnalogPotentiometer(PortsEnum.FRONT_RIGHT_ROTATION_ANALOG_ENCODER.getPort(), 1, 0);
-    	AnalogPotentiometer analogPotenTwo = new AnalogPotentiometer(PortsEnum.BACK_LEFT_ROTATION_ANALOG_ENCODER.getPort(), 1, 0);
-    	AnalogPotentiometer analogPotenThree = new AnalogPotentiometer(PortsEnum.BACK_RIGHT_ROTATION_ANALOG_ENCODER.getPort(), 1, 0);
 		while (isTest() && isEnabled()) {
-			String output = "";
-			output += ("Analog FL " + correctMod(analogPotenZero.get(), 1) + "\n");
-			output += ("Analog FR " + correctMod(analogPotenOne.get(), 1) + "\n");
-			output += ("Analog BL " + correctMod(analogPotenTwo.get(), 1) + "\n");
-			output += ("Analog BR " + correctMod(analogPotenThree.get(), 1) + "\n");
-			System.out.println(output);
+			driveTrain.printPotentioMeters();
 			Timer.delay(0.5);
 		}
-    	
-    	/*while(isTest() && isEnabled()){
-    		System.out.println(data.getYaw());
-    		Timer.delay(.05);
-    	}*/
-    	
-    	
     }
     
     public static double correctMod(double number, double modulus) {

@@ -7,6 +7,8 @@ import org.usfirst.frc.team2733.robot.enumerations.WheelPosition;
 import org.usfirst.frc.team2733.robot.swerve.SwerveCalc;
 import org.usfirst.frc.team2733.robot.swerve.SwerveCalc.AngleSpeedObject;
 
+import edu.wpi.first.wpilibj.AnalogPotentiometer;
+
 public class SwerveModule {
 	
     // angle needs to always be between 0pi and 2pi
@@ -115,5 +117,9 @@ public class SwerveModule {
 		driveMotor.update(0);
 		rotationMotor.update(0);
 	}
-
+	
+	public AnalogPotentiometer getPotentiometer(){
+		return rotationMotor.getPotentiometer();
+	}
+	
 }

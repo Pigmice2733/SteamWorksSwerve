@@ -48,6 +48,9 @@ public class RotationMotor {
 	public void reset(){
 		PIController.reset();
 		rotationMotor.set(0);
-		
+	}
+	
+	public AnalogPotentiometer getPotentiometer(){
+		return analogPoten;
 	}
 }
