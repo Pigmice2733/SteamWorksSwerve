@@ -70,9 +70,36 @@ public class SwerveModule {
 		default:
 			
 		}
+		
+		PIEnum P_Coef;
+		PIEnum I_Coef;
+		
+		switch (wheelPos) {
+		case FrontRight:
+			P_Coef = PIEnum.MODULE_ROTATION_FRONT_RIGHT_P;
+			I_Coef = PIEnum.MODULE_ROTATION_FRONT_RIGHT_I;
+			break;
+		case FrontLeft:
+			P_Coef = PIEnum.MODULE_ROTATION_FRONT_LEFT_P;
+			I_Coef = PIEnum.MODULE_ROTATION_FRONT_LEFT_I;
+			break;
+		case BackRight:
+			P_Coef = PIEnum.MODULE_ROTATION_BACK_RIGHT_P;
+			I_Coef = PIEnum.MODULE_ROTATION_BACK_RIGHT_I;
+			break;
+		case BackLeft:
+			P_Coef = PIEnum.MODULE_ROTATION_BACK_LEFT_P;
+			I_Coef = PIEnum.MODULE_ROTATION_BACK_LEFT_I;
+			break;
+		default:
+			P_Coef = PIEnum.MODULE_ROTATION_FRONT_RIGHT_P;
+			I_Coef = PIEnum.MODULE_ROTATION_FRONT_RIGHT_I;
+			break;
+		}
+		
 		driveMotor = new DriveMotor(portDrive, PIEnum.MODULE_DRIVE_P.getCoefficient(), PIEnum.MODULE_DRIVE_I.getCoefficient());
-		rotationMotor = new RotationMotor(portRotation, PIEnum.MODULE_ROTATION_P.getCoefficient(), 
-				PIEnum.MODULE_ROTATION_I.getCoefficient(), analogPort,
+		rotationMotor = new RotationMotor(portRotation, P_Coef.getCoefficient(), 
+				I_Coef.getCoefficient(), analogPort,
 				analogOffset);
 		
 		this.swerveCalc = swerveCalc;
