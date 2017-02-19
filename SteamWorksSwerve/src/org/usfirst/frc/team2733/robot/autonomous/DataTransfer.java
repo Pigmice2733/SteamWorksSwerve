@@ -11,7 +11,7 @@ public class DataTransfer {
 	public DataTransfer(Robot robot) {
 		networkTable = NetworkTable.getTable("datatable");
 		
-		while (!networkTable.isConnected() && robot.isTest() && robot.isEnabled()) {
+		while (!networkTable.isConnected() && robot.isEnabled()) {
 		    Timer.delay(0.2);
             System.out.println("Uhh.. The network table still isn't connected. You should start to panic.");
         }
@@ -37,5 +37,9 @@ public class DataTransfer {
 	
 	public double velocityY() {
 	    return networkTable.getNumber("velocityY", 0);
+	}
+	
+	public double getYaw() {
+		return networkTable.getNumber("yaw", 0);
 	}
 }
