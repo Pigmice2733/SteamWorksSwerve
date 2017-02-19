@@ -12,6 +12,8 @@ public class RotationMotor {
 	
 	private AnalogPotentiometer analogPoten;
 	
+	double motorSpeed;
+	
 	//private final AnalogInput anaInput;
 	private final PID PIController;
 	
@@ -23,6 +25,8 @@ public class RotationMotor {
 		PIController = new PID(P, I);
 		PIController.setMaxMin(2 * Math.PI, 0);
 		PIController.setContinuous(true);
+		
+		motorSpeed = 0;
 	}
 	
 	// Get angle to drive at, update PID and motor
@@ -32,7 +36,7 @@ public class RotationMotor {
 	public void update(double setAngle) {
 		double currentAngle = Robot.correctMod(analogPoten.get(), 1) * 2 * Math.PI;
         
-        double motorSpeed = PIController.getVal(currentAngle, setAngle);
+        motorSpeed = PIController.getVal(currentAngle, setAngle);
         
         rotationMotor.set(motorSpeed);
 	}

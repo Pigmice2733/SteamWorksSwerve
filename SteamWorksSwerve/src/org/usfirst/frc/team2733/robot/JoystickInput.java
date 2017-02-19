@@ -37,8 +37,8 @@ public class JoystickInput{
 	}
 	
 	public double getRotation() {
-	    double rotationSpeed = rStick.getRawAxis(0);
-		rotationSpeed = (Math.abs(rotationSpeed) < 0.1) ? 0 : rStick.getRawAxis(0);
+	    double rotationSpeed = -rStick.getRawAxis(0);
+		rotationSpeed = (Math.abs(rotationSpeed) < 0.1) ? 0 : rotationSpeed;
 		return rotationSpeed * ConversionEnum.ROTATION_SPEED_RANGE_TO_M_PER_S.getConversion();
 	}
 	

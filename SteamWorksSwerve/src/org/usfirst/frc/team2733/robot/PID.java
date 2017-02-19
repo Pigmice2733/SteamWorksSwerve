@@ -14,8 +14,8 @@ public class PID {
 	//the running total of the success of the movement
 	double errorSum, previousError;
 	
-	// System time in ms at last update
-	long lastTime;
+	// System time in seconds at last update
+	double lastTime;
 	
 	boolean continuous;
 	
@@ -91,13 +91,12 @@ public class PID {
 	 * The intended state of the object
 	 * @return output value for process using PID controller
 	 */
-	public double getVal(double currentVal, double aimVal) {
-	    
-		// Current time in ms
-		long currentTime = (long) (Timer.getFPGATimestamp() * 1000);
+	public double getVal(double currentVal, double aimVal) {		
+		// Current time in seconds
+		double currentTime = Timer.getFPGATimestamp();
 		
 		// Time elapsed since last update
-		long timeChange = currentTime - lastTime;
+		double timeChange = currentTime - lastTime;
 		
 		// The current error
 		double currentError = getContinuousError(aimVal - currentVal);
@@ -132,7 +131,6 @@ public class PID {
 	        }
 	      }
 	    }
-	    
 	    return error;
 	}
 	

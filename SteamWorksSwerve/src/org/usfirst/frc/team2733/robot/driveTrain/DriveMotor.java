@@ -9,18 +9,20 @@ public class DriveMotor {
 
 	private final Talon driveMotor;
 	
-	private double currentSpeed = 0;
+	private double currentSpeed;
 	
 	private final PID PIController;
 	
-	public DriveMotor(int motorPort, double P){
+	public DriveMotor(int motorPort, double P, double I){
 		driveMotor = new Talon(motorPort);
-		PIController = new PID(P);
+		PIController = new PID(P, I);
+		
+		currentSpeed = 0;
 	}
 	
 	// Get speed to drive at, update PID and motor
 	public void update(double speed) {
-		currentSpeed = PIController.getVal(currentSpeed, speed);
+		currentSpeed += PIController.getVal(currentSpeed, speed);
 		
 		System.out.println("current speed: " + currentSpeed / ConversionEnum.DRIVE_SPEED_RANGE_TO_M_PER_S.getConversion());
 		
