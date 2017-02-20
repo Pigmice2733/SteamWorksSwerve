@@ -9,7 +9,7 @@ public class DataTransfer {
 	NetworkTable networkTable;
 	
 	public DataTransfer(Robot robot) {
-		networkTable = NetworkTable.getTable("datatable");
+		networkTable = NetworkTable.getTable("tracker");
 		
 		while (!networkTable.isConnected() && robot.isEnabled()) {
 		    Timer.delay(0.2);
@@ -41,5 +41,13 @@ public class DataTransfer {
 	
 	public double getYaw() {
 		return networkTable.getNumber("yaw", 0);
+	}
+	
+	public double getPitch() {
+		return networkTable.getNumber("pitch", 0);
+	}
+	
+	public double getRoll() {
+		return networkTable.getNumber("roll", 0);
 	}
 }

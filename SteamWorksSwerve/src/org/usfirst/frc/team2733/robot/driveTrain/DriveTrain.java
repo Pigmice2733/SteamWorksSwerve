@@ -86,7 +86,7 @@ public class DriveTrain {
 		// Get degrees, convert to radians
 		// TODO: This is gonna be here later because we will have a better gyro and it will be possible then - Xander
         // double headingOffset = Math.toRadians(gyro.getAngle());
-		double headingOffset = 0;
+		double headingOffset = 0; //Robot.correctMod((Robot.data.getYaw() + 90 * (180 / Math.PI)), Math.PI * 2);
         
         double speed = joy.getSpeed();
         
@@ -143,11 +143,10 @@ public class DriveTrain {
 		}
 	}
 	
-	public void printPotentioMeters(){
-		String out = "";
+	public void printPotentiometers(){
 		for(SwerveModule mod : modules){
-			out += Robot.correctMod(mod.getPotentiometer().get(), 1) + "\n";
+			mod.printEncoderValue();
 		}
-		System.out.println(out);
+		System.out.println("");
 	}
 }

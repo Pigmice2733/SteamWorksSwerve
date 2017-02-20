@@ -50,7 +50,7 @@ public class RotationMotor {
 		rotationMotor.set(0);
 	}
 	
-	public AnalogPotentiometer getPotentiometer(){
-		return analogPoten;
+	public void printEncoder(String wheelPos){
+		System.out.println(wheelPos + Robot.correctMod(analogPoten.get(), 1));
 	}
 }

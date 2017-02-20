@@ -145,8 +145,8 @@ public class SwerveModule {
 		rotationMotor.update(0);
 	}
 	
-	public AnalogPotentiometer getPotentiometer(){
-		return rotationMotor.getPotentiometer();
+	public void printEncoderValue(){
+		rotationMotor.printEncoder(wheelPos.toString() + ": ");
 	}
 	
 }

@@ -13,7 +13,7 @@ public class Robot extends SampleRobot {
 	
 	public static DriveTrain driveTrain;
 	public static Autonomous auto;
-	DataTransfer data;
+	public static DataTransfer data;
 	
 	@Override
 	protected void robotInit() {
@@ -58,6 +58,8 @@ public class Robot extends SampleRobot {
 	
     @Override
     public void operatorControl() {
+    	//data = new DataTransfer (this);
+    	
     	while (isOperatorControl() && isEnabled()) {
             driveTrain.drive();
             Timer.delay(0.05);
@@ -66,9 +68,11 @@ public class Robot extends SampleRobot {
     
     @Override
     public void test() {
+    	//data = new DataTransfer(this);
     	
 		while (isTest() && isEnabled()) {
-			driveTrain.printPotentioMeters();
+			//System.out.println("Y: " + data.getYaw() + "  | P: " + data.getPitch() + "  | R: " + data.getRoll());
+			driveTrain.printPotentiometers();
 			Timer.delay(0.5);
 		}
     }
