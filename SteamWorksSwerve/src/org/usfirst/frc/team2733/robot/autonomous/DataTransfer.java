@@ -27,7 +27,7 @@ public class DataTransfer {
 	    return networkTable.getNumber("direction", 0);
 	}
 	
-	public void autonoousOverMessage() {
+	public void autonomousOverMessage() {
 		networkTable.putBoolean("autoOver", true);
 	}
 	
