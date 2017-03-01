@@ -7,17 +7,15 @@ import edu.wpi.first.wpilibj.Joystick;
 public class JoystickInput{
 	
 	private double lastDirection;
-	private Joystick lStick;
-	private Joystick rStick;
+	private Joystick joy;
 	
 	public JoystickInput(int port0, int port1) {
-		lStick = new Joystick(port0);
-		rStick = new Joystick(port1);
+		joy = new Joystick(port0);
 		lastDirection = 0;
 	}
 	
 	public double getSpeed() {
-	    double speed = lStick.getMagnitude();
+	    double speed = joy.getMagnitude();//* getSpeedMulti();
 	    
 	    speed = (Math.abs(speed) < 0.1) ? 0.01 : speed;
 	    
@@ -30,12 +28,26 @@ public class JoystickInput{
 		return speed * ConversionEnum.DRIVE_SPEED_RANGE_TO_M_PER_S.getConversion();
 	}
 	
+	public double getSpeedMulti() {
+		double speedMulti = joy.getRawAxis(2);
+		
+		speedMulti *= -0.5;
+		speedMulti += 1.0;
+		
+		if(speedMulti > 0.1) {
+			return speedMulti;
+		} else {
+			return 0.1;
+		}
+		
+	}
+	
 	public double getDirection() {
-		double radians = lStick.getDirectionRadians();
+		double radians = joy.getDirectionRadians();
 		
 		radians = (radians < 0) ? ((2 * Math.PI) + radians) : radians;
 		
-		radians = (lStick.getMagnitude() < .1) ? lastDirection : radians;
+		radians = (joy.getMagnitude() < .1) ? lastDirection : radians;
 		
 		lastDirection = radians;
 		
@@ -43,13 +55,13 @@ public class JoystickInput{
 	}
 	
 	public double getRotation() {
-	    double rotationSpeed = -rStick.getRawAxis(0);
+	    double rotationSpeed = joy.getRawAxis(5);// * getSpeedMulti();
 		rotationSpeed = (Math.abs(rotationSpeed) < 0.1) ? 0 : rotationSpeed;
 		return rotationSpeed * ConversionEnum.ROTATION_SPEED_RANGE_TO_M_PER_S.getConversion();
 	}
 	
 	public boolean isButtonPressed(JoyStickButton button) {
-	    return lStick.getRawButton(button.getRawButtonNumber());
+	    return joy.getRawButton(button.getRawButtonNumber());
 	}
 	
 	public enum JoyStickButton {
