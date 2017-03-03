@@ -15,21 +15,21 @@ public class JoystickInput{
 	}
 	
 	public double getSpeed() {
-	    double speed = joy.getMagnitude();//* getSpeedMulti();
+	    double speed = joy.getMagnitude();
 	    
-	    speed = (Math.abs(speed) < 0.1) ? 0.01 : speed;
+	    speed = (Math.abs(speed) < 0.1) ? 0 : speed;
 	    
 	    speed *= speed;
 	    
 	    speed = (Math.abs(speed) > 1.0) ? (Math.signum(speed) * 1.0) : speed;
 	    
-	    speed *= 0.5;
+	    speed *= 0.4;
 	    
 		return speed * ConversionEnum.DRIVE_SPEED_RANGE_TO_M_PER_S.getConversion();
 	}
 	
 	public double getSpeedMulti() {
-		double speedMulti = joy.getRawAxis(2);
+		double speedMulti = joy.getRawAxis(3);
 		
 		speedMulti *= -0.5;
 		speedMulti += 1.0;
@@ -55,8 +55,10 @@ public class JoystickInput{
 	}
 	
 	public double getRotation() {
-	    double rotationSpeed = joy.getRawAxis(5);// * getSpeedMulti();
+	    double rotationSpeed = -joy.getTwist() * getSpeedMulti();
+	    //double rotationSpeed = joy2.getRawAxis(0);
 		rotationSpeed = (Math.abs(rotationSpeed) < 0.1) ? 0 : rotationSpeed;
+		rotationSpeed *= 0.4;
 		return rotationSpeed * ConversionEnum.ROTATION_SPEED_RANGE_TO_M_PER_S.getConversion();
 	}
 	

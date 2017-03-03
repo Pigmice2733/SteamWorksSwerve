@@ -1,6 +1,5 @@
-package org.usfirst.frc.team2733.robot.autonomous;
+package org.usfirst.frc.team2733.robot;
 
-import org.usfirst.frc.team2733.robot.Robot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 

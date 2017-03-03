@@ -148,5 +148,8 @@ public class SwerveModule {
 	public void printEncoderValue(){
 		rotationMotor.printEncoder(wheelPos.toString() + ": ");
 	}
+	public void printActualEncoderValue(){
+		rotationMotor.printEncoder(wheelPos.toString() + ": ");
+	}
 	
 }
