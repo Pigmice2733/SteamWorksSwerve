@@ -106,9 +106,28 @@ public class SwerveModule {
 		this.wheelPos = wheelPos;
 	}
 	
+	private static final double MAX_ACCELERATION = 10.208 - 3;
+	
+	double lastSpeed = 0;
+	// In order to allow update to be called at any interval
+	float lastUpdate = 0;
+	
 	//updates the components
 	public void update() {
 		double targSpeed = swerveCalc.getVelAim(wheelPos);
+		
+		float deltaTime = System.currentTimeMillis() - lastUpdate;
+		double acceleration = (targSpeed - lastSpeed) / (deltaTime);
+		if (acceleration >= MAX_ACCELERATION) {
+			acceleration = MAX_ACCELERATION;
+		} else if (acceleration <= -MAX_ACCELERATION) {
+			acceleration = -MAX_ACCELERATION;
+		}
+		targSpeed = acceleration * deltaTime + lastSpeed;
+		
+		lastSpeed = targSpeed;
+		lastUpdate = System.currentTimeMillis();
+		
 		double targAngle = swerveCalc.getRotAim(wheelPos);
 		
 		AngleSpeedObject angleSpeedObject = swerveCalc.calcOptimalHeading(targSpeed, targAngle, angle);
