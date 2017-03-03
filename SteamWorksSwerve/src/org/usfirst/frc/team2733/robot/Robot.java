@@ -2,9 +2,7 @@ package org.usfirst.frc.team2733.robot;
 
 import org.usfirst.frc.team2733.robot.autonomous.Autonomous;
 import org.usfirst.frc.team2733.robot.driveTrain.DriveTrain;
-import org.usfirst.frc.team2733.robot.enumerations.PortsEnum;
 
-import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.SampleRobot;
 import edu.wpi.first.wpilibj.Timer;
 
