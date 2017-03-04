@@ -49,4 +49,12 @@ public class DataTransfer {
 	public double getRoll() {
 		return networkTable.getNumber("roll", 0);
 	}
+	
+	public void pingTable() {
+		if(networkTable.isConnected()) {
+			System.out.println("You are connected to the Tracker NetworkTable. Good job.");
+		} else {
+			System.out.println("You suck at programming. Your network table doesn't even work.");
+		}
+	}
 }

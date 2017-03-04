@@ -16,6 +16,7 @@ public class Robot extends SampleRobot {
 	protected void robotInit() {
 		driveTrain = new DriveTrain();
 		//auto = new Autonomous(this, driveTrain);
+		data = new DataTransfer(this);
     }
 
 	/** 
@@ -59,22 +60,39 @@ public class Robot extends SampleRobot {
     	
     	while (isOperatorControl() && isEnabled()) {
             driveTrain.drive();
+            System.out.println(data.getYaw());
+            data.pingTable();
             Timer.delay(0.05);
         }
     }
     
     @Override
     public void test() {
-    	//data = new DataTransfer(this);
-    	
-		while (isTest() && isEnabled()) {
-			//System.out.println("Y: " + data.getYaw() + "  | P: " + data.getPitch() + "  | R: " + data.getRoll());
-			driveTrain.printPotentiometers();
-			Timer.delay(0.5);
-		}
+    	while(isEnabled() && isTest()) {
+    		networkTableTest();
+    		Timer.delay(1);
+    	}
     }
     
     public static double correctMod(double number, double modulus) {
     	return number < 0 ? number % modulus + modulus : number % modulus;
     }
-}
+    
+    public void potentiometerCalibration() {
+    	driveTrain.printPotentiometers();
+    }
+    
+    public void networkTableTest() {
+    	while(isEnabled() && isTest()) {
+    		String visionTrackingData = "";
+    		data.pingTable();
+    		/*visionTrackingData += "Distance: " + dataTransfer.getDistance() + "\n";
+    		visionTrackingData += "Direction: " + dataTransfer.getDirection() + "\n";*/
+    		
+    		visionTrackingData += "Gyro: " + data.getYaw() + "\n";
+    		
+    		System.out.println(visionTrackingData);
+    		
+    	}
+    }
+    }
