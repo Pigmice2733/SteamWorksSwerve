@@ -23,7 +23,7 @@ public class JoystickInput{
 	    
 	    speed = (Math.abs(speed) > 1.0) ? (Math.signum(speed) * 1.0) : speed;
 	    
-	    speed *= 0.4;
+	    // speed *= 0.4;
 	    
 		return speed * ConversionEnum.DRIVE_SPEED_RANGE_TO_M_PER_S.getConversion();
 	}
