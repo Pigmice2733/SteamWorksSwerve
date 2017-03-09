@@ -74,10 +74,8 @@ public class Robot extends SampleRobot {
     
     @Override
     public void test() {
-<<<<<<< HEAD
     	while(isEnabled() && isTest()) {
     		//networkTableTest();
-=======
     	// Don't enable the line below unless you know what you are doing
     	//calibrateEncoders();
     	
@@ -86,6 +84,7 @@ public class Robot extends SampleRobot {
 >>>>>>> branch 'master' of https://github.com/Pigmice2733/SteamWorksSwerve.git
     		Timer.delay(1);
     	}*/
+    	}
     }
     
     public void calibrateEncoders() {

@@ -7,11 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-<<<<<<< HEAD
 import org.usfirst.frc.team2733.robot.DataTransfer;
-=======
 import org.usfirst.frc.team2733.robot.AutoCalibration;
->>>>>>> branch 'master' of https://github.com/Pigmice2733/SteamWorksSwerve.git
 import org.usfirst.frc.team2733.robot.JoystickInput;
 import org.usfirst.frc.team2733.robot.Robot;
 import org.usfirst.frc.team2733.robot.enumerations.PortsEnum;
@@ -45,15 +42,12 @@ public class DriveTrain {
 	private Climber climber;
 	private Shooter shooter;
 	private Intake intake;
-<<<<<<< HEAD
+
 	
 	public DataTransfer data;
-	
-=======
 
 	private boolean isReady;
 
->>>>>>> branch 'master' of https://github.com/Pigmice2733/SteamWorksSwerve.git
 	public DriveTrain() {// implementation for swerve
 
 		this.joy = new JoystickInput(PortsEnum.JOYSTICK_ONE.getPort(), PortsEnum.JOYSTICK_TWO.getPort());
@@ -120,7 +114,6 @@ public class DriveTrain {
 		// intake.update();
 
 		// Get degrees, convert to radians
-<<<<<<< HEAD
 		// TODO: This is gonna be here later because we will have a better gyro and it will be possible then - Xander
         // double headingOffset = Math.toRadians(gyro.getAngle());
 	    double headingOffset = 0;
@@ -135,20 +128,7 @@ public class DriveTrain {
         double direction = joy.getDirection() - headingOffset;
         double rotation = joy.getRotation();
 		
-=======
-		// TODO: This is gonna be here later because we will have a better gyro
-		// and it will be possible then - Xander
-		// double headingOffset = Math.toRadians(gyro.getAngle());
-		double headingOffset = 0; // Robot.correctMod((Robot.data.getYaw() + 90
-									// * (180 / Math.PI)), Math.PI * 2);
-		//headingOffset = Robot.correctMod(Robot.data.getYaw() + 90 * (180 / Math.PI), Math.PI * 2);
 
-		double speed = joy.getSpeed();
-
-		double direction = joy.getDirection() - headingOffset;
-		double rotation = joy.getRotation();
-
->>>>>>> branch 'master' of https://github.com/Pigmice2733/SteamWorksSwerve.git
 		Tuple velocityVector = getVelocityVector(speed, direction - headingOffset);
 
 		SmartDashboard.putNumber("Direction", direction);
