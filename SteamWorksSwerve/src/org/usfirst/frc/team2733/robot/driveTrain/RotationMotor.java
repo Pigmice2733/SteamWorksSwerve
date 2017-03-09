@@ -53,4 +53,8 @@ public class RotationMotor {
 	public void printEncoder(String wheelPos){
 		System.out.println(wheelPos + Robot.correctMod(analogPoten.get(), 1));
 	}
+	
+	public double getPoten() {
+		return analogPoten.get();
+	}
 }

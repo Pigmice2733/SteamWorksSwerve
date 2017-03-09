@@ -1,7 +1,11 @@
 package org.usfirst.frc.team2733.robot;
 
+import java.io.IOException;
+import java.util.Properties;
+
 import org.usfirst.frc.team2733.robot.autonomous.Autonomous;
 import org.usfirst.frc.team2733.robot.driveTrain.DriveTrain;
+import org.usfirst.frc.team2733.robot.enumerations.WheelPosition;
 
 import edu.wpi.first.wpilibj.SampleRobot;
 import edu.wpi.first.wpilibj.Timer;
@@ -14,6 +18,7 @@ public class Robot extends SampleRobot {
 	
 	@Override
 	protected void robotInit() {
+		AutoCalibration.logConfigurationFile();
 		driveTrain = new DriveTrain();
 		//auto = new Autonomous(this, driveTrain);
 		data = new DataTransfer(this);
@@ -25,7 +30,7 @@ public class Robot extends SampleRobot {
 	 */
 	@Override
 	public void autonomous() {
-		
+		driveTrain.ready(false);
 		
 		//auto.startAutonomous();
 		
@@ -56,6 +61,7 @@ public class Robot extends SampleRobot {
 	
     @Override
     public void operatorControl() {
+		driveTrain.ready(false);
     	//data = new DataTransfer (this);
     	
     	while (isOperatorControl() && isEnabled()) {
@@ -68,10 +74,36 @@ public class Robot extends SampleRobot {
     
     @Override
     public void test() {
+<<<<<<< HEAD
     	while(isEnabled() && isTest()) {
     		//networkTableTest();
+=======
+    	// Don't enable the line below unless you know what you are doing
+    	//calibrateEncoders();
+    	
+    	/*while (isEnabled() && isTest()) {
+    		networkTableTest();
+>>>>>>> branch 'master' of https://github.com/Pigmice2733/SteamWorksSwerve.git
     		Timer.delay(1);
-    	}
+    	}*/
+    }
+    
+    public void calibrateEncoders() {
+
+		driveTrain.ready(true);
+    	
+    	Properties properties = new Properties();
+    	properties.setProperty("FL", Double.toString(-driveTrain.getEncoderValue(WheelPosition.FrontLeft)));
+    	properties.setProperty("FR", Double.toString(-driveTrain.getEncoderValue(WheelPosition.FrontRight)));
+    	properties.setProperty("BL", Double.toString(-driveTrain.getEncoderValue(WheelPosition.BackLeft)));
+    	properties.setProperty("BR", Double.toString(-driveTrain.getEncoderValue(WheelPosition.BackRight)));
+
+    	try {
+			AutoCalibration.saveConfigurationFile(properties);
+	    	AutoCalibration.logConfigurationFile();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
     }
     
     public static double correctMod(double number, double modulus) {

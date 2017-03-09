@@ -26,13 +26,12 @@ public class SwerveModule {
 	 * @param wheelPos
 	 * @param swerveCalc
 	 */
-	public SwerveModule(WheelPosition wheelPos, SwerveCalc swerveCalc) {
+	public SwerveModule(WheelPosition wheelPos, SwerveCalc swerveCalc, double analogOffset) {
 		int portRotation = -1;
 		int portDrive = -1;
 		int portEncoder1 = -1;
 		int portEncoder2 = -1;
 		int analogPort = -1;
-		double analogOffset = 0;
 		
 		switch(wheelPos) {
 		case FrontRight:
@@ -41,7 +40,6 @@ public class SwerveModule {
 			portEncoder1 = PortsEnum.FRONT_RIGHT_ROTATION_DIGITAL_ENCODER_ONE.getPort();
 			portEncoder2 = PortsEnum.FRONT_RIGHT_ROTATION_DIGITAL_ENCODER_TWO.getPort();
 			analogPort = PortsEnum.FRONT_RIGHT_ROTATION_ANALOG_ENCODER.getPort();
-			analogOffset = ConversionEnum.ANALOG_POTENTIONOMETER_WHEEL_FRONT_RIGHT.getConversion();
 			break;
 		case BackRight:
 			portRotation = PortsEnum.BACK_RIGHT_ROTATION_MOTOR.getPort();
@@ -49,7 +47,6 @@ public class SwerveModule {
 			portEncoder1 = PortsEnum.BACK_RIGHT_ROTATION_DIGITAL_ENCODER_ONE.getPort();
 			portEncoder2 = PortsEnum.BACK_RIGHT_ROTATION_DIGITAL_ENCODER_TWO.getPort();
 			analogPort = PortsEnum.BACK_RIGHT_ROTATION_ANALOG_ENCODER.getPort();
-			analogOffset = ConversionEnum.ANALOG_POTENTIONOMETER_WHEEL_BACK_RIGHT.getConversion();
 			break;
 		case FrontLeft:
 			portRotation = PortsEnum.FRONT_LEFT_ROTATION_MOTOR.getPort();
@@ -57,7 +54,6 @@ public class SwerveModule {
 			portEncoder1 = PortsEnum.FRONT_LEFT_ROTATION_DIGITAL_ENCODER_ONE.getPort();
 			portEncoder2 = PortsEnum.FRONT_LEFT_ROTATION_DIGITAL_ENCODER_TWO.getPort();
 			analogPort = PortsEnum.FRONT_LEFT_ROTATION_ANALOG_ENCODER.getPort();
-			analogOffset = ConversionEnum.ANALOG_POTENTIONOMETER_WHEEL_FRONT_LEFT.getConversion();
 			break;
 		case BackLeft:
 			portRotation = PortsEnum.BACK_LEFT_ROTATION_MOTOR.getPort();
@@ -65,7 +61,6 @@ public class SwerveModule {
 			portEncoder1 = PortsEnum.BACK_LEFT_ROTATION_DIGITAL_ENCODER_ONE.getPort();
 			portEncoder2 = PortsEnum.BACK_LEFT_ROTATION_DIGITAL_ENCODER_TWO.getPort();
 			analogPort = PortsEnum.BACK_LEFT_ROTATION_ANALOG_ENCODER.getPort();
-			analogOffset = ConversionEnum.ANALOG_POTENTIONOMETER_WHEEL_BACK_LEFT.getConversion();
 			break;
 		default:
 			
@@ -167,11 +162,19 @@ public class SwerveModule {
 		rotationMotor.update(0);
 	}
 	
-	public void printEncoderValue(){
+	public void printEncoderValue() {
 		rotationMotor.printEncoder(wheelPos.toString() + ": ");
 	}
-	public void printActualEncoderValue(){
+	public void printActualEncoderValue() {
 		rotationMotor.printEncoder(wheelPos.toString() + ": ");
+	}
+	
+	public WheelPosition getWheelPosition() {
+		return wheelPos;
+	}
+	
+	public double getEncoderValue() {
+		return rotationMotor.getPoten();
 	}
 	
 }
