@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.usfirst.frc.team2733.robot.DataTransfer;
 import org.usfirst.frc.team2733.robot.JoystickInput;
 import org.usfirst.frc.team2733.robot.Robot;
 import org.usfirst.frc.team2733.robot.enumerations.PortsEnum;
@@ -40,6 +41,8 @@ public class DriveTrain {
 	private Climber climber;
 	private Shooter shooter;
 	private Intake intake;
+	
+	public DataTransfer data;
 	
 	public DriveTrain() {// implementation for swerve
 
@@ -86,7 +89,12 @@ public class DriveTrain {
 		// Get degrees, convert to radians
 		// TODO: This is gonna be here later because we will have a better gyro and it will be possible then - Xander
         // double headingOffset = Math.toRadians(gyro.getAngle());
-		double headingOffset = 0; //Robot.correctMod((Robot.data.getYaw() + 90 * (180 / Math.PI)), Math.PI * 2);
+	    double headingOffset = 0;
+		if(data.getYaw() >=0 && data.getYaw() <= 360) {
+	     headingOffset = data.getYaw(); 
+		} else {
+		 headingOffset = 0;//Robot.correctMod((Robot.data.getYaw() + 90 * (180 / Math.PI)), Math.PI * 2);
+		}
         
         double speed = joy.getSpeed();
         

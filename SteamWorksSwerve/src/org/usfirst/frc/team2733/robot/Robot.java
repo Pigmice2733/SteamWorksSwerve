@@ -61,7 +61,7 @@ public class Robot extends SampleRobot {
     	while (isOperatorControl() && isEnabled()) {
             driveTrain.drive();
             System.out.println(data.getYaw());
-            data.pingTable();
+            //data.pingTable();
             Timer.delay(0.05);
         }
     }
@@ -69,7 +69,7 @@ public class Robot extends SampleRobot {
     @Override
     public void test() {
     	while(isEnabled() && isTest()) {
-    		networkTableTest();
+    		//networkTableTest();
     		Timer.delay(1);
     	}
     }

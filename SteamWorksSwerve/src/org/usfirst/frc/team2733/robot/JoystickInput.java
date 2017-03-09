@@ -8,9 +8,11 @@ public class JoystickInput{
 	
 	private double lastDirection;
 	private Joystick joy;
+	private Joystick driver2;
 	
 	public JoystickInput(int port0, int port1) {
 		joy = new Joystick(port0);
+		driver2 = new Joystick(port1);
 		lastDirection = 0;
 	}
 	
