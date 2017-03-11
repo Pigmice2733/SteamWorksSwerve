@@ -1,53 +1,66 @@
 package org.usfirst.frc.team2733.robot.systems;
 
 import org.usfirst.frc.team2733.robot.JoystickInput;
-import org.usfirst.frc.team2733.robot.JoystickInput.JoyStickButton;
+import org.usfirst.frc.team2733.robot.enumerations.PortsEnum;
 
+import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.Talon;
-import edu.wpi.first.wpilibj.Timer;
 
-public class Shooter {
+public class ShooterAndBallRelease {
 	
-	Talon motor;
+	Spark motor;
 	Talon ballRelease;
 	
 	JoystickInput joy;
 	
-	double lastTime;
-	
 	boolean isShooting;
 	boolean isAgitating;
 	
-	double speed = 0.6;
-	double windowSpeed = 0.1;
+	double speed1 = 0.75;
+    double speed2 = 0.7;
+    double speed3 = 0.6;
+	double windowSpeed = 0.8;
 	
-	public Shooter(int motorPort, int servoPort, JoystickInput joy) {
-		motor = new Talon(motorPort);
-		ballRelease = new Talon(servoPort);
+	public ShooterAndBallRelease(JoystickInput joy) {
+	    this.joy = joy;
+		motor = new Spark(PortsEnum.SHOOTER.getPort());
+		ballRelease = new Talon(PortsEnum.BALL_RELEASE.getPort());
 		isShooting = false;
 		isAgitating = false;
-		lastTime = Timer.getFPGATimestamp();
-		this.joy = joy;
 	}
 	
 	public void update () {
-	    if (isShooting == false && joy.isButtonPressed(JoyStickButton.SHOOTER)) {
+	    if (joy.getShooter1()) {
+	        motor.set(speed1);
+	    //} else if (joy.getShooter2()) {
+	        //motor.set(speed2);
+	    //} else if (joy.getShooter3()) {
+	      //  motor.set(speed3);
+	    } else {
+	        motor.disable();
+	    }
+	    if (joy.getBallRelease()) {
+	        ballRelease.set(windowSpeed);
+	    } else {
+	        ballRelease.disable();
+	    }
+	    /*if (isShooting == false && joy.getShooter()) {
 	        lastTime = Timer.getFPGATimestamp();
 	        isShooting = true;
 	        motor.set(speed);
-	    } else if (isAgitating == true && !joy.isButtonPressed(JoyStickButton.SHOOTER)) {
+	    } else if (isAgitating == true && !joy.getShooter()) {
 	        lastTime = Timer.getFPGATimestamp();
 	        isAgitating = false;
 	        ballRelease.disable();
 	    } else if (isShooting == true && isAgitating == false && (Timer.getFPGATimestamp() - lastTime) > 0.5){
-	        if(joy.isButtonPressed(JoyStickButton.SHOOTER)) {
+	        if(joy.getShooter()) {
 	            isAgitating = true;
 	            ballRelease.set(windowSpeed);
 	        } else {
 	            isShooting = false;
 	            motor.disable();
 	        }
-	    }
+	    }*/
 	}
 	
 	

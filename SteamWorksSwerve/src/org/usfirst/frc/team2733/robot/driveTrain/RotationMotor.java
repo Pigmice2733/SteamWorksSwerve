@@ -3,12 +3,13 @@ package org.usfirst.frc.team2733.robot.driveTrain;
 import org.usfirst.frc.team2733.robot.PID;
 import org.usfirst.frc.team2733.robot.Robot;
 
+import com.ctre.CANTalon;
+
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
-import edu.wpi.first.wpilibj.Spark;
 
 public class RotationMotor {
 
-	private final Spark rotationMotor;
+	private final CANTalon rotationMotor;
 	
 	private AnalogPotentiometer analogPoten;
 	
@@ -18,7 +19,7 @@ public class RotationMotor {
 	private final PID PIController;
 	
 	public RotationMotor(int motorPort, double P, double I, int analogPort, double analogOffset) {
-	    rotationMotor = new Spark(motorPort);
+	    rotationMotor = new CANTalon(motorPort);
 		
 		analogPoten = new AnalogPotentiometer(analogPort, 1, analogOffset);
 		
@@ -44,13 +45,18 @@ public class RotationMotor {
 	public void disable() {
 		rotationMotor.disable();
 	}
+
+    public void delete() {
+        rotationMotor.delete();
+        analogPoten.free();
+    }
 	
-	public void reset(){
+	public void reset() {
 		PIController.reset();
 		rotationMotor.set(0);
 	}
 	
-	public void printEncoder(String wheelPos){
+	public void printEncoder(String wheelPos) {
 		System.out.println(wheelPos + Robot.correctMod(analogPoten.get(), 1));
 	}
 	

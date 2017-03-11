@@ -39,7 +39,7 @@ public class DataTransfer {
 	}
 	
 	public double getYaw() {
-		return networkTable.getNumber("yaw", 0);
+	    return Math.toRadians(networkTable.getNumber("yaw", 0));
 	}
 	
 	public double getPitch() {

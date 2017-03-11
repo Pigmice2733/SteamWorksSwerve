@@ -10,14 +10,14 @@ import java.util.Properties;
 import org.usfirst.frc.team2733.robot.DataTransfer;
 import org.usfirst.frc.team2733.robot.AutoCalibration;
 import org.usfirst.frc.team2733.robot.JoystickInput;
-import org.usfirst.frc.team2733.robot.Robot;
+import org.usfirst.frc.team2733.robot.TankDrive;
 import org.usfirst.frc.team2733.robot.enumerations.PortsEnum;
 import org.usfirst.frc.team2733.robot.enumerations.WheelPosition;
 import org.usfirst.frc.team2733.robot.swerve.SwerveCalc;
 import org.usfirst.frc.team2733.robot.swerve.Tuple;
 import org.usfirst.frc.team2733.robot.systems.Climber;
 import org.usfirst.frc.team2733.robot.systems.Intake;
-import org.usfirst.frc.team2733.robot.systems.Shooter;
+import org.usfirst.frc.team2733.robot.systems.ShooterAndBallRelease;
 
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -37,22 +37,24 @@ public class DriveTrain {
 
 	public Gyro gyro;
 
-	public SwerveCalc swerveCalc;
+	public TankDrive tankDrive;
+	//public SwerveCalc swerveCalc;
 
 	private Climber climber;
-	private Shooter shooter;
+	private ShooterAndBallRelease shooter;
 	private Intake intake;
 
-	
 	public DataTransfer data;
-
-	private boolean isReady;
 
 	public DriveTrain() {// implementation for swerve
 
 		this.joy = new JoystickInput(PortsEnum.JOYSTICK_ONE.getPort(), PortsEnum.JOYSTICK_TWO.getPort());
+		intake = new Intake(joy);
+		climber = new Climber(joy);
+		shooter = new ShooterAndBallRelease(joy);
 
-		swerveCalc = new SwerveCalc(getSwerveDict());
+        tankDrive = new TankDrive(joy);
+		//swerveCalc = new SwerveCalc(getSwerveDict());
 
 		/*
 		 * climber = new Climber(PortsEnum.CLIMBER.getPort(), joy); shooter =
@@ -62,8 +64,11 @@ public class DriveTrain {
 		 */
 	}
 
+	/*
+	 * defaultConfig - use the defaultConfig or not
+	 */
 	public void ready(boolean defaultConfig) {
-		Properties properties;
+		/*Properties properties;
 		if (defaultConfig) {
 			properties = AutoCalibration.getDefaultConfigurationFile();
 		} else {
@@ -85,7 +90,14 @@ public class DriveTrain {
 		modules.add(
 				new SwerveModule(WheelPosition.BackLeft, swerveCalc, Double.parseDouble(properties.getProperty("BL"))));
 		modules.add(new SwerveModule(WheelPosition.BackRight, swerveCalc,
-				Double.parseDouble(properties.getProperty("BR"))));
+				Double.parseDouble(properties.getProperty("BR"))));*/
+	}
+	
+	public void unready() {
+	    /*for (SwerveModule module : modules) {
+	        module.delete();
+	    }
+	    modules.clear();*/
 	}
 
 	public static Map<WheelPosition, Tuple> getSwerveDict() {
@@ -112,32 +124,35 @@ public class DriveTrain {
 		// climber.update();
 		// shooter.update();
 		// intake.update();
-
+	    intake.update();
+	    climber.update();
+	    shooter.update();
 		// Get degrees, convert to radians
 		// TODO: This is gonna be here later because we will have a better gyro and it will be possible then - Xander
         // double headingOffset = Math.toRadians(gyro.getAngle());
-	    double headingOffset = 0;
-		if(data.getYaw() >=0 && data.getYaw() <= 360) {
+	    //double headingOffset = 0;
+		/*if(data.getYaw() >=0 && data.getYaw() <= 2*Math.PI) {
 	     headingOffset = data.getYaw(); 
 		} else {
 		 headingOffset = 0;//Robot.correctMod((Robot.data.getYaw() + 90 * (180 / Math.PI)), Math.PI * 2);
-		}
+		}*/
         
-        double speed = joy.getSpeed();
+        /*double speed = joy.getSpeed();
         
         double direction = joy.getDirection() - headingOffset;
         double rotation = joy.getRotation();
 		
 
-		Tuple velocityVector = getVelocityVector(speed, direction - headingOffset);
+		Tuple velocityVector = getVelocityVector(speed, direction);
 
 		SmartDashboard.putNumber("Direction", direction);
-		SmartDashboard.putNumber("Speed", speed);
-		swerveCalc.setAim(velocityVector, rotation);
+		SmartDashboard.putNumber("Speed", speed);*/
+		tankDrive.update();
+		//swerveCalc.setAim(velocityVector, rotation);
 
-		for (SwerveModule module : modules) {
+		/*for (SwerveModule module : modules) {
 			module.update();
-		}
+		}*/
 	}
 
 	public void move(double speed, double direction, double rotation) {
@@ -149,7 +164,7 @@ public class DriveTrain {
 
 		Tuple velocityVector = getVelocityVector(speed, direction);
 
-		swerveCalc.setAim(velocityVector, rotation);
+		//swerveCalc.setAim(velocityVector, rotation);
 
 		for (SwerveModule module : modules) {
 			module.update();

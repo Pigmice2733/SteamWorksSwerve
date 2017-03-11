@@ -3,18 +3,18 @@ package org.usfirst.frc.team2733.robot.driveTrain;
 import org.usfirst.frc.team2733.robot.PID;
 import org.usfirst.frc.team2733.robot.enumerations.ConversionEnum;
 
-import edu.wpi.first.wpilibj.Talon;
+import com.ctre.CANTalon;
 
 public class DriveMotor {
 
-	private final Talon driveMotor;
+	private final CANTalon driveMotor;
 	
 	private double currentSpeed;
 	
 	private final PID PIController;
 	
 	public DriveMotor(int motorPort, double P, double I){
-		driveMotor = new Talon(motorPort);
+		driveMotor = new CANTalon(motorPort);
 		PIController = new PID(P, I);
 		
 		currentSpeed = 0;
@@ -32,5 +32,9 @@ public class DriveMotor {
 	
 	public void disable() {
 		driveMotor.disable();
+	}
+	
+	public void delete() {
+	    driveMotor.delete();
 	}
 }

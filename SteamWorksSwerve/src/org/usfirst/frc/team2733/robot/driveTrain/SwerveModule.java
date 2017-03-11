@@ -1,13 +1,10 @@
 package org.usfirst.frc.team2733.robot.driveTrain;
 
-import org.usfirst.frc.team2733.robot.enumerations.ConversionEnum;
 import org.usfirst.frc.team2733.robot.enumerations.PIEnum;
 import org.usfirst.frc.team2733.robot.enumerations.PortsEnum;
 import org.usfirst.frc.team2733.robot.enumerations.WheelPosition;
 import org.usfirst.frc.team2733.robot.swerve.SwerveCalc;
 import org.usfirst.frc.team2733.robot.swerve.SwerveCalc.AngleSpeedObject;
-
-import edu.wpi.first.wpilibj.AnalogPotentiometer;
 
 public class SwerveModule {
 	
@@ -18,7 +15,7 @@ public class SwerveModule {
 	
 	private final SwerveCalc swerveCalc;
 	
-	private final DriveMotor driveMotor;
+	private DriveMotor driveMotor = null;
 	private final RotationMotor rotationMotor;
 	
 	/**
@@ -29,37 +26,27 @@ public class SwerveModule {
 	public SwerveModule(WheelPosition wheelPos, SwerveCalc swerveCalc, double analogOffset) {
 		int portRotation = -1;
 		int portDrive = -1;
-		int portEncoder1 = -1;
-		int portEncoder2 = -1;
 		int analogPort = -1;
 		
 		switch(wheelPos) {
 		case FrontRight:
 			portRotation = PortsEnum.FRONT_RIGHT_ROTATION_MOTOR.getPort();
 			portDrive = PortsEnum.FRONT_RIGHT_DRIVE_MOTOR.getPort();
-			portEncoder1 = PortsEnum.FRONT_RIGHT_ROTATION_DIGITAL_ENCODER_ONE.getPort();
-			portEncoder2 = PortsEnum.FRONT_RIGHT_ROTATION_DIGITAL_ENCODER_TWO.getPort();
 			analogPort = PortsEnum.FRONT_RIGHT_ROTATION_ANALOG_ENCODER.getPort();
 			break;
 		case BackRight:
 			portRotation = PortsEnum.BACK_RIGHT_ROTATION_MOTOR.getPort();
 			portDrive = PortsEnum.BACK_RIGHT_DRIVE_MOTOR.getPort();
-			portEncoder1 = PortsEnum.BACK_RIGHT_ROTATION_DIGITAL_ENCODER_ONE.getPort();
-			portEncoder2 = PortsEnum.BACK_RIGHT_ROTATION_DIGITAL_ENCODER_TWO.getPort();
 			analogPort = PortsEnum.BACK_RIGHT_ROTATION_ANALOG_ENCODER.getPort();
 			break;
 		case FrontLeft:
 			portRotation = PortsEnum.FRONT_LEFT_ROTATION_MOTOR.getPort();
 			portDrive = PortsEnum.FRONT_LEFT_DRIVE_MOTOR.getPort();
-			portEncoder1 = PortsEnum.FRONT_LEFT_ROTATION_DIGITAL_ENCODER_ONE.getPort();
-			portEncoder2 = PortsEnum.FRONT_LEFT_ROTATION_DIGITAL_ENCODER_TWO.getPort();
 			analogPort = PortsEnum.FRONT_LEFT_ROTATION_ANALOG_ENCODER.getPort();
 			break;
 		case BackLeft:
 			portRotation = PortsEnum.BACK_LEFT_ROTATION_MOTOR.getPort();
 			portDrive = PortsEnum.BACK_LEFT_DRIVE_MOTOR.getPort();
-			portEncoder1 = PortsEnum.BACK_LEFT_ROTATION_DIGITAL_ENCODER_ONE.getPort();
-			portEncoder2 = PortsEnum.BACK_LEFT_ROTATION_DIGITAL_ENCODER_TWO.getPort();
 			analogPort = PortsEnum.BACK_LEFT_ROTATION_ANALOG_ENCODER.getPort();
 			break;
 		default:
@@ -92,7 +79,9 @@ public class SwerveModule {
 			break;
 		}
 		
-		driveMotor = new DriveMotor(portDrive, PIEnum.MODULE_DRIVE_P.getCoefficient(), PIEnum.MODULE_DRIVE_I.getCoefficient());
+		if (portDrive != PortsEnum.FRONT_RIGHT_DRIVE_MOTOR.getPort()) {
+		    driveMotor = new DriveMotor(portDrive, PIEnum.MODULE_DRIVE_P.getCoefficient(), PIEnum.MODULE_DRIVE_I.getCoefficient());
+		}
 		rotationMotor = new RotationMotor(portRotation, P_Coef.getCoefficient(), 
 				I_Coef.getCoefficient(), analogPort,
 				analogOffset);
@@ -132,14 +121,25 @@ public class SwerveModule {
 		angle = angleSpeedObject.getAngle();
 		speed = angleSpeedObject.getSpeed();
 		
-		driveMotor.update(speed);
+		if (driveMotor != null) {
+		    driveMotor.update(speed);
+		}
 		rotationMotor.update(angle);
 	}
 	
 	//disables the motors
 	public void disable() {
-		driveMotor.disable();
+	    if (driveMotor != null) {
+	        driveMotor.disable();
+	    }
 		rotationMotor.disable();
+	}
+	
+	public void delete() {
+	    if (driveMotor != null) {
+	        driveMotor.delete();
+	    }
+	    rotationMotor.delete();
 	}
 	
 	// For Testing Purpose
