@@ -93,7 +93,7 @@ public class Robot extends SampleRobot {
             //climber.update();
             //intake.update();
             //shooter.update();
-            System.out.println(data.getYaw());
+            //System.out.println(data.getYaw());
             //data.pingTable();
             Timer.delay(0.05);
         }
