@@ -37,7 +37,7 @@ public class DriveTrain {
 
 	public Gyro gyro;
 
-	public TankDrive tankDrive;
+	//public TankDrive tankDrive;
 	public SwerveCalc swerveCalc;
 
 	private Climber climber;
@@ -49,11 +49,11 @@ public class DriveTrain {
 	public DriveTrain() {// implementation for swerve
 
 		this.joy = new JoystickInput(PortsEnum.JOYSTICK_ONE.getPort(), PortsEnum.JOYSTICK_TWO.getPort());
-		intake = new Intake(joy);
-		climber = new Climber(joy);
-		shooter = new ShooterAndBallRelease(joy);
+		//intake = new Intake(joy);
+		//climber = new Climber(joy);
+		//shooter = new ShooterAndBallRelease(joy);
 
-        tankDrive = new TankDrive(joy);
+        //tankDrive = new TankDrive(joy);
 		swerveCalc = new SwerveCalc(getSwerveDict());
 
 		/*
@@ -134,7 +134,7 @@ public class DriveTrain {
 		/*if(data.getYaw() >=0 && data.getYaw() <= 2*Math.PI) {
 	     headingOffset = data.getYaw(); 
 		} else {
-		 headingOffset = 0;//Robot.correctMod((Robot.data.getYaw() + 90 * (180 / Math.PI)), Math.PI * 2);
+		 headingOffset = 0;//Robot.corr  ectMod((Robot.data.getYaw() + 90 * (180 / Math.PI)), Math.PI * 2);
 		}*/
         
         double speed = joy.getSpeed();

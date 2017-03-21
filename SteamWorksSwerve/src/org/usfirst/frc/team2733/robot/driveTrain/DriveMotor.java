@@ -3,18 +3,18 @@ package org.usfirst.frc.team2733.robot.driveTrain;
 import org.usfirst.frc.team2733.robot.PID;
 import org.usfirst.frc.team2733.robot.enumerations.ConversionEnum;
 
-import com.ctre.CANTalon;
+import edu.wpi.first.wpilibj.Talon;
 
 public class DriveMotor {
 
-	private final CANTalon driveMotor;
+	private final Talon driveMotor;
 	
 	private double currentSpeed;
 	
 	private final PID PIController;
 	
 	public DriveMotor(int motorPort, double P, double I){
-		driveMotor = new CANTalon(motorPort);
+		driveMotor = new Talon(motorPort);
 		PIController = new PID(P, I);
 		
 		currentSpeed = 0;
@@ -24,7 +24,7 @@ public class DriveMotor {
 	public void update(double speed) {
 		currentSpeed += PIController.getVal(currentSpeed, speed);
 		
-		System.out.println("current speed: " + currentSpeed / ConversionEnum.DRIVE_SPEED_RANGE_TO_M_PER_S.getConversion());
+		//System.out.println("current speed: " + currentSpeed / ConversionEnum.DRIVE_SPEED_RANGE_TO_M_PER_S.getConversion());
 		
 	    // Convert back from m/s
 		driveMotor.set(currentSpeed / ConversionEnum.DRIVE_SPEED_RANGE_TO_M_PER_S.getConversion());
@@ -35,6 +35,6 @@ public class DriveMotor {
 	}
 	
 	public void delete() {
-	    driveMotor.delete();
+	    driveMotor.free();
 	}
 }

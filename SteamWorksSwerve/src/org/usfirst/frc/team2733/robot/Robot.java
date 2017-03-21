@@ -43,7 +43,7 @@ public class Robot extends SampleRobot {
 		data = new DataTransfer(this);
     }
 	
-	/** 
+	/**
 	 * Commands available
 	 * 
 	 */
@@ -93,7 +93,7 @@ public class Robot extends SampleRobot {
             //climber.update();
             //intake.update();
             //shooter.update();
-            //System.out.println(data.getYaw());
+            System.out.println("Yaw: " + data.getYaw());
             //data.pingTable();
             Timer.delay(0.05);
         }
@@ -103,7 +103,7 @@ public class Robot extends SampleRobot {
     
     @Override
     public void test() {
-        //calibrateEncoders();
+        calibrateEncoders();
         //setupPoten();
         //portsTest();
     	while(isEnabled() && isTest()) {
@@ -232,7 +232,7 @@ public class Robot extends SampleRobot {
     		
     		visionTrackingData += "Gyro: " + data.getYaw() + "\n";
     		
-    		System.out.println(visionTrackingData);
+    		//System.out.println(visionTrackingData);
     		
     	}
     }

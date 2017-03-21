@@ -13,7 +13,7 @@ public class JoystickInput {
 	private XboxController driverJoyTwo;
 	
 	public JoystickInput(int port0, int port1) {
-		//driverJoyOne = new Joystick(port0);
+		driverJoyOne = new Joystick(port0);
 		driverJoyTwo = new XboxController(port1);
 		//lastDirection = 0;
 	}
@@ -27,7 +27,7 @@ public class JoystickInput {
 	    
 	    speed = (Math.abs(speed) > 1.0) ? (Math.signum(speed) * 1.0) : speed;
 	    
-	    // speed *= 0.4;
+	    speed *= 0.6;
 	    
 		return speed * ConversionEnum.DRIVE_SPEED_RANGE_TO_M_PER_S.getConversion();
 	}
@@ -61,10 +61,10 @@ public class JoystickInput {
 	}
 	
 	public double getRotation() {
-	    double rotationSpeed = -driverJoyOne.getTwist() * getSpeedMulti();
+	    double rotationSpeed = driverJoyOne.getTwist();// * getSpeedMulti();
 	    //double rotationSpeed = joy2.getRawAxis(0);
-		rotationSpeed = (Math.abs(rotationSpeed) < 0.1) ? 0 : rotationSpeed;
-		rotationSpeed *= 0.4;
+		rotationSpeed = (Math.abs(rotationSpeed) < 0.5) ? 0 : (rotationSpeed < 0) ? rotationSpeed + 0.5 : rotationSpeed - 0.5;
+		//rotationSpeed *= 0.8;
 		return rotationSpeed * ConversionEnum.ROTATION_SPEED_RANGE_TO_M_PER_S.getConversion();
 	}
 	
