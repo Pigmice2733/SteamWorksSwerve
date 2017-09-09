@@ -1,29 +1,29 @@
-package org.usfirst.frc.team2733.robot.autonomous;
+package org.usfirst.frc.team2733.robot;
 
-import org.usfirst.frc.team2733.robot.DataTransfer;
-import org.usfirst.frc.team2733.robot.PID;
-import org.usfirst.frc.team2733.robot.Robot;
-import org.usfirst.frc.team2733.robot.driveTrain.DriveTrain;
+import org.usfirst.frc.team2733.robot.comm.DataTransfer;
+import org.usfirst.frc.team2733.robot.systems.AbstractDriveTrain;
+import org.usfirst.frc.team2733.robot.utilities.PID;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 
 public class Autonomous {
 
-    private final DriveTrain driveTrain;
+    private final AbstractDriveTrain driveTrain;
     private final Robot robot;
     private final DataTransfer dataTransfer;
     
-    private PID lateralMovementPID, forwardMovementPID;
+    private final PID rotationalPID, lateralMovementPID, forwardMovementPID;
     
     private final InitialLocation initLoc;
     
-    public Autonomous (Robot robot, DriveTrain driveTrain) {
+    public Autonomous (Robot robot, AbstractDriveTrain driveTrain) {
         this.robot = robot;
         this.driveTrain = driveTrain;
         
-        this.lateralMovementPID = new PID(0.5, 0);
+        this.lateralMovementPID = new PID(0.25, 0);
         this.forwardMovementPID = new PID(0.05, 0);
+        this.rotationalPID = new PID(0.05, 0);
         
         this.dataTransfer = new DataTransfer(robot);
         
@@ -31,47 +31,45 @@ public class Autonomous {
     }
     
     public void startAutonomous() {
-        driveToTower();
-        
         double distance, direction;
         
-        //// Movement update with info from RPi
+        // Movement update with info from RPi
         while (robot.isAutonomous() && robot.isEnabled()) {
             
             direction = dataTransfer.getDirection();
             distance = dataTransfer.getDistance();
             
-            if(Math.abs(direction) > 1) {
+            // Straighten robot
+            if(Math.abs(dataTransfer.getYaw()) > 5) {
+                
+                double rotationalVelocity = rotationalPID.getVal(dataTransfer.getYaw(), 0.0);
+                driveTrain.swerveDrive(0, 0, rotationalVelocity, 0.0);
+                
+            // Align robot laterally
+            } else if(Math.abs(direction) > 1) {
                 
                 double lateralMovement = lateralMovementPID.getVal(direction, 0);
                 
-                driveTrain.move(lateralMovement, 0.5 * Math.PI, 0);
-                
+                driveTrain.swerveDrive(lateralMovement, 0.5 * Math.PI, 0.0, dataTransfer.getYaw());
+            
+            // Move robot forward to gear lift
             } else if (distance > 25) {
                 
                 double forwardMovement = forwardMovementPID.getVal(distance, 25);
                 
-                driveTrain.move(forwardMovement, 0, 0);
+                driveTrain.swerveDrive(forwardMovement, 0, 0, 0);
                 
+            // Stop robot
             } else {
-                
-                // Place gear
-                
-            	
-            	
                 driveTrain.stopMovement();
-                
             }
             
-            // Ball Shooter - If necessary
-            // double ballShooterSpeed = networkTable.getNumber("shooterSpeed", 0);
-            
-            
-            Timer.delay(0.1);
+            Timer.delay(0.075);
         }
     }
     
-    private void driveToTower() {
+    @SuppressWarnings("unused") //can someone confirm if this is used
+	private void driveToTower() {
         switch (initLoc) {
         case LEFT:
             
@@ -85,7 +83,7 @@ public class Autonomous {
             double startTime = Timer.getFPGATimestamp();
             
             while (distance > 0) {
-                driveTrain.move(0.1, 0, 0);
+                driveTrain.swerveDrive(0.1, 0, 0, 0);
                 distance -= dataTransfer.velocityY() * (Timer.getFPGATimestamp() - startTime);
             }
             

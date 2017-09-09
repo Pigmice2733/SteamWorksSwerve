@@ -1,4 +1,4 @@
-package org.usfirst.frc.team2733.robot.driveTrain;
+package org.usfirst.frc.team2733.robot.systems;
 
 public class Accelerometer {/*The accelerometer will be used to get velocities that help with
 							*swerve math and autonomous functions

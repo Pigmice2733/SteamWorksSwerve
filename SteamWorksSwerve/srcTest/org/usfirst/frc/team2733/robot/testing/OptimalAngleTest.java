@@ -2,9 +2,9 @@ package org.usfirst.frc.team2733.robot.testing;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.usfirst.frc.team2733.robot.driveTrain.DriveTrain;
-import org.usfirst.frc.team2733.robot.swerve.SwerveCalc;
-import org.usfirst.frc.team2733.robot.swerve.SwerveCalc.AngleSpeedObject;
+import org.usfirst.frc.team2733.robot.systems.swervedrive.SwerveCalc;
+import org.usfirst.frc.team2733.robot.systems.swervedrive.SwerveDriveTrain;
+import org.usfirst.frc.team2733.robot.systems.swervedrive.Tuple;
 
 public class OptimalAngleTest {
     
@@ -19,11 +19,11 @@ public class OptimalAngleTest {
     }
     
     public void testAngle(double startAngle, double targetAngle, double targetSpeed, double expectedAngle, double expectedSpeed) {
-        SwerveCalc swerveCalc = new SwerveCalc(DriveTrain.getSwerveDict());
-
+        SwerveCalc swerveCalc = new SwerveCalc(SwerveDriveTrain.getSwerveDict());
+        
         // Target Speed doesn't matter for the test so it is always 1 (can't be 0)
-        AngleSpeedObject angelSpeedObject = swerveCalc.calcOptimalHeading(startAngle, targetAngle, startAngle);
-        if (!almostEqual(angelSpeedObject.getAngle(), startAngle, uncertainty) && angelSpeedObject.getSpeed() == expectedSpeed) {
+        Tuple<Double> angelSpeed = swerveCalc.calcOptimalHeading(startAngle, targetAngle, startAngle);
+        if (!almostEqual(angelSpeed.getY(), startAngle, uncertainty) && angelSpeed.getX() == expectedSpeed) {
             Assert.fail();
         }
     }

@@ -1,22 +1,39 @@
 package org.usfirst.frc.team2733.robot.systems;
 
-import org.usfirst.frc.team2733.robot.JoystickInput;
-import org.usfirst.frc.team2733.robot.enumerations.PortsEnum;
+import org.usfirst.frc.team2733.robot.Testable;
 
 import edu.wpi.first.wpilibj.Spark;
+import edu.wpi.first.wpilibj.Timer;
 
-public class Climber {
+/**
+ * Controller for the climber
+ */
+public class Climber implements Testable{
 
 	Spark motor;
-	JoystickInput joy;
+	
 	public double speed = 1.0;
 	
-	public Climber(JoystickInput joy) {
-	    this.joy = joy;
-		motor = new Spark(PortsEnum.CLIMBER.getPort());
+	/**
+	 * Controller for the climber motor
+	 * @param climberPort Motor port for the climber
+	 */
+	public Climber(int climberPort) {
+		motor = new Spark(climberPort);
 	}
 	
-	public void update() {
-	    motor.set(joy.getClimber());
+	/**
+	 * Sets climber motor to speed
+	 * @param speed The speed to run the climber at
+	 */
+	public void update(double speed) {
+	    motor.set(speed);
 	}
+
+    @Override
+    public void test() {
+        motor.set(1.0);
+        Timer.delay(1);
+        motor.stopMotor();
+    }
 }

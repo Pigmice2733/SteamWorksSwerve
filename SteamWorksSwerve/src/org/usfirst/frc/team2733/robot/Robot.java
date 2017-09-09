@@ -1,239 +1,150 @@
 package org.usfirst.frc.team2733.robot;
 
-import java.io.IOException;
-import java.util.Properties;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.usfirst.frc.team2733.robot.autonomous.Autonomous;
-import org.usfirst.frc.team2733.robot.driveTrain.DriveTrain;
-import org.usfirst.frc.team2733.robot.enumerations.PortsEnum;
-import org.usfirst.frc.team2733.robot.enumerations.WheelPosition;
+import org.usfirst.frc.team2733.robot.comm.DataTransfer;
+import org.usfirst.frc.team2733.robot.comm.DriveStation;
+import org.usfirst.frc.team2733.robot.configuration.PortConfiguration;
+import org.usfirst.frc.team2733.robot.configuration.PortConfiguration.Chassis;
+import org.usfirst.frc.team2733.robot.systems.AbstractDriveTrain;
 import org.usfirst.frc.team2733.robot.systems.Climber;
 import org.usfirst.frc.team2733.robot.systems.Intake;
-import org.usfirst.frc.team2733.robot.systems.ShooterAndBallRelease;
+import org.usfirst.frc.team2733.robot.systems.ShooterAndAgitator;
+import org.usfirst.frc.team2733.robot.systems.swervedrive.EncoderCalibration;
+import org.usfirst.frc.team2733.robot.systems.swervedrive.SwerveDriveTrain;
+import org.usfirst.frc.team2733.robot.utilities.GyroCalibrator;
+import org.usfirst.frc.team2733.robot.utilities.LinearYaw;
 
-import com.ctre.CANTalon;
-
-import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.SampleRobot;
-import edu.wpi.first.wpilibj.Spark;
-import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Timer;
 
 public class Robot extends SampleRobot {
-	
-	public static DriveTrain driveTrain;
+    //The Correction Coefficient for the Gyro
+	double yawDriftAvg = 0;
+	double gyroOffset = 0;
+
+
+	public static AbstractDriveTrain driveTrain;
 	public static Autonomous auto;
 	public static DataTransfer data;
+
+	public static EncoderCalibration enCal;
+
+	public static DriveStation driveStation;
+
+	public static ShooterAndAgitator shooter;
 	public static Climber climber;
 	public static Intake intake;
-	public static ShooterAndBallRelease shooter;
-	
-	
-	
+
+	private LinearYaw linYaw;
+	private GyroCalibrator gyroCal;
+	//private CameraServer camera;
+
 	@Override
 	protected void robotInit() {
-		AutoCalibration.logConfigurationFile();
-		driveTrain = new DriveTrain();
-		//shooter = new ShooterAndBallRelease();
-		//climber = new Climber();
-		//shooter = new Shooter();
-        //climber = new Climber();
-        //intake = new Intake();
-		//auto = new Autonomous(this, driveTrain);
+		PortConfiguration portConfig = new PortConfiguration(false, null, Chassis.DEVBOT);
+		enCal = new EncoderCalibration(true, "/home/lvuser/encoderCalibration.properties");
+	    driveTrain = new SwerveDriveTrain(portConfig.getDriveMotorPorts(), portConfig.getRotationMotorPorts(), portConfig.getEncoderPorts(), enCal);
+
+	    //shooter = new ShooterAndAgitator(portConfig.getShooterPort(), portConfig.getAgitatorPort());
+		//climber = new Climber(portConfig.getClimberPort());
+		//intake = new Intake(portConfig.getIntakePort());
+	    //camera = CameraServer.getInstance();
+	    //camera.startAutomaticCapture()
 		data = new DataTransfer(this);
-    }
-	
-	/**
-	 * Commands available
-	 * 
-	 */
+		linYaw = new LinearYaw(data);
+		gyroCal = new GyroCalibrator(linYaw);
+		driveStation = new DriveStation(portConfig.getJoytsickOne(), portConfig.getJoystickTwo());
+	}
+
+	@Override
+	public void disabled() {
+		//linYaw.update();
+		//gyroCal.resetCal();
+
+		while(isDisabled()) {
+			//linYaw.update();
+			//gyroCal.updateCal();
+		}
+	}
+
 	@Override
 	public void autonomous() {
-		driveTrain.ready(false);
-		
-		//auto.startAutonomous();
-		
-		// Left and Right
-	    //driveTrain.swerveCalc.setAim(driveTrain.getVelocityVector(defaultSpeed, 0.05 * Math.PI * (location == RobotInitialLocation.LEFT ? -1 : 1)), 0);
-	    // Center
-	    //driveTrain.swerveCalc.setAim(driveTrain.getVelocityVector(defaultSpeed, 0), 0);
 
+	    driveTrain.initialize();
+	    gyroOffset = 0 - data.getYaw();
+
+	    // Straighten wheels
 		while (isAutonomous() && isEnabled()) {
-			/*// Movement Update
-			double speed = networkTable.getNumber("speed", 0);
-			double direction = networkTable.getNumber("direction", 0);
-			double rotation = networkTable.getNumber("rotation", 0);
-			
-			Vector_Point_Abomination velocityVector = driveTrain.getVelocityVector(speed, direction);
-			
-			driveTrain.swerveCalc.setAim(velocityVector, rotation);
-			
-			// Ball Shooter - If necessary
-			// double ballShooterSpeed = networkTable.getNumber("shooterSpeed", 0);
-			
-			*/
-			
-			driveTrain.zeroWheelPositions();
-			Timer.delay(0.05);
+			driveTrain.ready();
+			gyroOffset -= yawDriftAvg;
+
+		    Timer.delay(0.05);
 		}
-        
-        driveTrain.unready();
+
+		driveTrain.releaseReources();
 	}
-	
-    @Override
-    public void operatorControl() {
-		driveTrain.ready(false);
-    	//data = new DataTransfer (this);
-    	
-    	while (isOperatorControl() && isEnabled()) {
-            driveTrain.drive();
-            //shooter.update();
-            //intake.update();
-            //climber.update();
-            //climber.update();
-            //intake.update();
-            //shooter.update();
-            System.out.println("Yaw: " + data.getYaw());
-            //data.pingTable();
-            Timer.delay(0.05);
-        }
-    	
-    	driveTrain.unready();
-    }
-    
-    @Override
-    public void test() {
-        calibrateEncoders();
-        //setupPoten();
-        //portsTest();
-    	while(isEnabled() && isTest()) {
-    		//networkTableTest();
-    	// Don't enable the line below unless you know what you are doing
-    	//calibrateEncoders();
-    	
-    	/*while (isEnabled() && isTest()) {
-    		networkTableTest();
->>>>>>> branch 'master' of https://github.com/Pigmice2733/SteamWorksSwerve.git
-    		Timer.delay(1);
-    	}*/
-            //driveTrain.ready(true);
-    	    //potentiometerCalibration();
-    	    //portsTest();
-    	    //calibrateEncoders();
-    	}
-    	//disablePoten();
-    	
-    }
-    
-    public void portsTest() {
-        //portTest(PortsEnum.FRONT_RIGHT_ROTATION_MOTOR.getPort());
-        portTest(PortsEnum.FRONT_LEFT_ROTATION_MOTOR.getPort());
-        portTest(PortsEnum.FRONT_LEFT_DRIVE_MOTOR.getPort());
-        // Drive then rotation motors
-        // FL, FR, BL, BR
-        /*portTest(PortsEnum.FRONT_LEFT_DRIVE_MOTOR.getPort());
-        portTest(PortsEnum.FRONT_RIGHT_DRIVE_MOTOR.getPort());
-        portTest(PortsEnum.BACK_LEFT_DRIVE_MOTOR.getPort());
-        portTest(PortsEnum.BACK_RIGHT_DRIVE_MOTOR.getPort());*/
-        // FL, FR, BL, BR
-        /*portTest(PortsEnum.FRONT_LEFT_ROTATION_MOTOR.getPort());
-        portTest(PortsEnum.FRONT_RIGHT_ROTATION_MOTOR.getPort());
-        portTest(PortsEnum.BACK_LEFT_ROTATION_MOTOR.getPort());
-        portTest(PortsEnum.BACK_RIGHT_ROTATION_MOTOR.getPort());
-        
-        portTestSpark(PortsEnum.SHOOTER.getPort());
-        portTestSpark(PortsEnum.CLIMBER.getPort());
-        portTestTalon(PortsEnum.BALL_RELEASE.getPort());
-        portTestTalon(PortsEnum.INTAKE.getPort());*/
-        
-    }
-    
-    public void portTest(int port) {
-        CANTalon canTalon = new CANTalon(port);
-        canTalon.set(1.0);
-        Timer.delay(2.0);
-        //canTalon.set(0.0);
-        //canTalon.delete();
-    }
-    
-    public void portTestTalon(int port) {
-        Talon canTalon = new Talon(port);
-        canTalon.set(0.35);
-        Timer.delay(2.0);
-        canTalon.set(0.0);
-        canTalon.free();
-    }
-    
-    public void portTestSpark(int port) {
-        Spark spark = new Spark(port);
-        spark.set(0.35);
-        Timer.delay(2.0);
-        spark.set(0.0);
-        spark.free();
-    }
-    
-    
-    public void calibrateEncoders() {
 
-		driveTrain.ready(true);
-    	
-    	Properties properties = new Properties();
-    	properties.setProperty("FL", Double.toString(-driveTrain.getEncoderValue(WheelPosition.FrontLeft)));
-    	properties.setProperty("FR", Double.toString(-driveTrain.getEncoderValue(WheelPosition.FrontRight)));
-    	properties.setProperty("BL", Double.toString(-driveTrain.getEncoderValue(WheelPosition.BackLeft)));
-    	properties.setProperty("BR", Double.toString(-driveTrain.getEncoderValue(WheelPosition.BackRight)));
+	@Override
+	public void operatorControl() {
 
-    	try {
-			AutoCalibration.saveConfigurationFile(properties);
-	    	AutoCalibration.logConfigurationFile();
-		} catch (IOException e) {
-			e.printStackTrace();
+	    driveTrain.initialize();
+
+	    while (isOperatorControl() && isEnabled()) {
+
+	    	gyroCal.update(driveStation.getGyroCalibration());
+
+	    	if(driveStation.getTrigger()) {
+	    		double magnitude = 0.1;
+		    	double direction = (data.getDirection() > 10)? (3*Math.PI/2) : (data.getDirection() < -10)? (Math.PI/2): 0;
+		    	double rotation = 0;
+		    	double gyroOffset = 0;
+		    	driveTrain.swerveDrive(magnitude, direction, rotation, gyroOffset);
+		    	System.out.println("Direction: " + data.getDirection());
+	    	} else {
+
+		    	double magnitude = driveStation.getMagnitude() * 0.4;
+		    	double direction = driveStation.getDirection();
+		    	double rotation = driveStation.getRotation();
+		    	double gyroOffset = 0 + driveStation.getManualGyroOffset() + gyroCal.getCurrentHeading();
+		    	driveTrain.swerveDrive(magnitude, direction, rotation, gyroOffset);
+	    	}
+
+
+	    	//shooter.update(driveStation.getShooter1(), driveStation.getBallRelease(), driveStation.getUpPower(), driveStation.getDownPower());
+	    	//climber.update(driveStation.getClimber());
+	    	//intake.update(driveStation.getIntake());
+			Timer.delay(0.05);
+
+			if(driveStation.getEncoder(0)){
+				enCal.reloadOffsets(false);
+			}
+			if(driveStation.getEncoder(1)){
+				enCal.saveCalibrationFile();
+			}
+			if(driveStation.getEncoder(2)){
+				enCal.reloadOffsets(true);
+			}
 		}
-        
-        driveTrain.unready();
-    }
-    
-    
+
+	    driveTrain.releaseReources();
+	}
+
+	@Override
+	public void test() {
+		Timer.delay(0.1);
+	    driveTrain.setup();
+
+	    List<Testable> systemsToTest = new ArrayList<Testable>();
+
+	    TestMode tests = new TestMode(systemsToTest);
+
+	    tests.runTests();
+
+	}
+
     public static double correctMod(double number, double modulus) {
     	return number < 0 ? number % modulus + modulus : number % modulus;
     }
-    AnalogPotentiometer input1;
-    AnalogPotentiometer input2;
-    AnalogPotentiometer input3;
-    AnalogPotentiometer input4;
-    public void disablePoten() {
-        input1.free();
-        input2.free();
-        input3.free();
-        input4.free();
-    }
-    public void setupPoten() {
-        input1 = new AnalogPotentiometer(0);
-        input2 = new AnalogPotentiometer(1);
-        input3 = new AnalogPotentiometer(2);
-        input4 = new AnalogPotentiometer(3);
-    }
-    public void potentiometerCalibration() {
-        Timer.delay(0.5);
-        System.out.println("1: " + input1.get());
-        System.out.println("2: " + input2.get());
-        System.out.println("3: " + input3.get());
-        System.out.println("4: " + input4.get());
-    	//driveTrain.printPotentiometers();
-    }
-    
-    
-    public void networkTableTest() {
-    	while(isEnabled() && isTest()) {
-    		String visionTrackingData = "";
-    		data.pingTable();
-    		/*visionTrackingData += "Distance: " + dataTransfer.getDistance() + "\n";
-    		visionTrackingData += "Direction: " + dataTransfer.getDirection() + "\n";*/
-    		
-    		visionTrackingData += "Gyro: " + data.getYaw() + "\n";
-    		
-    		//System.out.println(visionTrackingData);
-    		
-    	}
-    }
-    }
+}

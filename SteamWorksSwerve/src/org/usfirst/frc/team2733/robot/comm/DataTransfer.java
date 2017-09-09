@@ -1,4 +1,6 @@
-package org.usfirst.frc.team2733.robot;
+package org.usfirst.frc.team2733.robot.comm;
+
+import org.usfirst.frc.team2733.robot.Robot;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
@@ -49,6 +51,8 @@ public class DataTransfer {
 	public double getRoll() {
 		return networkTable.getNumber("roll", 0);
 	}
+	
+	
 	
 	public void pingTable() {
 		if(networkTable.isConnected()) {
