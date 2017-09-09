@@ -15,8 +15,11 @@ public class Robot extends SampleRobot {
     private AbstractDriveTrain driveTrain;
     private EncoderCalibration enCal;
     private JoystickInput joyInput;
+    
+    
     private ShooterAndAgitator shooter;
-
+    
+    
     @Override
     protected void robotInit() {
         PortConfiguration portConfig = new PortConfiguration(false, null, Chassis.DEVBOT);
@@ -25,7 +28,10 @@ public class Robot extends SampleRobot {
                 portConfig.getEncoderPorts(), enCal);
 
         joyInput = new JoystickInput(portConfig.getJoytsickOne(), portConfig.getJoystickTwo());
-        shooter = new ShooterAndAgitator(portConfig.getShooterPort(), portConfig.getAgitatorPort());
+        
+        // Delay between shooter flywheel starting and agitator kicking in
+        double shooterDelay = 2.0;
+        shooter = new ShooterAndAgitator(portConfig.getShooterPort(), portConfig.getAgitatorPort(), shooterDelay);
     }
 
     @Override
@@ -56,7 +62,7 @@ public class Robot extends SampleRobot {
             
             driveTrain.swerveDrive(magnitude, direction, rotation, gyroOffset);
 
-            //shooter.update(joyInput.getShooter());
+            shooter.update(joyInput.getShooter());
             
             Timer.delay(0.05);
         }
