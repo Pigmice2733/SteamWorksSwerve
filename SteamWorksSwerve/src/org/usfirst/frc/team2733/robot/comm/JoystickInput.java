@@ -1,142 +1,126 @@
 package org.usfirst.frc.team2733.robot.comm;
 
-import edu.wpi.first.wpilibj.GenericHID.Hand;
+import org.usfirst.frc.team2733.robot.utilities.Modulus;
+
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController;
 
 public class JoystickInput {
 
-    // private double lastDirection;
-    private Joystick driverJoyOne;
-    private XboxController driverJoyTwo;
-
+    // Standard joystick, controls speed and direction for swerve,
+    //  left speed for tank
+    private Joystick joyOne;
+    // Standard joystick, controls rotation for swerve, right speed
+    //  for tank, shooter
+    private Joystick joyTwo;
+    
     public JoystickInput(int port0, int port1) {
-        driverJoyOne = new Joystick(port0);
-        driverJoyTwo = new XboxController(port1);
-        // lastDirection = 0;
+        joyOne = new Joystick(port0);
+        joyTwo = new Joystick(port1);
     }
 
+    // Get the speed value, always positive
     public double getSpeed() {
-        double speed = driverJoyOne.getMagnitude();
+        double speed = joyOne.getMagnitude();
+        
+        // Limit to magnitude 1.0
+        speed = (speed > 1.0) ? 1.0 : speed;
+        
+        // Set deadband
+        speed = (speed < 0.05) ? 0 : speed;
 
-        speed = (Math.abs(speed) < 0.1) ? 0 : speed;
-
+        // Squared sensitivity
         speed *= speed;
 
-        speed = (Math.abs(speed) > 1.0) ? (Math.signum(speed) * 1.0) : speed;
-
-        speed *= 0.6;
+        // Limit max speed to 0.6
+        speed *= 0.8;
 
         return speed;
     }
-
-    public double getSpeedMulti() {
-        double speedMulti = driverJoyOne.getRawAxis(3);
-
-        speedMulti *= -0.5;
-        speedMulti += 1.0;
-
-        if (speedMulti > 0.1) {
-            return speedMulti;
-        } else {
-            return 0.1;
-        }
-
-    }
-
+    
+    /**
+     * Get the direction to joystick is pushed, zero is straight ahead, positive
+     * is clock-wise
+     * 
+     * @return The direction in radians
+     */
     public double getDirection() {
-        double radians = driverJoyOne.getDirectionRadians();
 
-        System.out.println("Direction: " + radians);
+        // Left of 12 o'clock is -, right is +
+        double radians = joyOne.getDirectionRadians();
 
-        /*
-         * radians = (radians < 0) ? ((2 * Math.PI) + radians) : radians;
-         * 
-         * radians = (driverJoyOne.getMagnitude() < .1) ? lastDirection :
-         * radians;
-         * 
-         * lastDirection = radians;
-         */
+        // Convert to 0 - 2PI
+        radians = Modulus.modulus(radians, 2 * Math.PI);
 
+        // Reverse direction
         return (2 * Math.PI) - radians;
     }
 
+    /**
+     * Use a third axis as a speed multiplier. Speed multiplier is from 0.5 -
+     * 1.0
+     * 
+     * @return The speed multiplier
+     */
+    public double getSpeedMulti() {
+        double speedMulti = joyOne.getRawAxis(3);
+
+        speedMulti *= -0.5;
+        speedMulti += 1.0;
+        
+        return (speedMulti > 0.1) ? speedMulti : 0.1;
+    }
+
+    /**
+     * Get rotation - between +1 and -1
+     * 
+     * @return Rotation
+     */
     public double getRotation() {
-        double rotationSpeed = driverJoyOne.getTwist();// * getSpeedMulti();
-        // double rotationSpeed = joy2.getRawAxis(0);
-        rotationSpeed = (Math.abs(rotationSpeed) < 0.5) ? 0
-                : (rotationSpeed < 0) ? rotationSpeed + 0.5 : rotationSpeed - 0.5;
-        // rotationSpeed *= 0.8;
+        double rotationSpeed = joyTwo.getX();
+        
+        // Deadband
+        rotationSpeed = (Math.abs(rotationSpeed) < 0.15) ? 0 : rotationSpeed;
+        
+        // Scale speed
+        rotationSpeed *= 0.4;
+        
         return rotationSpeed;
     }
 
-    public boolean isButtonPressed(JoyStickButton button) {
-        return driverJoyOne.getRawButton(button.getRawButtonNumber());
+    /**
+     * Whether the shooter control is activated
+     * 
+     * @return boolean, Whether the shooter control is activated
+     */
+    public boolean getShooter() {
+        return joyTwo.getTrigger();
     }
 
-    public boolean getShooter1() {
-        return driverJoyTwo.getBumper(Hand.kLeft);
-    }
-
-    public double getClimber() {
-        if (driverJoyTwo.getTriggerAxis(Hand.kLeft) >= 0.1) {
-            return driverJoyTwo.getTriggerAxis(Hand.kLeft);
-        } else if (driverJoyTwo.getTriggerAxis(Hand.kRight) >= 0.1) {
-            return -driverJoyTwo.getTriggerAxis(Hand.kRight);
-        } else {
-            return 0;
-        }
-    }
-
-    public boolean getIntake() {
-        return driverJoyTwo.getXButton();
-    }
-
-    public boolean getBallRelease() {
-        return driverJoyTwo.getBumper(Hand.kRight);
-    }
-
-    public enum JoyStickButton {
-        CLIMBER(2), SHOOTER(1), INTAKE(3);
-
-        private int rawButtonNumber;
-
-        private JoyStickButton(int rawButtonNumber) {
-            this.rawButtonNumber = rawButtonNumber;
-        }
-
-        public int getRawButtonNumber() {
-            return rawButtonNumber;
-        }
-    }
-
+    /**
+     * Tank left speed
+     * 
+     * @return Tank left speed as double
+     */
     public double getTankLeft() {
-        if (Math.abs(driverJoyTwo.getRawAxis(1)) < 0.15) {
-            return 0;
-        }
-        return -driverJoyTwo.getRawAxis(1);
+        double leftSpeed = -joyOne.getY();
+        
+        // Deadband
+        leftSpeed = (leftSpeed < 0.08) ? 0 : leftSpeed;
+        
+        return leftSpeed;
     }
 
+    /**
+     * Tank right speed
+     * 
+     * @return Tank right speed as double
+     */
     public double getTankRight() {
-        if (Math.abs(driverJoyTwo.getRawAxis(5)) < 0.15) {
-            return 0;
-        }
-        return -driverJoyTwo.getRawAxis(5);
-    }
-
-    public double getTankVertical() {
-        if (Math.abs(driverJoyTwo.getRawAxis(1)) < 0.1) {
-            return 0;
-        }
-        return -driverJoyTwo.getRawAxis(1);
-    }
-
-    // Positive is right
-    // Negative is left
-    public double getTankHorizontal() {
-        if (Math.abs(driverJoyTwo.getRawAxis(0)) < 0.1) {
-            return 0;
-        }
-        return driverJoyTwo.getRawAxis(0);
+        double rightSpeed = -joyTwo.getY();
+        
+        // Deadband
+        rightSpeed = (rightSpeed < 0.08) ? 0 : rightSpeed;
+        
+        return rightSpeed;
     }
 }
