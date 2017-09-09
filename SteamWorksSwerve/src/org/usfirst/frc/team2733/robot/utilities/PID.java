@@ -19,15 +19,16 @@ public class PID {
     boolean continuous;
 
     double maxInput, minInput;
-    
+
     double maxOutput, minOutput;
     boolean usingOutputClamp;
-    
+
     /**
      * This is the constructor for a PID object that only uses the Proportional
      * component.
      * 
-     * @param P_coef The coefficient for the proportional part of the PID function.
+     * @param P_coef
+     *            The coefficient for the proportional part of the PID function.
      */
     public PID(double P_coef) {
         P = P_coef;
@@ -43,8 +44,10 @@ public class PID {
      * This is the constructor for a PID object that uses the Proportional and
      * Integral components.
      * 
-     * @param P_coef The coefficient for the proportional part of the PID function.
-     * @param I_coef The coefficient for the integral part of the PID function.
+     * @param P_coef
+     *            The coefficient for the proportional part of the PID function.
+     * @param I_coef
+     *            The coefficient for the integral part of the PID function.
      */
     public PID(double P_coef, double I_coef) {
         P = P_coef;
@@ -59,7 +62,7 @@ public class PID {
 
         // Zeroes time
         lastTime = 0;
-        
+
         usingOutputClamp = false;
     }
 
@@ -67,9 +70,12 @@ public class PID {
      * This is the constructor for a PID object that uses the Proportional,
      * Integral, and Derivative components.
      * 
-     * @param P_coef  The coefficient for the proportional part of the PID function.
-     * @param I_coef The coefficient for the integral part of the PID function.
-     * @param D_coef The coefficient for the derivative part of the PID function.
+     * @param P_coef
+     *            The coefficient for the proportional part of the PID function.
+     * @param I_coef
+     *            The coefficient for the integral part of the PID function.
+     * @param D_coef
+     *            The coefficient for the derivative part of the PID function.
      */
     public PID(double P_coef, double I_coef, double D_coef) {
         P = P_coef;
@@ -86,7 +92,7 @@ public class PID {
         previousError = 0;
         // Zeroes time
         lastTime = 0;
-        
+
         usingOutputClamp = false;
     }
 
@@ -94,8 +100,10 @@ public class PID {
      * Returns the amount the object running the PID should increment to
      * approach the intended value.
      * 
-     * @param currentVal Current value of the process.
-     * @param aimVal The set point of the process.
+     * @param currentVal
+     *            Current value of the process.
+     * @param aimVal
+     *            The set point of the process.
      * @return output Value for process using PID controller
      */
     public double getVal(double currentVal, double aimVal) {
@@ -141,7 +149,7 @@ public class PID {
                 returnVal = minOutput;
             }
         }
-        
+
         return returnVal;
     }
 
@@ -150,8 +158,10 @@ public class PID {
      * shortest path to the set point rather than going all the way back through
      * zero.
      * 
-     * @param error Current error
-     * @return New value for error that will cause the system to take the shortest path.
+     * @param error
+     *            Current error
+     * @return New value for error that will cause the system to take the
+     *         shortest path.
      */
     private double getContinuousError(double error) {
         if (continuous) {
@@ -174,7 +184,7 @@ public class PID {
     public void setOutputBounds(double maxOutput, double minOutput) {
         this.maxOutput = maxOutput;
         this.minOutput = minOutput;
-        
+
         usingOutputClamp = true;
     }
 

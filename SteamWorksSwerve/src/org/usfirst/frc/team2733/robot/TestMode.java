@@ -9,22 +9,22 @@ import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Timer;
 
 public class TestMode {
-    
+
     private List<Testable> testables;
-    
+
     public TestMode(List<Testable> systemsToTest) {
         testables = systemsToTest;
     }
-    
+
     public void runTests() {
         for (Testable systemToTest : testables) {
             systemToTest.test();
         }
     }
-    
+
     public void portsTest() {
-        //portTest(PortsEnum.FRONT_LEFT_ROTATION_MOTOR.getPort());
-        //portTest(PortsEnum.FRONT_LEFT_DRIVE_MOTOR.getPort());
+        // portTest(PortsEnum.FRONT_LEFT_ROTATION_MOTOR.getPort());
+        // portTest(PortsEnum.FRONT_LEFT_DRIVE_MOTOR.getPort());
     }
 
     public void portTest(int port) {

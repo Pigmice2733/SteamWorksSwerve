@@ -22,22 +22,25 @@ public class PortConfiguration {
     private final Map<WheelPosition, SpeedController> driveMotorControllers;
     private final Map<WheelPosition, SpeedController> rotationMotorControllers;
     private final Map<WheelPosition, Integer> encoderPorts;
-    
+
     private int shooterPort, agitatorPort, intakePort, climberPort;
-    
+
     private int joystickOne, joystickTwo;
 
     public enum Chassis {
-    	DEVBOT,
-    	COMPBOT;
+        DEVBOT, COMPBOT;
     }
-    
+
     private final Chassis chassis;
-    
+
     /**
      * Construct a port config structure and fill it in
-     * @param shouldReadFromFile Whether the port values should be read from a file or not
-     * @param configFile The file to read values from, can be left null if using values from code
+     * 
+     * @param shouldReadFromFile
+     *            Whether the port values should be read from a file or not
+     * @param configFile
+     *            The file to read values from, can be left null if using values
+     *            from code
      */
     public PortConfiguration(boolean shouldReadFromFile, String configFilePath, Chassis chassis) {
         this.configFilePath = configFilePath;
@@ -48,11 +51,14 @@ public class PortConfiguration {
 
         reloadConfig(shouldReadFromFile);
     }
-    
+
     /**
      * Reload the config data
-     * @param shouldReadFromFile Whether the port values should be read from a file or not
-     * @param configFile The name of the file to read from if reading from a file
+     * 
+     * @param shouldReadFromFile
+     *            Whether the port values should be read from a file or not
+     * @param configFile
+     *            The name of the file to read from if reading from a file
      */
     public void reloadConfig(boolean shouldReadFromFile) {
         if (shouldReadFromFile) {
@@ -66,25 +72,28 @@ public class PortConfiguration {
             initializePorts();
         }
     }
-    
+
     /**
      * Gets an unmodifiable reference to the drive motor ports map
+     * 
      * @return Unmodifiable reference to the drive motor ports map
      */
     public Map<WheelPosition, SpeedController> getDriveMotorPorts() {
         return Collections.unmodifiableMap(driveMotorControllers);
     }
-    
+
     /**
      * Gets an unmodifiable reference to the rotation motor ports map
+     * 
      * @return Unmodifiable reference to the rotation motor ports map
      */
     public Map<WheelPosition, SpeedController> getRotationMotorPorts() {
         return Collections.unmodifiableMap(rotationMotorControllers);
     }
-    
+
     /**
      * Gets an unmodifiable reference to the encoder ports map
+     * 
      * @return Unmodifiable reference to the encoder map
      */
     public Map<WheelPosition, Integer> getEncoderPorts() {
@@ -93,6 +102,7 @@ public class PortConfiguration {
 
     /**
      * Port for the shooter flywheel
+     * 
      * @return Shooter port number
      */
     public int getShooterPort() {
@@ -102,6 +112,7 @@ public class PortConfiguration {
 
     /**
      * Port for the agitator motor
+     * 
      * @return Agitator port number
      */
     public int getAgitatorPort() {
@@ -110,6 +121,7 @@ public class PortConfiguration {
 
     /**
      * Port for the climber motor
+     * 
      * @return Climber port number
      */
     public int getClimberPort() {
@@ -118,22 +130,25 @@ public class PortConfiguration {
 
     /**
      * Port for the intake motor
+     * 
      * @return Intake port number
      */
     public int getIntakePort() {
         return intakePort;
     }
-    
+
     /**
      * Port for the first joystick
+     * 
      * @return
      */
     public int getJoytsickOne() {
         return joystickOne;
     }
-    
+
     /**
      * Port for the second joystick
+     * 
      * @return
      */
     public int getJoystickTwo() {
@@ -142,6 +157,7 @@ public class PortConfiguration {
 
     /**
      * Attempts to read config ports from file
+     * 
      * @return <i>true</i> if succeeded, <i>false</i> if failed
      */
     private boolean tryReadFromFile() {
@@ -153,12 +169,12 @@ public class PortConfiguration {
             portConfig.load(fileStream);
             fileStream.close();
         } catch (IOException | NullPointerException ex) {
-            if(configFilePath == null) {
+            if (configFilePath == null) {
                 System.out.println("Failed to load port configuration, file path is null\n");
             } else {
                 System.out.println("Failed to load port configuration\n");
             }
-            
+
             try {
                 fileStream.close();
             } catch (IOException ex1) {
@@ -171,7 +187,7 @@ public class PortConfiguration {
 
         // Load port values from portConfig into the maps
         loadFromProperties(portConfig);
-        
+
         return true;
     }
 
@@ -179,63 +195,65 @@ public class PortConfiguration {
      * Initializes ports with hard-coded values
      */
     private void initializePorts() {
-    	
-    	if(this.chassis == Chassis.DEVBOT) {
-	        driveMotorControllers.put(WheelPosition.FrontLeft, new Talon(4));
-	        driveMotorControllers.put(WheelPosition.FrontRight, new Talon(0));
-	        driveMotorControllers.put(WheelPosition.BackLeft, new Talon(6));
-	        driveMotorControllers.put(WheelPosition.BackRight, new Talon(2));
-	        
-	        rotationMotorControllers.put(WheelPosition.FrontLeft, new Spark(5));
-	        rotationMotorControllers.put(WheelPosition.FrontRight, new Spark(1));
-	        rotationMotorControllers.put(WheelPosition.BackLeft, new Spark(7));
-	        rotationMotorControllers.put(WheelPosition.BackRight, new Spark(3));
-       
-    	} else if (this.chassis == Chassis.COMPBOT) {
-    		driveMotorControllers.put(WheelPosition.FrontLeft, new CANTalon(18));
+
+        if (this.chassis == Chassis.DEVBOT) {
+            driveMotorControllers.put(WheelPosition.FrontLeft, new Talon(4));
+            driveMotorControllers.put(WheelPosition.FrontRight, new Talon(0));
+            driveMotorControllers.put(WheelPosition.BackLeft, new Talon(6));
+            driveMotorControllers.put(WheelPosition.BackRight, new Talon(2));
+
+            rotationMotorControllers.put(WheelPosition.FrontLeft, new Spark(5));
+            rotationMotorControllers.put(WheelPosition.FrontRight, new Spark(1));
+            rotationMotorControllers.put(WheelPosition.BackLeft, new Spark(7));
+            rotationMotorControllers.put(WheelPosition.BackRight, new Spark(3));
+
+        } else if (this.chassis == Chassis.COMPBOT) {
+            driveMotorControllers.put(WheelPosition.FrontLeft, new CANTalon(18));
             driveMotorControllers.put(WheelPosition.FrontRight, new CANTalon(16));
             driveMotorControllers.put(WheelPosition.BackLeft, new CANTalon(12));
             driveMotorControllers.put(WheelPosition.BackRight, new CANTalon(11));
-            
+
             rotationMotorControllers.put(WheelPosition.FrontLeft, new CANTalon(5));
             rotationMotorControllers.put(WheelPosition.FrontRight, new CANTalon(15));
             rotationMotorControllers.put(WheelPosition.BackLeft, new CANTalon(14));
             rotationMotorControllers.put(WheelPosition.BackRight, new CANTalon(13));
-    	}
-    	
-    	 encoderPorts.put(WheelPosition.FrontLeft, 2);
-         encoderPorts.put(WheelPosition.FrontRight, 0);
-         encoderPorts.put(WheelPosition.BackLeft, 3);
-         encoderPorts.put(WheelPosition.BackRight, 1);
-         
+        }
+
+        encoderPorts.put(WheelPosition.FrontLeft, 2);
+        encoderPorts.put(WheelPosition.FrontRight, 0);
+        encoderPorts.put(WheelPosition.BackLeft, 3);
+        encoderPorts.put(WheelPosition.BackRight, 1);
+
         shooterPort = 2;
         agitatorPort = 1;
         intakePort = 3;
         climberPort = 0;
-        
+
         joystickOne = 0;
         joystickTwo = 1;
-    	
+
     }
-    
+
     /**
      * Load port values from Properties into the maps
-     * @param portsConfig The Properties to load from
+     * 
+     * @param portsConfig
+     *            The Properties to load from
      */
     private void loadFromProperties(Properties portConfig) {
-    
+
         encoderPorts.put(WheelPosition.FrontLeft, Integer.parseInt(portConfig.getProperty("encoderFL")));
         encoderPorts.put(WheelPosition.FrontRight, Integer.parseInt(portConfig.getProperty("encoderFR")));
         encoderPorts.put(WheelPosition.BackLeft, Integer.parseInt(portConfig.getProperty("encoderBL")));
         encoderPorts.put(WheelPosition.BackRight, Integer.parseInt(portConfig.getProperty("encoderBR")));
-        
+
         shooterPort = Integer.parseInt(portConfig.getProperty("shooter"));
         agitatorPort = Integer.parseInt(portConfig.getProperty("agitator"));
         intakePort = Integer.parseInt(portConfig.getProperty("intake"));
         climberPort = Integer.parseInt(portConfig.getProperty("climber"));
-        
+
         joystickOne = Integer.parseInt(portConfig.getProperty("joyOne"));
         joystickTwo = Integer.parseInt(portConfig.getProperty("joyTwo"));
     }
-    
+
 }

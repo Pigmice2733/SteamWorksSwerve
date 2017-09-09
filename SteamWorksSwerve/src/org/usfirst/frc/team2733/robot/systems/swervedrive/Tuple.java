@@ -1,7 +1,7 @@
 package org.usfirst.frc.team2733.robot.systems.swervedrive;
 
-public class Tuple<T>{
-   
+public class Tuple<T> {
+
     public T x;
 
     public T y;

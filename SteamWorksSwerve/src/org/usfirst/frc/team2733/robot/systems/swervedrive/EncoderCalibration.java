@@ -17,8 +17,13 @@ public class EncoderCalibration {
 
     /**
      * Construct an encoder calibration structure
-     * @param shouldReadFromFile Whether the encoder offsets should be read from a file or zeroed
-     * @param calibrationFilePath The file to read values from, can be left null if values are to be zeroed
+     * 
+     * @param shouldReadFromFile
+     *            Whether the encoder offsets should be read from a file or
+     *            zeroed
+     * @param calibrationFilePath
+     *            The file to read values from, can be left null if values are
+     *            to be zeroed
      */
     public EncoderCalibration(boolean shouldReadFromFile, String calibrationFilePath) {
         this.calibrationFilePath = calibrationFilePath;
@@ -30,7 +35,9 @@ public class EncoderCalibration {
 
     /**
      * Get the encoder offset for a specific swerve module
-     * @param pos WheelPosition of the encoder's swerve module
+     * 
+     * @param pos
+     *            WheelPosition of the encoder's swerve module
      * @return Encoder offset of that encoder
      */
     public double getEncoderOffset(WheelPosition pos) {
@@ -39,8 +46,11 @@ public class EncoderCalibration {
 
     /**
      * Set the offset for an encoder
-     * @param pos WheelPosition of the encoder's swerve module
-     * @param encoderOffset The new encoder offset to set for future use
+     * 
+     * @param pos
+     *            WheelPosition of the encoder's swerve module
+     * @param encoderOffset
+     *            The new encoder offset to set for future use
      */
     public void setEncoderOffset(WheelPosition pos, double encoderOffset) {
         encoderOffsets.put(pos, Double.valueOf(encoderOffset));
@@ -48,7 +58,10 @@ public class EncoderCalibration {
 
     /**
      * Reload all the offsets
-     * @param shouldReadFromFile Whether the encoder offsets should be read from a file or zeroed
+     * 
+     * @param shouldReadFromFile
+     *            Whether the encoder offsets should be read from a file or
+     *            zeroed
      */
     public void reloadOffsets(boolean shouldReadFromFile) {
         if (shouldReadFromFile) {
@@ -79,12 +92,12 @@ public class EncoderCalibration {
             encoderOffsets.store(fileStream, null);
             fileStream.close();
         } catch (IOException | NullPointerException ex) {
-            if(calibrationFilePath == null) {
+            if (calibrationFilePath == null) {
                 System.out.println("Failed to save calibration data, calibration file path is null\n");
             } else {
                 System.out.println("Failed to save encoder calibration data\n");
             }
-            
+
             try {
                 fileStream.close();
             } catch (IOException ex1) {
@@ -123,12 +136,12 @@ public class EncoderCalibration {
             encoderOffsets.load(fileStream);
             fileStream.close();
         } catch (IOException | NullPointerException ex) {
-            if(calibrationFilePath == null) {
+            if (calibrationFilePath == null) {
                 System.out.println("Failed to load calibration data, calibration file path is null\n");
             } else {
                 System.out.println("Failed to load encoder calibration data\n");
             }
-            
+
             try {
                 fileStream.close();
             } catch (IOException ex1) {

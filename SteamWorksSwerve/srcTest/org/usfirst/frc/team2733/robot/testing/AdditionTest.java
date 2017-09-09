@@ -5,9 +5,9 @@ import org.junit.Test;
 
 public class AdditionTest {
 
-	@Test
-	public void exampleTest() {
-		Assert.assertEquals(2 + 2, 4);
-	}
+    @Test
+    public void exampleTest() {
+        Assert.assertEquals(2 + 2, 4);
+    }
 
 }

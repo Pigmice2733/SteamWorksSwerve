@@ -4,7 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 public class RobotClassTest {
-    
+
     @Test
     public void robotClassTest() {
         try {
@@ -13,5 +13,5 @@ public class RobotClassTest {
             Assert.fail();
         }
     }
-    
+
 }

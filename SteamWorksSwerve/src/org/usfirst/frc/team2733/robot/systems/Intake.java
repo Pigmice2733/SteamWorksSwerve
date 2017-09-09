@@ -16,7 +16,9 @@ public class Intake implements Testable {
 
     /**
      * Intake controller
-     * @param intakeMotorPort Port for intake motor
+     * 
+     * @param intakeMotorPort
+     *            Port for intake motor
      */
     public Intake(int intakeMotorPort) {
         motor = new Talon(intakeMotorPort);
@@ -24,7 +26,9 @@ public class Intake implements Testable {
 
     /**
      * Trigger intake motor
-     * @param trigger <i>true</i> turns on intake, <i>false</i> stops it
+     * 
+     * @param trigger
+     *            <i>true</i> turns on intake, <i>false</i> stops it
      */
     public void update(boolean trigger) {
         if (trigger) {
