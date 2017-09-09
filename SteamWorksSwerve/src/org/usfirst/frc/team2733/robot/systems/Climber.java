@@ -1,14 +1,11 @@
 package org.usfirst.frc.team2733.robot.systems;
 
-import org.usfirst.frc.team2733.robot.Testable;
-
 import edu.wpi.first.wpilibj.Spark;
-import edu.wpi.first.wpilibj.Timer;
 
 /**
  * Controller for the climber
  */
-public class Climber implements Testable {
+public class Climber{
 
     Spark motor;
 
@@ -32,12 +29,5 @@ public class Climber implements Testable {
      */
     public void update(double speed) {
         motor.set(speed);
-    }
-
-    @Override
-    public void test() {
-        motor.set(1.0);
-        Timer.delay(1);
-        motor.stopMotor();
     }
 }

@@ -1,14 +1,11 @@
 package org.usfirst.frc.team2733.robot.systems;
 
-import org.usfirst.frc.team2733.robot.Testable;
-
 import edu.wpi.first.wpilibj.Talon;
-import edu.wpi.first.wpilibj.Timer;
 
 /**
  * Intake controller
  */
-public class Intake implements Testable {
+public class Intake {
 
     Talon motor;
 
@@ -36,12 +33,5 @@ public class Intake implements Testable {
         } else {
             motor.set(0);
         }
-    }
-
-    @Override
-    public void test() {
-        motor.set(1.0);
-        Timer.delay(1);
-        motor.stopMotor();
     }
 }

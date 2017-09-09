@@ -5,9 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.usfirst.frc.team2733.robot.enumerations.ConversionEnum;
 import org.usfirst.frc.team2733.robot.enumerations.WheelPosition;
 import org.usfirst.frc.team2733.robot.systems.AbstractDriveTrain;
+import org.usfirst.frc.team2733.robot.utilities.Tuple;
 
 import edu.wpi.first.wpilibj.SpeedController;
 
@@ -150,11 +150,8 @@ public class SwerveDriveTrain extends AbstractDriveTrain {
         // Apply the gyro offset
         direction += gyroOffset;
 
-        // Convert magnitude to speed
-        double speed = magnitude * ConversionEnum.DRIVE_SPEED_RANGE_TO_M_PER_S.getConversion();
-
         // Vector representation of speed and direction
-        Tuple<Double> velocityVector = getVelocityVector(speed, direction);
+        Tuple<Double> velocityVector = getVelocityVector(magnitude, direction);
 
         // Set swerve modules target speed and angle
         swerveCalc.setAim(velocityVector, rotation);

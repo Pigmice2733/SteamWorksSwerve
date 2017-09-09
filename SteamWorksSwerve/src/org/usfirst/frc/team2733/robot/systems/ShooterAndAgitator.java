@@ -1,15 +1,12 @@
 package org.usfirst.frc.team2733.robot.systems;
 
-import org.usfirst.frc.team2733.robot.Testable;
-
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.Talon;
-import edu.wpi.first.wpilibj.Timer;
 
 /**
  * Shooter systems controller
  */
-public class ShooterAndAgitator implements Testable {
+public class ShooterAndAgitator {
 
     Spark shooterMotor;
     Talon agitatorMotor;
@@ -57,16 +54,5 @@ public class ShooterAndAgitator implements Testable {
         } else if (downSpeed) {
             shooterSpeed -= 0.05;
         }
-    }
-
-    @Override
-    public void test() {
-        System.out.println("Running Motors");
-        shooterMotor.set(1.0);
-        agitatorMotor.set(1.0);
-        Timer.delay(1);
-        shooterMotor.stopMotor();
-        agitatorMotor.stopMotor();
-
     }
 }

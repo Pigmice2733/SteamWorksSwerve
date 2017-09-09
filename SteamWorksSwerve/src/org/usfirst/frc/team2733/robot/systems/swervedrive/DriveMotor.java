@@ -1,6 +1,5 @@
 package org.usfirst.frc.team2733.robot.systems.swervedrive;
 
-import org.usfirst.frc.team2733.robot.enumerations.ConversionEnum;
 import org.usfirst.frc.team2733.robot.utilities.PID;
 
 import edu.wpi.first.wpilibj.SpeedController;
@@ -46,7 +45,7 @@ public class DriveMotor {
     public void update(double speed) {
         currentSpeed += PIController.getVal(currentSpeed, speed);
 
-        driveMotor.set(currentSpeed / ConversionEnum.DRIVE_SPEED_RANGE_TO_M_PER_S.getConversion());
+        driveMotor.set(currentSpeed);
     }
 
     /**

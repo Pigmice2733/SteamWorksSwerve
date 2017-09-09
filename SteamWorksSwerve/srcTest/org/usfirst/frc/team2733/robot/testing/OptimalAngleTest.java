@@ -4,7 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.usfirst.frc.team2733.robot.systems.swervedrive.SwerveCalc;
 import org.usfirst.frc.team2733.robot.systems.swervedrive.SwerveDriveTrain;
-import org.usfirst.frc.team2733.robot.systems.swervedrive.Tuple;
+import org.usfirst.frc.team2733.robot.utilities.Tuple;
 
 public class OptimalAngleTest {
 

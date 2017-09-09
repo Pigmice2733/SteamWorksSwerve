@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.usfirst.frc.team2733.robot.enumerations.WheelPosition;
 import org.usfirst.frc.team2733.robot.utilities.Modulus;
+import org.usfirst.frc.team2733.robot.utilities.Tuple;
 
 public class SwerveCalc {
 
