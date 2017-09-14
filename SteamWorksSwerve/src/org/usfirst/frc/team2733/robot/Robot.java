@@ -22,7 +22,7 @@ public class Robot extends SampleRobot {
     
     @Override
     protected void robotInit() {
-        PortConfiguration portConfig = new PortConfiguration(false, null, Chassis.DEVBOT);
+        PortConfiguration portConfig = new PortConfiguration(false, null, Chassis.COMPBOT);
         enCal = new EncoderCalibration(true, "/home/lvuser/encoderCalibration.properties");
         driveTrain = new SwerveDriveTrain(portConfig.getDriveMotorPorts(), portConfig.getRotationMotorPorts(),
                 portConfig.getEncoderPorts(), enCal);
