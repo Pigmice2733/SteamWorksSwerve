@@ -96,7 +96,7 @@ public class SwerveModule {
         lastUpdate = System.nanoTime();
 
         double targAngle = swerveCalc.getRotAim(wheelPos);
-
+        
         Tuple<Double> angleSpeed = swerveCalc.calcOptimalHeading(targSpeed, targAngle, angle);
         speed = angleSpeed.getX();
         angle = angleSpeed.getY();

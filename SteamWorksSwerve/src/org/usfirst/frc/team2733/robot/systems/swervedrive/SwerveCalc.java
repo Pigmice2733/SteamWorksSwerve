@@ -54,7 +54,7 @@ public class SwerveCalc {
 
         // Iterate over each wheel and set its target speed and angle
         for (WheelPosition position : wheelCoordinates.keySet()) {
-            setWheelAim(velocityVector, rotation, centerOfRotation, position);
+        	setWheelAim(velocityVector, rotation, centerOfRotation, position);
         }
     }
 
@@ -82,7 +82,7 @@ public class SwerveCalc {
         // easier to think about. They are used in the later step
         double Wxi = velocityVector.getX() + (rotation * wheelLocX);
         double Wyi = velocityVector.getY() - (rotation * wheelLocY);
-
+        
         // Calculate the aims and store
         wheelAims.put(wheelPosition,
                 new Tuple<Double>(Math.sqrt(Math.pow(Wxi, 2) + Math.pow(Wyi, 2)), Math.atan2(Wxi, Wyi)));

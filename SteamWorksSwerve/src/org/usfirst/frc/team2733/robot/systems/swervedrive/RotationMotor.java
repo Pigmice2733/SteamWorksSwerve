@@ -57,8 +57,8 @@ public class RotationMotor {
      *            The angle (in radians) to turn wheel to
      */
     public void update(double setAngle) {
-
-        double currentAngle = Modulus.modulus(analogPoten.get(), 1) * 2 * Math.PI;
+    	
+    	double currentAngle = getEncoderValue() * 2 * Math.PI;
 
         motorSpeed = PIController.getVal(currentAngle, setAngle);
 

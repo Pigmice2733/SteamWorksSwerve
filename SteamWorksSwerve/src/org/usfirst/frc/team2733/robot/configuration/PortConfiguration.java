@@ -224,10 +224,10 @@ public class PortConfiguration {
         encoderPorts.put(WheelPosition.BackLeft, 3);
         encoderPorts.put(WheelPosition.BackRight, 1);
 
-        shooterPort = 2;
+        shooterPort = 0;
         agitatorPort = 1;
         intakePort = 3;
-        climberPort = 0;
+        climberPort = 2;
 
         joystickOne = 0;
         joystickTwo = 1;

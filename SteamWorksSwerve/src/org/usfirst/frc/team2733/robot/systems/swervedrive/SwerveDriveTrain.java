@@ -120,8 +120,6 @@ public class SwerveDriveTrain extends AbstractDriveTrain {
         encoderCal.printEncoderOffsets();
 
         encoderCal.saveCalibrationFile();
-
-        releaseReources();
     }
 
     @Override
@@ -146,7 +144,7 @@ public class SwerveDriveTrain extends AbstractDriveTrain {
             System.out.println("Swerve swerveDrive() is called before initialize()\n");
             return;
         }
-
+        
         // Apply the gyro offset
         direction += gyroOffset;
 
