@@ -12,14 +12,10 @@ public class ShooterAndAgitator {
     private Spark shooterMotor;
     private Talon agitatorMotor;
 
-    private double shooterSpeed = 1.0;
-    private double agitatorSpeed = 1.0;
-
     private double shooterDelay;
     private boolean shooterOn;
     private boolean agitatorOn;
-    private double shooterActivationTime;
-    private double agitatorDeactivationTime;
+    private double startTime = 0;
 
     /**
      * The controller for the shooter and ball agitator
@@ -38,54 +34,38 @@ public class ShooterAndAgitator {
         this.shooterDelay = shooterDelay;
         this.shooterOn = false;
         this.agitatorOn = false;
-        this.shooterActivationTime = 0.0;
-        this.agitatorDeactivationTime = 0.0;
+    }
+    
+    private boolean hasTimeElapsed(double startTime, double delay) {
+    	return (Timer.getFPGATimestamp() - startTime) >= delay;
     }
 
     /**
      * Controls shooter and ball agitator motors
      * 
-     * @param shoot
+     * @param triggerPulled
      *            Whether the shooter should start firing
-     * @param speed
+     * @param shooterSpeed
      *            Speed multiplier for shooter speed, should be 0-1
      */
-    public void update(boolean shoot, double speed) {
-    	// State control so the shooter wheel has 'shooterDelay' seconds to get
-        // up to speed before the agitator kicks in,
-        // and the agitator has 'shooterDelay' seconds to wind down before the
-        // shooter wheel turns off.
-
-        // If the shooter wheel is off, and the shooter should start firing,
-        // turn the shooter wheel on and keep track of the time in started
-        if (!shooterOn && shoot) {
-        	shooterMotor.set(shooterSpeed * speed);
-            shooterActivationTime = Timer.getFPGATimestamp();
-            shooterOn = true;
-            // Once the shooter wheel is on, and the shooter should start
-            // firing, and the shooter wheel has had 'shooterDelay' seconds to
-            // get up to speed, turn on the agitator
-        } else if (shooterOn && shoot && !agitatorOn && (Timer.getFPGATimestamp() - shooterActivationTime) > shooterDelay) {
-            agitatorMotor.set(agitatorSpeed);
-            agitatorOn = true;
-        }
-        
-        if (shoot) {
-            shooterMotor.set(shooterSpeed * speed);
-        }
-
-        // If the agitator is on, but the shooter shouldn't be firing, turn the
-        // agitator off and keep track of when it was turned off
-        if (agitatorOn && !shoot) {
-            agitatorMotor.stopMotor();
-            agitatorOn = false;
-            agitatorDeactivationTime = Timer.getFPGATimestamp();
-            // Once the agitator is off, and has had 'shooterDelay' seconds to
-            // wind down, and the shooter shouldn't be firing, turn the shooter
-            // wheel off
-        } else if (!agitatorOn && shooterOn && !shoot && (Timer.getFPGATimestamp() - agitatorDeactivationTime) > shooterDelay) {
-            shooterMotor.stopMotor();
-            shooterOn = false;
-        }
+    public void update(boolean triggerPulled, double shooterSpeed) {
+    	if (triggerPulled) {
+    		if (!shooterOn) {
+    			startTime = Timer.getFPGATimestamp();
+    			shooterOn = true;
+    		} else if (hasTimeElapsed(startTime, shooterDelay)) {
+    			agitatorOn = true;
+    		}
+    	} else {
+    		if (agitatorOn) {
+    			startTime = Timer.getFPGATimestamp();
+    			agitatorOn = false;
+    		} else if (hasTimeElapsed(startTime, shooterDelay)) {
+    			shooterOn = false;
+    		}
+    	}
+    	
+   		shooterMotor.set(shooterOn ? shooterSpeed : 0);    	
+    	agitatorMotor.set(agitatorOn ? 1 : 0);
     }
 }
