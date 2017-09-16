@@ -47,9 +47,11 @@ public class ShooterAndAgitator {
      * 
      * @param shoot
      *            Whether the shooter should start firing
+     * @param speed
+     *            Speed multiplier for shooter speed, should be 0-1
      */
     public void update(boolean shoot, double speed) {
-        // State control so the shooter wheel has 'shooterDelay' seconds to get
+    	// State control so the shooter wheel has 'shooterDelay' seconds to get
         // up to speed before the agitator kicks in,
         // and the agitator has 'shooterDelay' seconds to wind down before the
         // shooter wheel turns off.
@@ -57,7 +59,7 @@ public class ShooterAndAgitator {
         // If the shooter wheel is off, and the shooter should start firing,
         // turn the shooter wheel on and keep track of the time in started
         if (!shooterOn && shoot) {
-            shooterMotor.set(shooterSpeed * speed);
+        	shooterMotor.set(shooterSpeed * speed);
             shooterActivationTime = Timer.getFPGATimestamp();
             shooterOn = true;
             // Once the shooter wheel is on, and the shooter should start
@@ -66,6 +68,10 @@ public class ShooterAndAgitator {
         } else if (shooterOn && shoot && !agitatorOn && (Timer.getFPGATimestamp() - shooterActivationTime) > shooterDelay) {
             agitatorMotor.set(agitatorSpeed);
             agitatorOn = true;
+        }
+        
+        if (shoot) {
+            shooterMotor.set(shooterSpeed * speed);
         }
 
         // If the agitator is on, but the shooter shouldn't be firing, turn the
