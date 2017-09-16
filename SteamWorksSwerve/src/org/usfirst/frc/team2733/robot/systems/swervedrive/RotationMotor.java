@@ -82,10 +82,19 @@ public class RotationMotor {
     /**
      * Get encoder value (range 0-1);
      * 
-     * @return
+     * @return Encoder value in range 0-1
      */
     public double getEncoderValue() {
         return Modulus.modulus(analogPoten.get(), 1);
+    }
+    
+    /**
+     * Get the raw encoder value
+     * 
+     * @return Raw encoder value
+     */
+    public double getRawEncoderValue() {
+    	return analogPoten.get();
     }
 
 }

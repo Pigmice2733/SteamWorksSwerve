@@ -200,7 +200,7 @@ public class SwerveDriveTrain extends AbstractDriveTrain {
     private double getEncoderValue(WheelPosition wheelPos) {
         for (int i = 0; i < swerveModules.size(); i++) {
             if (swerveModules.get(i).getWheelPosition() == wheelPos) {
-                return swerveModules.get(i).getEncoderValue();
+                return swerveModules.get(i).getRawEncoderValue();
             }
         }
 

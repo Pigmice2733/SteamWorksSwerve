@@ -157,5 +157,13 @@ public class SwerveModule {
     public double getEncoderValue() {
         return rotationMotor.getEncoderValue();
     }
-
+    
+    /**
+     * Get raw encoder value of rotation motor
+     * 
+     * @return
+     */
+    public double getRawEncoderValue() {
+        return rotationMotor.getRawEncoderValue();
+    }
 }
