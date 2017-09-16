@@ -26,7 +26,7 @@ public class JoystickInput {
         speed = (speed > 1.0) ? 1.0 : speed;
         
         // Set deadband
-        speed = (speed < 0.05) ? 0 : speed;
+        //speed = (speed < 0.025) ? 0 : speed;
 
         // Squared sensitivity
         speed *= speed;
@@ -52,7 +52,7 @@ public class JoystickInput {
         radians = Modulus.modulus(radians, 2 * Math.PI);
 
         // Reverse direction
-        return (2 * Math.PI) - radians;
+        return 2*Math.PI - Modulus.modulus(radians + Math.PI, 2 * Math.PI);
     }
 
     /**
@@ -76,13 +76,16 @@ public class JoystickInput {
      * @return Rotation
      */
     public double getRotation() {
-        double rotationSpeed = joyTwo.getX();
+        double rotationSpeed = joyOne.getTwist();
+        
+        //Squared sensitivity
+        rotationSpeed = Math.pow(rotationSpeed, 3);
         
         // Deadband
-        rotationSpeed = (Math.abs(rotationSpeed) < 0.15) ? 0 : rotationSpeed;
+        //rotationSpeed = (Math.abs(rotationSpeed) < 0.3) ? 0 : rotationSpeed;
         
         // Scale speed
-        rotationSpeed *= 0.4;
+        rotationSpeed *= 0.02;
         
         return rotationSpeed;
     }
@@ -93,7 +96,7 @@ public class JoystickInput {
      * @return boolean, Whether the shooter control is activated
      */
     public boolean getShooter() {
-        return joyTwo.getTrigger();
+        return joyOne.getTrigger();
     }
 
     /**
