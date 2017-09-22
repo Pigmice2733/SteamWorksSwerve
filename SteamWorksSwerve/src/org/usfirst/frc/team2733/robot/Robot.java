@@ -66,7 +66,7 @@ public class Robot extends SampleRobot {
 
             shooter.update(joyInput.getShooter(), joyInput.getSpeedMulti());
             
-            //intake.update(joyInput.getShooter());
+            intake.update(joyInput.getShooter());
             
             Timer.delay(0.05);
         }

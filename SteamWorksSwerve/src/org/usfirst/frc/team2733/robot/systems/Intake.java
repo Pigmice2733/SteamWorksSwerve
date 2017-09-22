@@ -9,7 +9,7 @@ public class Intake {
 
     Talon motor;
 
-    public static final double speed = 0.6;
+    public static final double speed = 0.08;
 
     /**
      * Intake controller
