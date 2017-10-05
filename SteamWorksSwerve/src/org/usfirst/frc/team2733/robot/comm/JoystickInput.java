@@ -100,6 +100,15 @@ public class JoystickInput {
     }
 
     /**
+     * Whether the climber control is activated
+     * 
+     * @return boolean, Whether the climber control is activated
+     */
+    public boolean getClimber() {
+        return joyOne.getRawButton(11);
+    }
+    
+    /**
      * Tank left speed
      * 
      * @return Tank left speed as double

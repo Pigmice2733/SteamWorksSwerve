@@ -24,10 +24,10 @@ public class Climber{
     /**
      * Sets climber motor to speed
      * 
-     * @param speed
-     *            The speed to run the climber at
+     * @param on
+     *            Whether the climber should be on
      */
-    public void update(double speed) {
-        motor.set(speed);
+    public void update(boolean on) {
+        motor.set(on ? speed : 0);
     }
 }
