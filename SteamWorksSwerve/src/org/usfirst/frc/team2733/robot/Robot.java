@@ -5,6 +5,7 @@ import org.usfirst.frc.team2733.robot.configuration.PortConfiguration;
 import org.usfirst.frc.team2733.robot.configuration.PortConfiguration.Chassis;
 import org.usfirst.frc.team2733.robot.systems.AbstractDriveTrain;
 import org.usfirst.frc.team2733.robot.systems.Intake;
+import org.usfirst.frc.team2733.robot.systems.Climber;
 import org.usfirst.frc.team2733.robot.systems.ShooterAndAgitator;
 import org.usfirst.frc.team2733.robot.systems.swervedrive.EncoderCalibration;
 import org.usfirst.frc.team2733.robot.systems.swervedrive.SwerveDriveTrain;
@@ -20,6 +21,7 @@ public class Robot extends SampleRobot {
     
     private ShooterAndAgitator shooter;
 	private Intake intake;
+	private Climber climber;
     
     
     @Override
@@ -35,6 +37,7 @@ public class Robot extends SampleRobot {
         double shooterDelay = 0.5;
         shooter = new ShooterAndAgitator(portConfig.getShooterPort(), portConfig.getAgitatorPort(), shooterDelay);
         intake = new Intake(portConfig.getIntakePort());
+        climber = new Climber(portConfig.getClimberPort());
         driveTrain.initialize();
     }
 
@@ -67,6 +70,8 @@ public class Robot extends SampleRobot {
             shooter.update(joyInput.getShooter(), joyInput.getSpeedMulti());
             
             intake.update(joyInput.getShooter());
+            
+            climber.update(joyInput.getClimber());
             
             Timer.delay(0.05);
         }
